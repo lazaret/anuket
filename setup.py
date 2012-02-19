@@ -14,9 +14,9 @@ requires = [
     'WebTest',
     ]
 
-setup(name='Wepwapet',
+setup(name='Wepwawet',
       version='0.1a',
-      description='Wepwapet',
+      description='Wepwawet',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -34,10 +34,10 @@ setup(name='Wepwapet',
       zip_safe=False,
       install_requires=requires,
       tests_require=requires,
-      test_suite="wepwapet",
+      test_suite="wepwawet",
       entry_points = """\
       [paste.app_factory]
-      main = wepwapet:main
+      main = wepwawet:main
       """,
       )
 
