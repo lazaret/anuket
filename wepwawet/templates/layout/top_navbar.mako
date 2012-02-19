@@ -20,7 +20,7 @@
                 <li><a href="#">Tool 4</a></li>
             </ul>
           </li>
-          <li><a href="#"><span class="icon">t</span><b>Login</b></a></li>
+          <li><a href="login"><span class="icon">t</span><b>Login</b></a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

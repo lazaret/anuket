@@ -30,9 +30,6 @@
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
-            <div class="page-header">
-    <h1>Example page header</h1>
-    </div>
         ${breadcrumbs()}
         ${next.body()}
       </article>
