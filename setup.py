@@ -14,9 +14,9 @@ requires = [
     'WebTest',
     ]
 
-setup(name='Anubis',
+setup(name='Wepwapet',
       version='0.1a',
-      description='Anubis',
+      description='Wepwapet',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -34,10 +34,10 @@ setup(name='Anubis',
       zip_safe=False,
       install_requires=requires,
       tests_require=requires,
-      test_suite="anubis",
+      test_suite="wepwapet",
       entry_points = """\
       [paste.app_factory]
-      main = anubis:main
+      main = wepwapet:main
       """,
       )
 
