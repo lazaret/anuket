@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 from pyramid.config import Configurator
+#from pyramid.authentication import AuthTktAuthenticationPolicy
+#from pyramid.authorization import ACLAuthorizationPolicy
 from .views import root
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+#    authorization_policy = ACLAuthorizationPolicy()
+#    authentication_policy = AuthTktAuthenticationPolicy('seekrit') #TODO use SessionAuthenticationPolicy ?
+#    # TODO see https://bitbucket.org/cancel/pyrone/src/087372020b67/pyrone/__init__.py
     config = Configurator(settings=settings)
+#    # set auth & auth
+#    config.set_authentication_policy(authentication_policy)
+#    config.set_authorization_policy(authorization_policy)
     config.include(add_static_views)
     # include routes
     config.include(root)
