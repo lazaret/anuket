@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from pyramid.view import view_config
 
+
 def includeme(config):
     """Add root pages routes."""
     config.add_route('home', '/')
