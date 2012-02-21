@@ -2,7 +2,7 @@
 from pyramid.config import Configurator
 #from pyramid.authentication import AuthTktAuthenticationPolicy
 #from pyramid.authorization import ACLAuthorizationPolicy
-from .views import root
+from .views import root, tools
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -17,6 +17,7 @@ def main(global_config, **settings):
     config.include(add_static_views)
     # include routes
     config.include(root)
+    config.include(tools)
     config.scan()
     return config.make_wsgi_app()
 
