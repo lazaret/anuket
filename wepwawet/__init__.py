@@ -18,8 +18,19 @@ def main(global_config, **settings):
     # include routes
     config.include(root)
     config.include(tools)
+    # scan views
     config.scan()
+    # incluse suscribers
+    config.add_subscriber('wepwawet.subscribers.add_renderer_globals', 'pyramid.events.BeforeRender')
+    config.add_subscriber('wepwawet.subscribers.add_localizer', 'pyramid.events.NewRequest')
+    #
+    config.add_translation_dirs('wepwawet:locale')
     return config.make_wsgi_app()
 
 def add_static_views(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
+
+
+#def add_suscribers(config):
+#    config.add_subscriber('wepwawet.subscribers.add_renderer_globals', 'pyramid.events.BeforeRender')
+#    config.add_subscriber('wepwawet.subscribers.add_localizer', 'pyramid.events.NewRequest')
