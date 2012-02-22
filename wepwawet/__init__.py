@@ -4,6 +4,7 @@ from pyramid.config import Configurator
 #from pyramid.authorization import ACLAuthorizationPolicy
 from .views import root, tools
 
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
@@ -20,17 +21,14 @@ def main(global_config, **settings):
     config.include(tools)
     # scan views
     config.scan()
-    # incluse suscribers
-    config.add_subscriber('wepwawet.subscribers.add_renderer_globals', 'pyramid.events.BeforeRender')
-    config.add_subscriber('wepwawet.subscribers.add_localizer', 'pyramid.events.NewRequest')
-    #
+    # include subscribers
+    config.add_subscriber('wepwawet.lib.subscribers.add_renderer_globals', 'pyramid.events.BeforeRender')
+    config.add_subscriber('wepwawet.lib.subscribers.add_localizer', 'pyramid.events.NewRequest')
+    # internationalization
     config.add_translation_dirs('wepwawet:locale')
+    config.set_locale_negotiator('wepwawet.lib.i18n.locale_negotiator')
     return config.make_wsgi_app()
+
 
 def add_static_views(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
-
-
-#def add_suscribers(config):
-#    config.add_subscriber('wepwawet.subscribers.add_renderer_globals', 'pyramid.events.BeforeRender')
-#    config.add_subscriber('wepwawet.subscribers.add_localizer', 'pyramid.events.NewRequest')
