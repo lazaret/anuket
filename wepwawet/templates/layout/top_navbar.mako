@@ -6,7 +6,6 @@
     <div class="container">
       <div class="nav-collapse">
         <ul class="nav">
-##TODO: route_url or route_path ?
           <li class="active"><a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a></li>
         </ul>
         <ul class="nav pull-right">
