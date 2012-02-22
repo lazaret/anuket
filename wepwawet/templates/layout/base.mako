@@ -1,6 +1,7 @@
 ## -*- coding:utf-8 -*-
 ##
 <%namespace file="top_navbar.mako" import="top_navbar"/>
+<%namespace file="flash_messages.mako" import="flash_messages"/>
 <%namespace file="breadcrumbs.mako" import="breadcrumbs"/>
 
 <!DOCTYPE html>
@@ -31,6 +32,7 @@
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
+        ${flash_messages()}
         ${breadcrumbs()}
         ${next.body()}
       </article>
