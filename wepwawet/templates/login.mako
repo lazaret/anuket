@@ -10,7 +10,7 @@
   <div class="span5 offset2">
     <form class="form-horizontal login-box">
       <fieldset>
-##        ${form.csrf_token()}
+        ${form.csrf_token()}
         <div class="control-group">
           <label for="input01" class="control-label">${_(u"Username")}</label>
           <div class="controls">

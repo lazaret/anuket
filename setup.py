@@ -13,6 +13,7 @@ requires = [
     'pyramid_simpleform',
     'waitress',
     'Babel',
+    'formencode',
     'WebTest',
     ]
 

@@ -10,7 +10,6 @@ def includeme(config):
 
 @view_config(context='pyramid.exceptions.NotFound', renderer='wepwawet:templates/404.mako')
 @view_config(route_name='home', renderer='wepwawet:templates/index.mako')
-@view_config(route_name='login', renderer='wepwawet:templates/login.mako')
 #@view_config(route_name='test', renderer='wepwawet:templates/index.mako', permission='test')
 def root_view(request):
     """Render the root pages."""
@@ -20,5 +19,17 @@ def root_view(request):
 #    request.session.flash(u"success message", 'success')
     return {'brand_name':'Wepwawet'}
 
-# for forbiden views
+
+#TODO redirect forbiden views + flash error
 #@view_config(context='pyramid.exceptions.HTTPForbidden', renderer='wepwawet:templates/403.mako')
+
+
+from pyramid_simpleform import Form
+from pyramid_simpleform.renderers import FormRenderer
+from wepwawet.forms import LoginForm
+
+@view_config(route_name='login', renderer='wepwawet:templates/login.mako')
+def login_view(request):
+    """Render the login form."""
+    form = Form(request, schema=LoginForm)
+    return {'brand_name':'Wepwawet', 'form':FormRenderer(form)}
