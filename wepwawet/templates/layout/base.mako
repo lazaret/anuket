@@ -32,7 +32,7 @@
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
-        <div class ="flash_placeholder">
+        <div class ="flash-placeholder">
           ${flash_messages()}
         </div>
         ${next.body()}
