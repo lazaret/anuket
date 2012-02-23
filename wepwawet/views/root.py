@@ -14,6 +14,10 @@ def includeme(config):
 #@view_config(route_name='test', renderer='wepwawet:templates/index.mako', permission='test')
 def root_view(request):
     """Render the root pages."""
+#    request.session.flash(u"warning message", 'warn')
+#    request.session.flash(u"info message", 'info')
+#    request.session.flash(u"error message", 'error')
+#    request.session.flash(u"success message", 'success')
     return {'brand_name':'Wepwawet'}
 
 # for forbiden views

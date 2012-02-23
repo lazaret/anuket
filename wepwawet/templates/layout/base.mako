@@ -32,8 +32,9 @@
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
-        ${flash_messages()}
-        ${breadcrumbs()}
+        <div class ="flash_placeholder">
+          ${flash_messages()}
+        </div>
         ${next.body()}
       </article>
       <aside class="span3">
