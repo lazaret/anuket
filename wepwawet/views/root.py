@@ -6,7 +6,8 @@ def includeme(config):
     """Add root pages routes."""
     config.add_route('home', '/')
     config.add_route('login', '/login')
-    config.add_route('test', '/test')
+    config.add_route('logout', '/logout')
+#    config.add_route('test', '/test')
 
 @view_config(context='pyramid.exceptions.NotFound', renderer='wepwawet:templates/404.mako')
 @view_config(route_name='home', renderer='wepwawet:templates/index.mako')
@@ -33,3 +34,13 @@ def login_view(request):
     """Render the login form."""
     form = Form(request, schema=LoginForm)
     return {'brand_name':'Wepwawet', 'form':FormRenderer(form)}
+
+
+from pyramid.httpexceptions import HTTPFound
+from pyramid.security import forget
+
+@view_config(route_name='logout')
+def logout_view(request):
+    """Clear credentials and retirect to the home page."""
+    headers = forget(request)
+    return HTTPFound(location=request.route_path('home'), headers=headers)

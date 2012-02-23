@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from pyramid.config import Configurator
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
-#from pyramid.authentication import AuthTktAuthenticationPolicy
-#from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+
 from .views import root, tools
 from .lib import subscribers
+from .security import groupfinder
 
 
 def main(global_config, **settings):
@@ -14,11 +16,13 @@ def main(global_config, **settings):
     # configure session
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     config.set_session_factory(session_factory)
-#    # configure auth & auth
-#    authorization_policy = ACLAuthorizationPolicy()
-#    authentication_policy = AuthTktAuthenticationPolicy('seekrit') #TODO use SessionAuthenticationPolicy ?
-#    config.set_authentication_policy(authentication_policy)
-#    config.set_authorization_policy(authorization_policy)
+
+    # configure auth & auth
+    authorization_policy = ACLAuthorizationPolicy()
+    #TODO use SessionAuthenticationPolicy ?
+    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
+    config.set_authentication_policy(authentication_policy)
+    config.set_authorization_policy(authorization_policy)
 
     # configure subscribers
     config.include(subscribers)
