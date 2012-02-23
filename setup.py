@@ -16,9 +16,9 @@ requires = [
     'WebTest',
     ]
 
-setup(name='Wepwawet',
+setup(name='wepwawet',
     version='0.1a',
-    description='Wepwawet',
+    description='wepwawet',
     long_description=README + '\n\n' +  CHANGES,
     classifiers=[
         "Programming Language :: Python",
