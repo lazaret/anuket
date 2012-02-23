@@ -8,23 +8,23 @@
 
 <div class="row">
   <div class="span5 offset2">
-    <form class="form-horizontal login-box">
+    <form action="/login" method="post" class="form-horizontal login-box">
       <fieldset>
-        ${form.csrf_token()}
+        ${renderer.csrf_token()}
         <div class="control-group">
-          <label for="input01" class="control-label">${_(u"Username")}</label>
+          <label for="username" class="control-label">${_(u"Username")}</label>
           <div class="controls">
-            <input type="text" autofocus="autofocus" id="input01" />
+            <input type="text" name="username" autofocus="autofocus" />
           </div>
         </div>
         <div class="control-group">
-          <label for="input01" class="control-label">${_(u"Password")}</label>
+          <label for="password" class="control-label">${_(u"Password")}</label>
             <div class="controls">
-              <input type="password" id="input01" />
+              <input type="password" name="password" />
             </div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-large btn-primary" type="submit">${_(u"Login")}</button>
+          <button type="submit" name="form_submitted" class="btn btn-large btn-primary" >${_(u"Login")}</button>
         </div>
       </fieldset>
     </form>

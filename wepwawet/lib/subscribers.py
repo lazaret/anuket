@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pyramid.events import BeforeRender, NewRequest
+from pyramid.httpexceptions import HTTPForbidden
 from pyramid.i18n import get_localizer, TranslationStringFactory
 
 
@@ -26,7 +27,7 @@ def add_localizer(event):
 
 
 def csrf_validation(event):
-    if event.request.method == "POST":
-        token = event.request.POST.get("csrf_token")
+    if event.request.method == 'POST':
+        token = event.request.POST.get('_csrf')
         if token is None or token != event.request.session.get_csrf_token():
             raise HTTPForbidden('CSRF token is missing or invalid')

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
-USERS = {'editor':'editor',
+USERS = {'admin':'admin',
           'viewer':'viewer'}
-GROUPS = {'editor':['group:editors']}
+GROUPS = {'admin':['group:admins']}
 
 def groupfinder(userid, request):
     if userid in USERS:

@@ -9,8 +9,7 @@ def includeme(config):
 #TODO: decide if we add routes + redirects to match trailing slash and index.html
 
 
-@view_config(route_name='tools.index', renderer='wepwawet:templates/tools/tools_index.mako')
-#@view_config(route_name='tools.index', renderer='wepwawet:templates/tools/tools_index.mako', permission='test')
+@view_config(route_name='tools.index', renderer='wepwawet:templates/tools/tools_index.mako', permission='admin')
 def tools_index_view(request):
     """Render the tools main page."""
     return {'brand_name':'Wepwawet'}
