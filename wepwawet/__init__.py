@@ -3,15 +3,21 @@ from pyramid.config import Configurator
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from sqlalchemy import engine_from_config
 
-from .views import root, tools
 from .lib import subscribers
+from .models import DBSession
 from .security import groupfinder
+from .views import root, tools
 
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    # configure SQLAlchemy
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    DBSession.configure(bind=engine)
+
     config = Configurator(settings=settings)
     # configure session
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')

@@ -9,11 +9,15 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid',
+    'SQLAlchemy',
+    'transaction',
+    'pyramid_tm',
     'pyramid_debugtoolbar',
-    'pyramid_simpleform',
+    'zope.sqlalchemy',
     'waitress',
     'Babel',
     'formencode',
+    'pyramid_simpleform',
     'WebTest',
     ]
 
@@ -31,7 +35,7 @@ setup(name='wepwawet',
     author_email='miniwark@gmail.com',
     url='',
     license='',
-    keywords='web pyramid pylons',
+    keywords='web wsgi pyramid',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
@@ -45,5 +49,7 @@ setup(name='wepwawet',
     entry_points="""\
     [paste.app_factory]
     main = wepwawet:main
+    [console_scripts]
+    populate_wepwawet = wepwawet.scripts.populate:main
     """,
     )

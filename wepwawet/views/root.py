@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from pyramid.view import view_config
 
+from ..models import (
+    DBSession,
+    MyModel,
+    )
+
 
 def includeme(config):
     """Add root pages routes."""
@@ -8,6 +13,7 @@ def includeme(config):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 #    config.add_route('test', '/test')
+
 
 @view_config(context='pyramid.exceptions.NotFound', renderer='wepwawet:templates/404.mako')
 @view_config(route_name='home', renderer='wepwawet:templates/index.mako')
@@ -18,7 +24,9 @@ def root_view(request):
 #    request.session.flash(u"info message", 'info')
 #    request.session.flash(u"error message", 'error')
 #    request.session.flash(u"success message", 'success')
-    return {'brand_name':'Wepwawet'}
+
+    one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
+    return {'one':one, 'brand_name':'Wepwawet'}
 
 
 #TODO redirect forbiden views + flash error
