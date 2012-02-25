@@ -15,6 +15,7 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+#    'alembic',
     'Babel',
     'formencode',
     'pyramid_simpleform',
