@@ -1,9 +1,8 @@
-====
-TODO
+Todo
 ====
 
 0.1
-===
+---
 
 * Remove SQLAlchemy dummy database form 'pcreate sqlalchemy'
 * Add a database migration tool and base migration scripts -> alembic
@@ -14,35 +13,35 @@ TODO
 * Decide to use or not a form generation toolkit : pyramid_simpleforms / WTforms / deform ?
 
 0.2
-===
+---
 
 * Add tests
 
 0.3
-===
+---
 
 * Add logging and log display tool
 * Add security checks tool (default paswords alerts)
 * Add database export tool
 
 0.4
-===
+---
 
 * Add tests
 
 0.5
-===
+---
 
 * Add database import / migration check
 * Add data versioning in the database
 
 0.6
-===
+---
 
 * Add tests
 
 0.7 and after
-=============
+-------------
 
 * Add a paster template with an example child application
 * Add image an library based on PIL. Maybe as a Tween ?
