@@ -4,7 +4,7 @@ Todo
 0.1
 ---
 
-* Remove SQLAlchemy dummy database form 'pcreate sqlalchemy'
+* Remove SQLAlchemy dummy database frmm 'pcreate sqlalchemy'
 * Add a database migration tool and base migration scripts -> alembic
 * Add Users / groups / perm models : zygourat_foundation ?
 * Add user/group management in the tools
