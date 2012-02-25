@@ -49,4 +49,4 @@ def add_static_views(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
 #TODO: Auth & auth
-#TODO: decide if we use beaker for sessions
+#TODO: decide if we use beaker for sessions or not
