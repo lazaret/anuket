@@ -50,6 +50,14 @@ License
 .. literalinclude:: ..LICENSE.txt
 
 
+.. toctree::
+   :maxdepth: 2
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+
 .. _Alembic: http://pypi.python.org/pypi/alembic
 .. _Formencode: http://www.formencode.org/
 .. _Mako: http://www.makotemplates.org/
