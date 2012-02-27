@@ -8,7 +8,7 @@ from sqlalchemy import engine_from_config
 from .lib import subscribers
 from .models import DBSession
 from .security import groupfinder
-from .views import root, tools
+from .views import auth, root, tools
 
 
 def main(global_config, **settings):
@@ -35,6 +35,7 @@ def main(global_config, **settings):
     # configure static views
     config.include(add_static_views)
     # configure routes
+    config.include(auth)
     config.include(root)
     config.include(tools)
     # configure views
