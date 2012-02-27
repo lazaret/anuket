@@ -17,6 +17,7 @@ requires = [
     'waitress',
 #    'alembic',
     'Babel',
+    'cryptacular',
     'formencode',
     'pyramid_simpleform',
     'WebTest',
