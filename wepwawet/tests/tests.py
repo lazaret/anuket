@@ -12,13 +12,13 @@ class ViewTests(unittest.TestCase):
         engine = create_engine('sqlite://')
         from ..models import (
             Base,
-            MyModel,
+#            MyModel,
             )
         DBSession.configure(bind=engine)
         Base.metadata.create_all(engine)
-        with transaction.manager:
-            model = MyModel(name='one', value=55)
-            DBSession.add(model)
+#        with transaction.manager:
+#            model = MyModel(name='one', value=55)
+#            DBSession.add(model)
 
     def tearDown(self):
         DBSession.remove()
@@ -28,5 +28,5 @@ class ViewTests(unittest.TestCase):
         from ..views.root import root_view
         request = testing.DummyRequest()
         info = root_view(request)
-        self.assertEqual(info['one'].name, 'one')
+#        self.assertEqual(info['one'].name, 'one')
         self.assertEqual(info['brand_name'], 'Wepwawet')
