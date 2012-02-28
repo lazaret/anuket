@@ -3,6 +3,8 @@
 <%namespace file="top_navbar.mako" import="top_navbar"/>
 <%namespace file="flash_messages.mako" import="flash_messages"/>
 <%namespace file="breadcrumbs.mako" import="breadcrumbs"/>
+<%namespace file="aside_logo.mako" import="aside_logo"/>
+<%namespace file="aside_menu.mako" import="aside_menu"/>
 
 <!DOCTYPE html>
 <html>
@@ -38,21 +40,8 @@
         ${next.body()}
       </article>
       <aside class="span3">
-        <div class="well">
-          <h1><img src="${request.static_url('wepwawet:static/img/wepwawet.svg')}" width=60>&nbsp;${brand_name}</h1>
-        </div>
-        <div style="padding: 8px 0pt;" class="well">
-          <ul class="nav nav-list">
-            <li class="nav-header">TESTING</li>
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Test</a></li>
-            <li><a href="#">Test</a></li>
-            <li class="nav-header">Another TESTING</li>
-            <li><a href="#">Test</a></li>
-            <li><a href="#">Test</a></li>
-            <li><a href="#">Test</a></li>
-          </ul>
-        </div>
+        ${aside_logo()}
+        ${aside_menu()}
       </aside>
       </div>
     </div><!-- /container -->
