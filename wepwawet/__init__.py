@@ -8,7 +8,7 @@ from sqlalchemy import engine_from_config
 from .lib import subscribers
 from .models import DBSession
 from .security import groupfinder
-from .views import auth, root, tools
+from .views import auth, root, tools, user
 
 
 def main(global_config, **settings):
@@ -38,6 +38,7 @@ def main(global_config, **settings):
     config.include(auth)
     config.include(root)
     config.include(tools)
+    config.include(user)
     # configure views
     config.scan()
     # configure i18n

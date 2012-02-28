@@ -5,7 +5,7 @@ Todo
 ---
 
 * Add a database migration tool and base migration scripts -> alembic
-* Add Users / groups / perm models : zygourat_foundation ?
+* Add Users / groups / perm models
 * Add user/group management in the tools
 * Add ACLs in templates
 * Add form validation : formencode or colander
@@ -14,7 +14,7 @@ Todo
 0.2
 ---
 
-* Add tests
+* Add tests and doc
 
 0.3
 ---
@@ -26,7 +26,7 @@ Todo
 0.4
 ---
 
-* Add tests
+* Add tests and doc
 
 0.5
 ---
@@ -37,11 +37,13 @@ Todo
 0.6
 ---
 
-* Add tests
+* Add tests and doc
 
 0.7 and after
 -------------
 
 * Add a paster template with an example child application
-* Add image an library based on PIL. Maybe as a Tween ?
-* Add a line in docs about alembic and SQLlite
+* Add an image library based on PIL. Maybe as a Tween ?
+* Add a line in docs about alembic migration and SQLlite
+* Add security check in tools
+* Add Python3 support
