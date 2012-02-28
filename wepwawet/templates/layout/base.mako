@@ -27,21 +27,40 @@
   </head>
 
   <body>
+    ${top_navbar()}
     <header>
-      ${top_navbar()}
+      <div class="container">
+        <div class="row">
+          <div class="span9">
+            <div class ="flash-placeholder">
+              ${flash_messages()}
+            </div>
+            <div class="row">
+              <div class="span6">
+                <h1>${self.page_title()}</h1>
+              </div>
+              <div class="span3">
+                ${self.add_button()}
+              </div>
+            </div>
+          </div>
+          <div class="span3">
+            <div class="well">
+              <h1><img src="${request.static_url('wepwawet:static/img/wepwawet.svg')}" width=60>&nbsp;${brand_name}</h1>
+            <div>
+          </div>
+        </div>
+      </div>
     </header>
 
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
-        <div class ="flash-placeholder">
-          ${flash_messages()}
-        </div>
         ${next.body()}
       </article>
       <aside class="span3">
-        ${aside_logo()}
         ${aside_menu()}
+        ${self.aside_search()}
       </aside>
       </div>
     </div><!-- /container -->
@@ -59,5 +78,12 @@
 
   </body>
 </html>
-##
-<%def name="page_title()">TITLE</%def>
+
+## Page title
+<%def name="page_title()"></%def>
+
+## Add record button
+<%def name="add_button()"></%def>
+
+## Search box
+<%def name="aside_search()"></%def>

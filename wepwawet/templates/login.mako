@@ -2,10 +2,6 @@
 ##
 <%inherit file="wepwawet:templates/layout/base.mako" />
 
-<div class="page-header">
-  <h1>${_(u"Login")}</h1>
-</div>
-
 <div class="row">
   <div class="span5 offset2">
     <form action="/login" method="post" class="form-horizontal login-box">
@@ -30,3 +26,8 @@
     </form>
   </div>
 </div>
+
+## Page title
+<%def name="page_title()">
+${_(u"Login")}
+</%def>
