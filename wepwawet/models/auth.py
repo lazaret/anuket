@@ -17,8 +17,9 @@ class User(Base):
 
     user_id = Column(Integer, autoincrement=True, primary_key=True)
     username = Column(Unicode(16), unique=True, nullable=False, index=True)
+    first_name = Column(Unicode(255))
+    last_name = Column(Unicode(255))
     email = Column(Unicode(255), unique=True)
-    display_name = Column(Unicode(255))
     created = Column(DateTime, default=datetime.now)
 
     _password = Column('password', Unicode(80))
