@@ -1,24 +1,10 @@
 ## -*- coding:utf-8 -*-
 ##
 <%inherit file="wepwawet:templates/layout/base.mako" />
+<%namespace file="wepwawet:templates/layout/confirm_delete.mako" import="confirm_delete"/>
 
-##<div class="page-header">
-##  <h1>${_(u"User list")}</h1>
-##</div>
+${confirm_delete()}
 
-##<div class="page-header">
-##<div>
-##  <h1 class="pull-left">${_(u"User list")}</h1>
-##  <div class="pull-right">
-##    <a href="${request.route_path("tools.user_add")}" class="btn btn-primary">${_(u"Add new user")}</a>
-##
-
-
-##  </div>
-##</div>
-##</div>
-
-##<table class="table table-striped table-condensed">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -40,9 +26,10 @@
       <td>${user.email}</td>
       <td>
         <div class="btn-group">
-          <a href='${request.route_path("home")}' class='btn btn-mini'><span class="icon">i</span>${_(u"Show")}</a>
-          <a href='${request.route_path("tools.user_edit", user_id=user.user_id)}' class='btn btn-mini'><span class="icon">></span>${_(u"Edit")}</a>
-          <a href='${request.route_path("tools.user_delete", user_id=user.user_id)}' class='btn btn-mini'><span class="icon">Â</span>${_(u"Delete")}</a>
+          <a href="${request.route_path("home")}" class="btn btn-mini"><span class="icon">i</span>${_(u"Show")}</a>
+          <a href="${request.route_path("tools.user_edit", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">></span>${_(u"Edit")}</a>
+##          <a href="${request.route_path("tools.user_delete", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">Â</span>${_(u"Delete")}</a>
+          <a href="#confirm_delete" class="btn btn-mini" data-toggle="modal"><span class="icon">Â</span>${_(u"Delete")}</a>
         </div>
       </td>
     </tr>

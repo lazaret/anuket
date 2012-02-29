@@ -23,10 +23,12 @@ def includeme(config):
 @view_config(route_name='tools.user_list', renderer='wepwawet:templates/tools/user/user_list.mako')
 def list(request):
     """Render the user list page."""
-    users = DBSession.query(User).all()
+    search = request.params.get('search')
+    if search:
+        users = DBSession.query(User).filter(User.username.like('%'+search+'%'))
+    else:
+        users = DBSession.query(User).all()
     return {'users':users, 'brand_name':'Wepwawet'}
-
-#    return {'brand_name':'Wepwawet'}
 
 
 @view_config(route_name='tools.user_add', renderer='wepwawet:templates/tools/user/user_add.mako')
@@ -61,9 +63,24 @@ def edit(request):
 
 @view_config(route_name='tools.user_delete')
 def delete(request):
-    pass
+    user_id = request.matchdict['user_id']
+    user = DBSession.query(User).filter_by(user_id=user_id).first()
+    if not user:
+        request.session.flash(u"This user did not exist!", 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
+    DBSession.delete(user)
+    request.session.flash(u"User deleted", 'success')
+    return HTTPFound(location=request.route_path('tools.user_list'))
 
 
 @view_config(route_name='tools.user_search')
 def search(request):
     pass
+
+
+#TODO: list pagination
+#TODO: uber search ?
+#TODO: stats
+#TODO: real validation (capitalise first letters of firs and last name)
+#TODO: passwords
+#TODO: ACLs for admin and each users (edit his infos)
