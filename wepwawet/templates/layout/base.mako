@@ -2,8 +2,6 @@
 ##
 <%namespace file="top_navbar.mako" import="top_navbar"/>
 <%namespace file="flash_messages.mako" import="flash_messages"/>
-<%namespace file="breadcrumbs.mako" import="breadcrumbs"/>
-<%namespace file="aside_logo.mako" import="aside_logo"/>
 <%namespace file="aside_menu.mako" import="aside_menu"/>
 
 <!DOCTYPE html>
