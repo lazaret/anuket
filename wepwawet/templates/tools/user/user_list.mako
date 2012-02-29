@@ -29,20 +29,24 @@
       <th style="width: 175px;"></th>
     </tr>
   </thead>
+  <tfoot>
+  </tfoot>
   <tbody>
+    % for user in users:
     <tr>
-      <td>Test1</td>
-      <td>Test2</td>
-      <td>Test3</td>
-      <td>Test4</td>
+      <td>${user.username}</td>
+      <td>${user.first_name}</td>
+      <td>${user.last_name}</td>
+      <td>${user.email}</td>
       <td>
         <div class="btn-group">
           <a href='${request.route_path("home")}' class='btn btn-mini'><span class="icon">i</span>${_(u"Show")}</a>
-          <a href='${request.route_path("home")}' class='btn btn-mini'><span class="icon">></span>${_(u"Edit")}</a>
-          <a href='${request.route_path("home")}' class='btn btn-mini'><span class="icon">Â</span>${_(u"Delete")}</a>
+          <a href='${request.route_path("tools.user_edit", user_id=user.user_id)}' class='btn btn-mini'><span class="icon">></span>${_(u"Edit")}</a>
+          <a href='${request.route_path("tools.user_delete", user_id=user.user_id)}' class='btn btn-mini'><span class="icon">Â</span>${_(u"Delete")}</a>
         </div>
       </td>
     </tr>
+    % endfor
   </tbody>
 </table>
 
