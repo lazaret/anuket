@@ -5,18 +5,18 @@
 <div class="row">
   <div class="span5 offset2">
     <form action="/login" method="post" class="form-horizontal login-box">
+      ${renderer.csrf_token()}
       <fieldset>
-        ${renderer.csrf_token()}
         <div class="control-group">
           <label for="username" class="control-label">${_(u"Username")}</label>
           <div class="controls">
-            <input type="text" name="username" autofocus="autofocus" />
+            ${renderer.text("username", autofocus="autofocus")}
           </div>
         </div>
         <div class="control-group">
           <label for="password" class="control-label">${_(u"Password")}</label>
             <div class="controls">
-              <input type="password" name="password" />
+            ${renderer.password("password")}
             </div>
         </div>
         <div class="form-actions">

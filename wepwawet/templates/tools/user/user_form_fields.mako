@@ -1,30 +1,31 @@
 ## -*- coding:utf-8 -*-
 ##
 <%def name="user_form_fields()">
+${renderer.csrf_token()}
 <fieldset>
   <legend>${_(u"User informations")}</legend>
   <div class="control-group">
     <label for="username" class="control-label">${_(u"Username")}</label>
     <div class="controls">
-      <input type="text" name="username" autofocus="autofocus" />
+      ${renderer.text("username", autofocus="autofocus")}
     </div>
   </div>
   <div class="control-group">
     <label for="first_name" class="control-label">${_(u"First name")}</label>
     <div class="controls">
-      <input type="text" name="first_name" />
+      ${renderer.text("first_name")}
     </div>
   </div>
   <div class="control-group">
     <label for="last_name" class="control-label">${_(u"Last name")}</label>
     <div class="controls">
-      <input type="text" name="last_name" />
+      ${renderer.text("last_name")}
     </div>
   </div>
   <div class="control-group">
     <label for="email" class="control-label">${_(u"Email")}</label>
     <div class="controls">
-      <input type="text" name="email" />
+      ${renderer.text("email")}
     </div>
   </div>
 </fieldset>

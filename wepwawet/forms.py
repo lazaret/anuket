@@ -8,5 +8,15 @@ from formencode.schema import Schema
 class LoginForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
-    usename = validators.String(not_empty=True)
+    username = validators.String(not_empty=True)
     password = validators.String(not_empty=True)
+
+
+class UserForm(Schema):
+    filter_extra_fields = True
+    allow_extra_fields = True
+    username = validators.String(not_empty=True)
+    first_name = validators.String()
+    last_name = validators.String()
+    email = validators.String()
+#    password = validators.String(not_empty=True)
