@@ -28,7 +28,8 @@ def list(request):
         users = DBSession.query(User).filter(User.username.like('%'+search+'%'))
     else:
         users = DBSession.query(User).all()
-    return {'users':users, 'brand_name':'Wepwawet'}
+    return dict(brand_name='Wepwawet',
+                users=users)
 
 
 @view_config(route_name='tools.user_add', renderer='wepwawet:templates/tools/user/user_add.mako')
@@ -69,7 +70,7 @@ def delete(request):
         request.session.flash(u"This user did not exist!", 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
     DBSession.delete(user)
-    request.session.flash(u"User deleted", 'success')
+    request.session.flash(u"User deleted", 'warning')
     return HTTPFound(location=request.route_path('tools.user_list'))
 
 
