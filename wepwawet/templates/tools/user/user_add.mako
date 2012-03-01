@@ -5,7 +5,7 @@
 
 
 <div class="row">
-  <div class="span5 offset2">
+  <div class="span7  offset1">
     <form action="" method="post" class="form-horizontal">
       ${user_form_fields()}
       <div class="form-actions">
