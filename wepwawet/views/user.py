@@ -14,10 +14,9 @@ def includeme(config):
     config.add_route('tools.user_add', '/tools/user/add')
     config.add_route('tools.user_edit', '/tools/user/{user_id}/edit')
     config.add_route('tools.user_delete', '/tools/user/{user_id}/delete')
-    config.add_route('tools.user_search', '/tools/user/search')
+#    config.add_route('tools.user_search', '/tools/user/search')
+#    config.add_route('tools.user_view', '/tools/user/{user_id}/view')
 
-#TODO: add request_method ? (DELETE, POST, GET)
-#TODO: put in a common class ? see http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/viewconfig.html#view-defaults-class-decorator
 
 #@view_config(route_name='tools.user_list', renderer='wepwawet:templates/tools/user_list.mako', permission='admin')
 @view_config(route_name='tools.user_list', renderer='wepwawet:templates/tools/user/user_list.mako')
@@ -74,9 +73,9 @@ def delete(request):
     return HTTPFound(location=request.route_path('tools.user_list'))
 
 
-@view_config(route_name='tools.user_search')
-def search(request):
-    pass
+#@view_config(route_name='tools.user_search')
+#def search(request):
+#    pass
 
 
 #TODO: list pagination
