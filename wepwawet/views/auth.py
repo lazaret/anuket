@@ -22,15 +22,15 @@ def login_view(request):
         password = request.params['password']
         if USERS.get(username) == password:
             headers = remember(request, username)
-            request.session.flash(u"login ok", 'info') #TODO flash message
+            request.session.flash(u"login ok", 'info') #TODO beter flash message
             return HTTPFound(location=request.route_path('home'), headers=headers)
         else:
-            request.session.flash(u"login niet", 'error') #TODO flash message
+            request.session.flash(u"login niet", 'error') #TODO beter flash message
     return dict(brand_name='Wepwawet',
                 renderer=FormRenderer(form))
 
 @view_config(route_name='logout')
 def logout_view(request):
-    """Clear credentials and retirect to the login page."""
+    """Clear credentials and redirect to the login page."""
     headers = forget(request)
     return HTTPFound(location=request.route_path('login'), headers=headers)
