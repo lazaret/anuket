@@ -12,6 +12,5 @@ def includeme(config):
 @view_config(route_name='tools.index', permission='admin', renderer='wepwawet:templates/tools/tools_index.mako')
 def tools_index_view(request):
     """Render the tools main page."""
-    username = authenticated_userid(request)
     return dict(brand_name='Wepwawet',
-        username=username)
+                username=authenticated_userid(request))

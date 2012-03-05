@@ -2,6 +2,7 @@
 """ Admin tools for user management."""
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
+from pyramid.security import authenticated_userid
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 from wepwawet.forms import UserForm
@@ -27,6 +28,7 @@ def list(request):
     else:
         users = DBSession.query(User).all()
     return dict(brand_name='Wepwawet',
+                username=authenticated_userid(request),
                 users=users)
 
 
@@ -39,6 +41,7 @@ def add(request):
         request.session.flash(u"User added", 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(brand_name='Wepwawet',
+                username=authenticated_userid(request),
                 renderer=FormRenderer(form))
 
 
@@ -57,6 +60,7 @@ def edit(request):
         request.session.flash(u"User updated", 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(brand_name='Wepwawet',
+                username=authenticated_userid(request),
                 renderer=FormRenderer(form))
 
 
