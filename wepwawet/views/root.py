@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
+from pyramid.security import authenticated_userid
+from pyramid.view import view_config, forbidden_view_config, notfound_view_config
 
-from ..models import (
-    DBSession,
+#from ..models import (
+#    DBSession,
 #    MyModel,
-    )
+#    )
 
 
 def includeme(config):
@@ -12,7 +14,7 @@ def includeme(config):
     config.add_route('home', '/')
 
 
-@view_config(context='pyramid.exceptions.NotFound', renderer='wepwawet:templates/404.mako')
+@notfound_view_config(renderer='wepwawet:templates/404.mako')
 @view_config(route_name='home', renderer='wepwawet:templates/index.mako')
 def root_view(request):
     """Render the root pages."""
@@ -21,10 +23,16 @@ def root_view(request):
 #    request.session.flash(u"error message", 'error')
 #    request.session.flash(u"success message", 'success')
 
-#    one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
-#    return {'one':one, 'brand_name':'Wepwawet'}
-    return {'brand_name':'Wepwawet'}
+    return dict(brand_name='Wepwawet')
 
 
+@forbidden_view_config()
+def forbiden_view(request):
 
-#@view_config(context='pyramid.exceptions.HTTPForbidden', renderer='wepwawet:templates/403.mako')
+    username = authenticated_userid(request)
+    if username:
+        request.session.flash(u"You do not have the permission to do this!", 'error')
+        return HTTPFound(location=request.route_path('home'))
+    else:
+        request.session.flash(u"You are not connected, please log in.", 'error')
+        return HTTPFound(location=request.route_path('login'))
