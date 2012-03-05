@@ -6,7 +6,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from sqlalchemy import engine_from_config
 
 from .lib import subscribers
-from .models import DBSession
+from .models import DBSession, RootFactory
 from .security import groupfinder
 from .views import auth, root, tools, user
 
@@ -19,6 +19,9 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
 
     config = Configurator(settings=settings)
+    # configure the root factory (used for Auth & Auth)
+    root_factory = RootFactory
+    config.set_root_factory(root_factory)
     # configure session
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     config.set_session_factory(session_factory)
@@ -48,5 +51,6 @@ def main(global_config, **settings):
 
 
 def add_static_views(config):
+    """ Congigure the static view."""
     config.add_static_view('static', 'static', cache_max_age=3600)
 
