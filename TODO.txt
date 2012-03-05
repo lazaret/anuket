@@ -4,12 +4,9 @@ Todo
 0.1
 ---
 
-* Add a database migration tool and base migration scripts -> alembic
 * Add Users / groups / perm models
 * Add user/group management in the tools
 * Add ACLs in templates
-* Add form validation : formencode or colander
-* Decide to use or not a form generation toolkit : pyramid_simpleforms / WTforms / deform ?
 
 0.2
 ---
@@ -20,7 +17,7 @@ Todo
 ---
 
 * Add logging and log display tool
-* Add security checks tool (default paswords alerts)
+* Add security checks in tool (like default paswords alerts)
 * Add database export tool
 
 0.4
@@ -32,18 +29,18 @@ Todo
 ---
 
 * Add database import / migration check
+* Add a database migration tool and base migration scripts -> alembic
 * Add data versioning in the database
 
 0.6
 ---
 
 * Add tests and doc
+* Add a line in docs about alembic migration and SQLlite
 
 0.7 and after
 -------------
 
 * Add a paster template with an example child application
 * Add an image library based on PIL. Maybe as a Tween ?
-* Add a line in docs about alembic migration and SQLlite
-* Add security check in tools
 * Add Python3 support

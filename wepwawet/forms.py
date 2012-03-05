@@ -5,7 +5,6 @@ from formencode.schema import Schema
 
 
 ## helpers
-## TODO: move in libs ?
 def capitalize_string(value):
     """ Capitalize the first letter of the `value` string
     (and strip spaces).
@@ -20,17 +19,12 @@ def strip_string(value):
     """ Revove leading and trailling spaces."""
     return value.strip()
 
-# TODO add fancies for uniqueness
 
-
-# TODO replace by a more complete user shema
-# TODO move schemas in view files or models ?
 class LoginForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
     username = validators.String(not_empty=True)
     password = validators.String(not_empty=True)
-
 
 
 class UserForm(Schema):
@@ -52,7 +46,6 @@ class UserForm(Schema):
         validators.String(min=6, max=80),
         validators.Wrapper(to_python=strip_string))
     password_confirm = validators.String()
-
 
     chained_validators = [
         validators.FieldsMatch('password', 'password_confirm'),

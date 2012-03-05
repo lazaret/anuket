@@ -77,10 +77,3 @@ def delete(request):
 #def search(request):
 #    pass
 
-
-#TODO: list pagination
-#TODO: uber search ?
-#TODO: stats
-#TODO: real validation (capitalise first letters of firs and last name)
-#TODO: passwords
-#TODO: ACLs for admin and each users (edit his infos)

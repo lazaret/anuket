@@ -26,6 +26,5 @@ def root_view(request):
     return {'brand_name':'Wepwawet'}
 
 
-#TODO redirect forbiden views + flash error
-#@view_config(context='pyramid.exceptions.HTTPForbidden', renderer='wepwawet:templates/403.mako')
 
+#@view_config(context='pyramid.exceptions.HTTPForbidden', renderer='wepwawet:templates/403.mako')
