@@ -21,7 +21,7 @@ def includeme(config):
 #    config.add_route('tools.user_view', '/tools/user/{user_id}/view')
 
 
-@view_config(route_name='tools.user_list', permission='admin', renderer='wepwawet:templates/tools/user/user_list.mako')
+@view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
 def list(request):
     """Render the user list page."""
     search = request.params.get('search')
@@ -33,7 +33,7 @@ def list(request):
                 users=users)
 
 
-@view_config(route_name='tools.user_add', permission='admin', renderer='wepwawet:templates/tools/user/user_add.mako')
+@view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
 def add(request):
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
@@ -45,7 +45,7 @@ def add(request):
                 renderer=FormRenderer(form))
 
 
-@view_config(route_name='tools.user_edit', permission='admin', renderer='wepwawet:templates/tools/user/user_edit.mako')
+@view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
 def edit(request):
     user_id = request.matchdict['user_id']
     user = DBSession.query(User).filter_by(user_id=user_id).first()
