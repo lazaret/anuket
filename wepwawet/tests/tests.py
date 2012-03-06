@@ -2,7 +2,8 @@
 import unittest
 import transaction
 from pyramid import testing
-from ..models import DBSession
+
+from wepwawet.models import DBSession
 
 
 class ViewTests(unittest.TestCase):
@@ -29,4 +30,5 @@ class ViewTests(unittest.TestCase):
         request = testing.DummyRequest()
         info = root_view(request)
 #        self.assertEqual(info['one'].name, 'one')
+        #TODO change this beacause brand_name can be modified
         self.assertEqual(info['brand_name'], 'Wepwawet')

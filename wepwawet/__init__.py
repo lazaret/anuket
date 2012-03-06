@@ -6,10 +6,10 @@ from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from sqlalchemy import engine_from_config
 
-from .lib import subscribers
-from .models import DBSession, RootFactory
-from .security import groupfinder
-from .views import auth, root, tools, user
+from wepwawet.lib import subscribers
+from wepwawet.models import DBSession, RootFactory
+from wepwawet.security import groupfinder
+from wepwawet.views import auth, root, tools, user
 
 
 def main(global_config, **settings):

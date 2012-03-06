@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Define our own locale negotiator that looks at the browser preferences.
+"""Define a Messagefactory and a locale negotiator.
 """
+from pyramid.i18n import TranslationStringFactory
+
+
+MessageFactory = TranslationStringFactory('wepwawet')
 
 
 def locale_negotiator(request):

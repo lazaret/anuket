@@ -4,6 +4,8 @@ from pyramid.security import forget, remember
 from pyramid.view import view_config
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
+
+from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import LoginForm
 from wepwawet.security import USERS
 
@@ -22,10 +24,10 @@ def login_view(request):
         password = request.params['password']
         if USERS.get(username) == password:
             headers = remember(request, username)
-            request.session.flash(u"login ok", 'info') #TODO beter flash message
+            request.session.flash(_(u"You have successfuly connected."), 'info')
             return HTTPFound(location=request.route_path('home'), headers=headers)
         else:
-            request.session.flash(u"login niet", 'error') #TODO beter flash message
+            request.session.flash(_(u"Please check your login credentials!"), 'error')
     return dict(renderer=FormRenderer(form))
 
 @view_config(route_name='logout')

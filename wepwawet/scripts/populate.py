@@ -15,6 +15,7 @@ from ..models import (
     Base,
     )
 
+
 def usage(argv):
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri>\n'

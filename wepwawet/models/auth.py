@@ -3,9 +3,9 @@ from datetime import datetime
 from cryptacular.bcrypt import BCRYPTPasswordManager
 from sqlalchemy import Column, DateTime, Integer, Unicode
 from sqlalchemy.ext.hybrid import hybrid_property
-from . import Base
 
-#__all__ = ['User']
+from wepwawet.models import Base
+
 
 bcrypt = BCRYPTPasswordManager()
 

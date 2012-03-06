@@ -3,6 +3,8 @@ from pyramid.events import BeforeRender, NewRequest
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid.i18n import get_localizer, TranslationStringFactory
 
+from wepwawet.lib.i18n import MessageFactory
+
 
 def includeme(config):
     """Configure subscribers."""
@@ -21,11 +23,10 @@ def add_renderer_globals(event):
     event['brand_name'] = settings['wepwawet.brand_name']
 
 def add_localizer(event):
-    tsf = TranslationStringFactory('wepwawet')
     request = event.request
     localizer = get_localizer(request)
     def auto_translate(string):
-        return localizer.translate(tsf(string))
+        return localizer.translate(MessageFactory(string))
     request.localizer = localizer
     request.translate = auto_translate
 
