@@ -27,8 +27,7 @@ def list(request):
         users = DBSession.query(User).filter(User.username.like('%'+search+'%'))
     else:
         users = DBSession.query(User).all()
-    return dict(brand_name='Wepwawet',
-                username=authenticated_userid(request),
+    return dict(username=authenticated_userid(request),
                 users=users)
 
 
@@ -40,8 +39,7 @@ def add(request):
         DBSession.add(user)
         request.session.flash(u"User added", 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(brand_name='Wepwawet',
-                username=authenticated_userid(request),
+    return dict(username=authenticated_userid(request),
                 renderer=FormRenderer(form))
 
 
@@ -59,8 +57,7 @@ def edit(request):
         DBSession.add(user)
         request.session.flash(u"User updated", 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(brand_name='Wepwawet',
-                username=authenticated_userid(request),
+    return dict(username=authenticated_userid(request),
                 renderer=FormRenderer(form))
 
 

@@ -23,8 +23,7 @@ def root_view(request):
 #    request.session.flash(u"error message", 'error')
 #    request.session.flash(u"success message", 'success')
 
-    return dict(brand_name='Wepwawet',
-                username=authenticated_userid(request))
+    return dict(username=authenticated_userid(request))
 
 
 @forbidden_view_config()

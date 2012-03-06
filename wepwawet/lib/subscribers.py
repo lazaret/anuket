@@ -10,21 +10,24 @@ def includeme(config):
     config.add_subscriber(add_localizer, NewRequest)
     config.add_subscriber(csrf_validation, NewRequest)
 
+
 def add_renderer_globals(event):
     request = event.get('request')
+    # add globals for i18n
     event['_'] = request.translate
     event['localizer'] = request.localizer
-
-tsf = TranslationStringFactory('wepwawet')
+    # add application globals from the config file
+    settings = request.registry.settings
+    event['brand_name'] = settings['wepwawet.brand_name']
 
 def add_localizer(event):
+    tsf = TranslationStringFactory('wepwawet')
     request = event.request
     localizer = get_localizer(request)
     def auto_translate(string):
         return localizer.translate(tsf(string))
     request.localizer = localizer
     request.translate = auto_translate
-
 
 def csrf_validation(event):
     if event.request.method == 'POST':

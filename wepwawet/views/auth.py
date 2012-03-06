@@ -26,8 +26,7 @@ def login_view(request):
             return HTTPFound(location=request.route_path('home'), headers=headers)
         else:
             request.session.flash(u"login niet", 'error') #TODO beter flash message
-    return dict(brand_name='Wepwawet',
-                renderer=FormRenderer(form))
+    return dict(renderer=FormRenderer(form))
 
 @view_config(route_name='logout')
 def logout_view(request):
