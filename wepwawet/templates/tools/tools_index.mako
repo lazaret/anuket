@@ -2,10 +2,6 @@
 ##
 <%inherit file="wepwawet:templates/layout/base.mako" />
 
-%if username:
-    ${username}
-%endif
-
 
 ## Page title
 <%def name="page_title()">

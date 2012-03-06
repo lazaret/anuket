@@ -62,6 +62,6 @@ def login_view(request):
 
 @view_config(route_name='logout')
 def logout_view(request):
-    """Clear credentials and redirect to the login page."""
+    """Clear credentials and redirect to the home page."""
     headers = forget(request)
-    return HTTPFound(location=request.route_path('login'), headers=headers)
+    return HTTPFound(location=request.route_path('home'), headers=headers)
