@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from pyramid.config import Configurator
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
-from pyramid.authentication import AuthTktAuthenticationPolicy
+##from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from sqlalchemy import engine_from_config
 
@@ -28,8 +29,8 @@ def main(global_config, **settings):
 
     # configure auth & auth
     authorization_policy = ACLAuthorizationPolicy()
-    #TODO use SessionAuthenticationPolicy ?
-    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
+##    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
+    authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
     config.set_authentication_policy(authentication_policy)
     config.set_authorization_policy(authorization_policy)
 
