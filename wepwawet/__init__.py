@@ -9,7 +9,7 @@ from sqlalchemy import engine_from_config
 from wepwawet.lib import subscribers
 from wepwawet.models import DBSession, RootFactory
 from wepwawet.security import groupfinder
-from wepwawet.views import auth, root, tools, user
+from wepwawet.views import root, tools, user
 
 
 def main(global_config, **settings):
@@ -39,7 +39,6 @@ def main(global_config, **settings):
     # configure static views
     config.include(add_static_views)
     # configure routes
-    config.include(auth)
     config.include(root)
     config.include(tools)
     config.include(user)
