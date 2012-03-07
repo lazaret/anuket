@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ Admin tools for user management."""
+import logging
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.security import authenticated_userid
@@ -9,6 +10,9 @@ from pyramid_simpleform.renderers import FormRenderer
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import UserForm
 from wepwawet.models import DBSession, User
+
+
+log = logging.getLogger(__name__)
 
 
 def includeme(config):

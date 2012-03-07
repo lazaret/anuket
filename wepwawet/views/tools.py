@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """ Admin tools for the application."""
+import logging
 from pyramid.security import authenticated_userid
 from pyramid.view import view_config
+
+
+log = logging.getLogger(__name__)
 
 
 def includeme(config):

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import authenticated_userid, forget, remember
 from pyramid.view import view_config, forbidden_view_config, notfound_view_config
@@ -8,6 +9,9 @@ from pyramid_simpleform.renderers import FormRenderer
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import LoginForm
 from wepwawet.security import USERS
+
+
+log = logging.getLogger(__name__)
 
 
 def includeme(config):
