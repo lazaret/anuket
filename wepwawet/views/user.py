@@ -6,6 +6,7 @@ from pyramid.view import view_config
 from pyramid.security import authenticated_userid
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
+from webhelpers import paginate
 
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import UserForm
@@ -33,6 +34,11 @@ def list(request):
         users = DBSession.query(User).filter(User.username.like('%'+search+'%'))
     else:
         users = DBSession.query(User).all()
+    page_url = paginate.PageURL_WebOb(request)
+    users = paginate.Page(users,
+                          page=int(request.params.get("page", 1)),
+                          items_per_page=20,
+                          url=page_url)
     return dict(username=authenticated_userid(request),
                 users=users)
 

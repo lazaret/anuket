@@ -2,9 +2,10 @@
 ##
 <%inherit file="wepwawet:templates/layout/base.mako" />
 <%namespace file="wepwawet:templates/layout/confirm_delete.mako" import="confirm_delete"/>
+<%namespace file="wepwawet:templates/layout/pager.mako" import="pager"/>
 
 
-<table class="table table-striped">
+<table class="table table-striped table-condensed">
   <thead>
     <tr>
       <th>${_(u"Username")}</th>
@@ -14,8 +15,8 @@
       <th style="width: 175px;"></th>
     </tr>
   </thead>
-  <tfoot>
-  </tfoot>
+##  <tfoot>
+##  </tfoot>
   <tbody>
     % for user in users:
     <tr>
@@ -35,6 +36,8 @@
   </tbody>
 </table>
 
+## Pager
+${pager(users)}
 
 ## Confirm delete modal
 ${confirm_delete()}
