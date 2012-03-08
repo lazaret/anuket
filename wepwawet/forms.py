@@ -1,30 +1,17 @@
 # -*- coding: utf-8 -*-
-from formencode import compound
-from formencode import validators
 from formencode.schema import Schema
+from formencode.validators import String, Email, FieldsMatch
 
+from wepwawet.lib.validators import UsernameString, CapitalString
 
-## helpers
-def capitalize_string(value):
-    """ Capitalize the first letter of the `value` string
-    (and strip spaces).
-    """
-    return value.capitalize().strip()
-
-def lower_string(value):
-    """ Return the lowercase of `value` (and strip spaces)."""
-    return value.lower().strip()
-
-def strip_string(value):
-    """ Revove leading and trailling spaces."""
-    return value.strip()
 
 
 class LoginForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
-    username = validators.String(not_empty=True)
-    password = validators.String(not_empty=True)
+
+    username = String(not_empty=True, strip=True)
+    password = String(not_empty=True, strip=True)
 
 
 class UserForm(Schema):
@@ -32,23 +19,15 @@ class UserForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
 
-    username = compound.All(
-        validators.String(min=5, max=16),
-        validators.Wrapper(to_python=lower_string))
-    first_name = compound.All(
-        validators.String(not_empty=True),
-        validators.Wrapper(to_python=capitalize_string))
-    last_name = compound.All(
-        validators.String(not_empty=True),
-        validators.Wrapper(to_python=capitalize_string))
-    email = validators.Email()
-    password = compound.All(
-        validators.String(min=6, max=80),
-        validators.Wrapper(to_python=strip_string))
-    password_confirm = validators.String()
+    username = UsernameString(min=5, max=16, strip=True)
+    first_name = CapitalString(not_empty=True, strip=True)
+    last_name = CapitalString(not_empty=True, strip=True)
+    email = Email()
+    password = String(min=6, max=80, strip=True)
+    password_confirm = String(strip=True)
 
     chained_validators = [
-        validators.FieldsMatch('password', 'password_confirm'),
+        FieldsMatch('password', 'password_confirm'),
     ]
 
 
