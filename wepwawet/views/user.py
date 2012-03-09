@@ -55,14 +55,14 @@ def add(request):
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
 def edit(request):
     user_id = request.matchdict['user_id']
-    user = DBSession.query(User).filter_by(user_id=user_id).first()
+    user = DBSession.query(User).get(user_id)
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
     form = Form(request, schema=UserForm, obj=user)
     if 'form_submitted' in request.params and form.validate():
-        #user = form.bind(User())
-        user.username = request.params['username']
+        form.bind(user)
+        #user.username = request.params['username']
         DBSession.add(user)
         request.session.flash(_(u"User updated"), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
@@ -72,7 +72,7 @@ def edit(request):
 @view_config(route_name='tools.user_delete', permission='admin')
 def delete(request):
     user_id = request.matchdict['user_id']
-    user = DBSession.query(User).filter_by(user_id=user_id).first()
+    user = DBSession.query(User).get(user_id)
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
