@@ -1,6 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
-<%inherit file="wepwawet:templates/layout/base.mako" />
+<%inherit file="wepwawet:templates/base.mako" />
 
 ##TODO add Home infos
 <p></p>

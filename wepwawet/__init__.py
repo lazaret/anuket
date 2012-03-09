@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pyramid.config import Configurator
+from pyramid.security import unauthenticated_userid
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 ##from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authentication import SessionAuthenticationPolicy
@@ -12,10 +13,13 @@ from wepwawet.security import groupfinder
 from wepwawet.views import root, tools, user
 
 
+
 def get_auth_user(request):
-    from pyramid.security import authenticated_userid
-    auth_user = authenticated_userid(request)
+
+    #TODO: bind to user model
+    auth_user = unauthenticated_userid(request)
     return auth_user
+
 
 def add_static_views(config):
     """ Congigure the static view."""

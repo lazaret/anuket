@@ -1,5 +1,7 @@
 ## -*- coding:utf-8 -*-
 ##
+<%! from pyramid.security import has_permission %>
+
 <%def name="top_navbar()">
 <nav role="navigation" class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -9,8 +11,11 @@
           <li class="active"><a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a></li>
         </ul>
         <ul class="nav pull-right">
-          <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
         %if request.auth_user:
+          ## Tools ara available only for admins
+          % if has_permission('admin', request.context, request):
+            <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
+          %endif
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user}</b><b class="caret"/></b></a>
             <ul class="dropdown-menu">

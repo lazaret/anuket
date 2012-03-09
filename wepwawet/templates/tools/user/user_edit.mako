@@ -1,6 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
-<%inherit file="wepwawet:templates/layout/base.mako" />
+<%inherit file="wepwawet:templates/tools/base.mako" />
 <%namespace file="user_form_fields.mako" import="user_form_fields"/>
 
 

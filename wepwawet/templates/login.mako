@@ -1,6 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
-<%inherit file="wepwawet:templates/layout/base.mako" />
+<%inherit file="wepwawet:templates/base.mako" />
 
 <div class="row">
   <div class="span5 offset2">

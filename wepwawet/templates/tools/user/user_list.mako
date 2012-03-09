@@ -1,8 +1,8 @@
 ## -*- coding:utf-8 -*-
 ##
-<%inherit file="wepwawet:templates/layout/base.mako" />
-<%namespace file="wepwawet:templates/layout/confirm_delete.mako" import="confirm_delete"/>
-<%namespace file="wepwawet:templates/layout/pager.mako" import="pager"/>
+<%inherit file="wepwawet:templates/tools/base.mako" />
+<%namespace file="wepwawet:templates/widgets/confirm_delete.mako" import="confirm_delete"/>
+<%namespace file="wepwawet:templates/widgets/pager.mako" import="pager"/>
 
 
 <table class="table table-striped table-condensed">

@@ -1,8 +1,7 @@
 ## -*- coding:utf-8 -*-
 ##
-<%namespace file="top_navbar.mako" import="top_navbar"/>
-<%namespace file="flash_messages.mako" import="flash_messages"/>
-<%namespace file="aside_menu.mako" import="aside_menu"/>
+<%namespace file="wepwawet:templates/widgets/top_navbar.mako" import="top_navbar"/>
+<%namespace file="wepwawet:templates/widgets/flash_messages.mako" import="flash_messages"/>
 
 <!DOCTYPE html>
 <html>
@@ -57,7 +56,7 @@
         ${next.body()}
       </article>
       <aside class="span3">
-        ${aside_menu()}
+        ${self.aside_menu()}
         ${self.aside_search()}
       </aside>
       </div>
@@ -83,5 +82,8 @@
 ## Add record button
 <%def name="add_button()"></%def>
 
-## Search box
+## Aside menu
+<%def name="aside_menu()"></%def>
+
+## Aside search box
 <%def name="aside_search()"></%def>
