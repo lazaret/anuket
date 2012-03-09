@@ -62,7 +62,6 @@ def edit(request):
     form = Form(request, schema=UserForm, obj=user)
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
-        #user.username = request.params['username']
         DBSession.add(user)
         request.session.flash(_(u"User updated"), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
