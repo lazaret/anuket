@@ -12,6 +12,16 @@ from wepwawet.security import groupfinder
 from wepwawet.views import root, tools, user
 
 
+def get_auth_user(request):
+    from pyramid.security import authenticated_userid
+    auth_user = authenticated_userid(request)
+    return auth_user
+
+def add_static_views(config):
+    """ Congigure the static view."""
+    config.add_static_view('static', 'static', cache_max_age=3600)
+
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
@@ -33,6 +43,8 @@ def main(global_config, **settings):
     authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
     config.set_authentication_policy(authentication_policy)
     config.set_authorization_policy(authorization_policy)
+    # set an auth_user object
+    config.set_request_property(get_auth_user, 'auth_user', reify=True)
 
     # configure subscribers
     config.include(subscribers)
@@ -48,9 +60,3 @@ def main(global_config, **settings):
     config.add_translation_dirs('wepwawet:locale')
     config.set_locale_negotiator('wepwawet.lib.i18n.locale_negotiator')
     return config.make_wsgi_app()
-
-
-def add_static_views(config):
-    """ Congigure the static view."""
-    config.add_static_view('static', 'static', cache_max_age=3600)
-

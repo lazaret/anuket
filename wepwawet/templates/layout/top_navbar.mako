@@ -10,9 +10,9 @@
         </ul>
         <ul class="nav pull-right">
           <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
-        %if username:
+        %if request.auth_user:
           <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${username}</b><b class="caret"/></b></a>
+            <a data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user}</b><b class="caret"/></b></a>
             <ul class="dropdown-menu">
               <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
               <li><a href="#">Test</a></li>

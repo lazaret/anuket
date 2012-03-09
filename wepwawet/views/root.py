@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from pyramid.httpexceptions import HTTPFound
-from pyramid.security import authenticated_userid, forget, remember
+from pyramid.security import forget, remember
 from pyramid.view import view_config, forbidden_view_config, notfound_view_config
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
@@ -31,17 +31,15 @@ def root_view(request):
 #    request.session.flash(u"info message", 'info')
 #    request.session.flash(u"error message", 'error')
 #    request.session.flash(u"success message", 'success')
-    return dict(username=authenticated_userid(request))
-
+    return dict()
 
 @forbidden_view_config()
 def forbiden_view(request):
     """Redirect the 403 forbiden view to login or home page and add a
     flash message to display the relevant error.
     """
-    username = authenticated_userid(request)
     #TODO: take care of csrf error
-    if username:
+    if request.auth_user:
         request.session.flash(_(u"You do not have the permission to do this!"), 'error')
         return HTTPFound(location=request.route_path('home'))
     else:

@@ -3,7 +3,6 @@
 import logging
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
-from pyramid.security import authenticated_userid
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 from webhelpers import paginate
@@ -39,8 +38,7 @@ def list(request):
                           page=int(request.params.get("page", 1)),
                           items_per_page=20,
                           url=page_url)
-    return dict(username=authenticated_userid(request),
-                users=users)
+    return dict(users=users)
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
@@ -51,8 +49,7 @@ def add(request):
         DBSession.add(user)
         request.session.flash(_(u"User added"), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(username=authenticated_userid(request),
-                renderer=FormRenderer(form))
+    return dict(renderer=FormRenderer(form))
 
 
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
@@ -69,8 +66,7 @@ def edit(request):
         DBSession.add(user)
         request.session.flash(_(u"User updated"), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(username=authenticated_userid(request),
-                renderer=FormRenderer(form))
+    return dict(renderer=FormRenderer(form))
 
 
 @view_config(route_name='tools.user_delete', permission='admin')
