@@ -5,8 +5,6 @@ Todo
 ---
 
 * Add Users / groups / perm models
-* Add user/group management in the tools
-* Add ACLs in templates
 
 0.2
 ---
