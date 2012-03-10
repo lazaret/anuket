@@ -9,7 +9,7 @@ from webhelpers import paginate
 
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import UserForm
-from wepwawet.models import DBSession, User
+from wepwawet.models import DBSession, AuthUser
 
 
 log = logging.getLogger(__name__)
@@ -30,9 +30,9 @@ def list(request):
     """Render the user list page."""
     search = request.params.get('search')
     if search:
-        users = DBSession.query(User).filter(User.username.like('%'+search+'%'))
+        users = DBSession.query(AuthUser).filter(User.username.like('%'+search+'%'))
     else:
-        users = DBSession.query(User).all()
+        users = DBSession.query(AuthUser).all()
     page_url = paginate.PageURL_WebOb(request)
     users = paginate.Page(users,
                           page=int(request.params.get("page", 1)),
@@ -45,7 +45,7 @@ def list(request):
 def add(request):
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
-        user = form.bind(User())
+        user = form.bind(AuthUser())
         DBSession.add(user)
         request.session.flash(_(u"User added"), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
@@ -55,7 +55,7 @@ def add(request):
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
 def edit(request):
     user_id = request.matchdict['user_id']
-    user = DBSession.query(User).get(user_id)
+    user = AuthUser.get_by_id(user_id)
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
@@ -71,7 +71,7 @@ def edit(request):
 @view_config(route_name='tools.user_delete', permission='admin')
 def delete(request):
     user_id = request.matchdict['user_id']
-    user = DBSession.query(User).get(user_id)
+    user = AuthUser.get_by_id(user_id)
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))

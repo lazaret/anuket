@@ -8,7 +8,7 @@ DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 # SQLAlchemy models imports
-from .auth import User
+from wepwawet.models.auth import AuthUser
 
 # Root factory (ACLS)
 from rootfactory import RootFactory

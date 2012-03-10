@@ -4,14 +4,14 @@ from cryptacular.bcrypt import BCRYPTPasswordManager
 from sqlalchemy import Column, DateTime, Integer, Unicode
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from wepwawet.models import Base
+from wepwawet.models import Base, DBSession
 
 
 bcrypt = BCRYPTPasswordManager()
 
 
-class User(Base):
-    """ User definition.
+class AuthUser(Base):
+    """ AuthUser definition.
     """
     __tablename__ = 'auth_user'
 
@@ -25,14 +25,15 @@ class User(Base):
     _password = Column('password', Unicode(80))
 
 
-#    def __init__(self, username):
-#        self.username = username
-
     def __repr__(self):
-        return '<User: %s>' % self.username
+        return '<AuthUser: %s>' % self.username
 
-#    def __unicode__(self):
-#        return self.username
+    def __unicode__(self):
+        return self.username
+
+    @classmethod
+    def get_by_id(cls, user_id):
+        return DBSession.query(cls).get(user_id)
 
     @hybrid_property
     def password(self):
