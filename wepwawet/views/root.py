@@ -8,7 +8,7 @@ from pyramid_simpleform.renderers import FormRenderer
 
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import LoginForm
-from wepwawet.security import USERS
+from wepwawet.models import AuthUser
 
 
 log = logging.getLogger(__name__)
@@ -46,15 +46,14 @@ def forbiden_view(request):
         request.session.flash(_(u"You are not connected, please log in."), 'error')
         return HTTPFound(location=request.route_path('login'))
 
-
 @view_config(route_name='login', renderer='login.mako')
 def login_view(request):
     """Render the login form."""
     form = Form(request, schema=LoginForm)
-    if 'form_submitted' in request.params:
+    if 'form_submitted' in request.params and form.validate():
         username = request.params['username']
         password = request.params['password']
-        if USERS.get(username) == password:
+        if AuthUser.check_password(username, password):
             headers = remember(request, username)
             request.session.flash(_(u"You have successfuly connected."), 'info')
             return HTTPFound(location=request.route_path('home'), headers=headers)

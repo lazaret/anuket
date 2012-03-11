@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
+from wepwawet.models import AuthUser, AuthGroup
 
 
-USERS = {'admin':'admin', # user:pass
-          'viewer':'viewer'}
-GROUPS = {'admin':['group:admins']} # user:group
-
-def groupfinder(userid, request):
-    if userid in USERS:
-        return GROUPS.get(userid, [])
+def groupfinder(username, request):
+    auth_user = AuthUser.get_by_username(username)
+    if auth_user:
+        auth_group = auth_user.group.groupname
+        return [('group:%s' % auth_group)]

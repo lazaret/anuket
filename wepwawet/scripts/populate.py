@@ -13,6 +13,7 @@ from pyramid.paster import (
 from wepwawet.models import (
     DBSession,
     AuthUser,
+    AuthGroup,
     Base,
     )
 
@@ -33,6 +34,11 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
+        admins_group = AuthGroup(
+            groupname=u'admins')
+        DBSession.add(admins_group)
         admin_user = AuthUser(
-            username='admin')
+            username=u'admin',
+            password=u'admin',
+            group=admins_group)
         DBSession.add(admin_user)
