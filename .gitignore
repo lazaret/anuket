@@ -1,6 +1,7 @@
 *.db
 *.egg-info
 *.pyc
+build/
 data/
 dist/
 .directory
