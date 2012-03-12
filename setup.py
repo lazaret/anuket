@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
-requires = [
+install_requires = [
     'pyramid',
     'SQLAlchemy',
     'transaction',
@@ -19,12 +19,15 @@ requires = [
     'cryptacular',
     'formencode',
     'pyramid_simpleform',
+    ]
+
+tests_require = [
     'WebTest',
     ]
 
 setup(name='wepwawet',
     version='0.2a',
-    description='wepwawet',
+    description='Wepwawet web application',
     long_description=README + '\n\n' +  CHANGES,
     classifiers=[
         "Programming Language :: Python",
@@ -35,13 +38,13 @@ setup(name='wepwawet',
     author='Bertrand Lecervoisier',
     author_email='miniwark@gmail.com',
     url='',
-    license='',
+    license='LICENSE.txt',
     keywords='web wsgi pyramid',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=requires,
-    tests_require=requires,
+    install_requires=install_requires,
+    tests_require=tests_require,
     test_suite='wepwawet',
     message_extractors = {'wepwawet': [
         ('**.py', 'python', None),
