@@ -10,9 +10,6 @@ class LoginForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
 
-    username = String(not_empty=True, strip=True)
-    password = String(not_empty=True, strip=True)
-
 
 class UserForm(Schema):
     """ Form validation schema for users."""

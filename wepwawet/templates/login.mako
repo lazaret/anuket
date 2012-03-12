@@ -10,13 +10,13 @@
         <div class="control-group">
           <label for="username" class="control-label">${_(u"Username")}</label>
           <div class="controls">
-            ${renderer.text("username", autofocus="autofocus")}
+            <input type="username" name="username" autofocus="autofocus"/>
           </div>
         </div>
         <div class="control-group">
           <label for="password" class="control-label">${_(u"Password")}</label>
             <div class="controls">
-            ${renderer.password("password")}
+            <input type="password" name="password"/>
             </div>
         </div>
         <div class="form-actions">
