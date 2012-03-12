@@ -23,7 +23,7 @@ requires = [
     ]
 
 setup(name='wepwawet',
-    version='0.1',
+    version='0.2a',
     description='wepwawet',
     long_description=README + '\n\n' +  CHANGES,
     classifiers=[
