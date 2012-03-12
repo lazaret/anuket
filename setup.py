@@ -15,7 +15,6 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
-#    'alembic',
     'Babel',
     'cryptacular',
     'formencode',
@@ -24,7 +23,7 @@ requires = [
     ]
 
 setup(name='wepwawet',
-    version='0.1a',
+    version='0.1',
     description='wepwawet',
     long_description=README + '\n\n' +  CHANGES,
     classifiers=[
