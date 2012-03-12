@@ -5,7 +5,6 @@ from formencode.validators import String, Email, FieldsMatch
 from wepwawet.lib.validators import UsernameString, CapitalString
 
 
-
 class LoginForm(Schema):
     filter_extra_fields = True
     allow_extra_fields = True
@@ -26,7 +25,3 @@ class UserForm(Schema):
     chained_validators = [
         FieldsMatch('password', 'password_confirm'),
     ]
-
-
-
-

@@ -33,6 +33,7 @@ def root_view(request):
 #    request.session.flash(u"success message", 'success')
     return dict()
 
+
 @forbidden_view_config()
 def forbiden_view(request):
     """Redirect the 403 forbiden view to login or home page and add a
@@ -45,6 +46,7 @@ def forbiden_view(request):
     else:
         request.session.flash(_(u"You are not connected, please log in."), 'error')
         return HTTPFound(location=request.route_path('login'))
+
 
 @view_config(route_name='login', renderer='login.mako')
 def login_view(request):
@@ -60,6 +62,7 @@ def login_view(request):
         else:
             request.session.flash(_(u"Please check your login credentials!"), 'error')
     return dict(renderer=FormRenderer(form))
+
 
 @view_config(route_name='logout')
 def logout_view(request):

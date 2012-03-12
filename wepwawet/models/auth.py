@@ -19,12 +19,10 @@ class AuthUser(Base):
     last_name = Column(Unicode(255))
     email = Column(Unicode(255), unique=True)
     created = Column(DateTime, default=datetime.utcnow)
+    _password = Column('password', Unicode(80))
     #many to one
     group_id = Column(Integer, ForeignKey('auth_group.group_id'))
     group = relationship('AuthGroup')
-
-    _password = Column('password', Unicode(80))
-
 
     def __repr__(self):
         return '<AuthUser: %s>' % self.username
@@ -38,7 +36,7 @@ class AuthUser(Base):
 
     @classmethod
     def get_by_username(cls, username):
-        return DBSession.query(cls).filter(cls.username==username).first()
+        return DBSession.query(cls).filter(cls.username == username).first()
 
     @classmethod
     def check_password(cls, username, password):

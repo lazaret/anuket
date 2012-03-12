@@ -13,7 +13,6 @@ from wepwawet.security import groupfinder
 from wepwawet.views import root, tools, user
 
 
-
 def get_auth_user(request):
 
     #TODO: bind to user model

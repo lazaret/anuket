@@ -12,6 +12,4 @@ class UsernameString(validators.String):
     """Expand the validators.String class tu return a lowercased value with
     all whitespaces removed."""
     def _to_python(self, value, state):
-        return value.lower().replace(" ","")
-
-
+        return value.lower().replace(" ", "")
