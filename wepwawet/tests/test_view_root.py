@@ -13,6 +13,25 @@ def _initTestingDB():
     return DBSession
 
 
+#TODO: use with functional forms tests
+#def _csrf_tocken(post=None):
+#    from mock import Mock
+#    csrf = 'test_token'
+#    if not post:
+#        post = {}
+#    if not u'_csrf' in post.keys():
+#        post.update({
+#            '_csrf': csrf
+#        })
+#    request = testing.DummyRequest(post)
+#    request.session = Mock()
+#    csrf_token = Mock()
+#    csrf_token.return_value = csrf
+#    request.session.get_csrf_token = csrf_token
+#    return request
+
+
+
 class ViewRootTests(unittest.TestCase):
     def setUp(self):
         self.DBSession = _initTestingDB()
@@ -40,21 +59,23 @@ class ViewRootTests(unittest.TestCase):
         response = root_view(request)
         self.assertEqual(response, {})
 
-        #TODO: add tests for 404 -> functional
-
     def test_03_forbiden_view_non_logged(self):
         """ Test the response of the `forbiden_view` for non-logged users."""
         from wepwawet.views.root import forbiden_view
         request = testing.DummyRequest(auth_user=None)
         response = forbiden_view(request)
         self.assertEqual(response.location, '/login')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u'You are not connected, please log in.')
 
-    def test_04_forbiden_view(self):
+    def test_04_forbiden_view_logged(self):
         """ Test the response of the `forbiden_view` for logged users."""
         from wepwawet.views.root import forbiden_view
         request = testing.DummyRequest(auth_user='test_user')
         response = forbiden_view(request)
         self.assertEqual(response.location, '/')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u'You do not have the permission to do this!')
 
     def test_05_login_view_non_logged(self):
         """ Test the response of the `login_view` for non-logged users."""
@@ -62,6 +83,9 @@ class ViewRootTests(unittest.TestCase):
         request = testing.DummyRequest()
         response = login_view(request)
         self.assertIsNotNone(response['renderer'])
+        # no flash message yet for non-logged users
+        self.assertEqual(len(request.session.pop_flash('info')), 0)
+        self.assertEqual(len(request.session.pop_flash('error')), 0)
 
     def test_06_login_view_good_credentials(self):
         """ Test the response of the `login_view` with good credentials."""
@@ -70,12 +94,14 @@ class ViewRootTests(unittest.TestCase):
         user = AuthUser(username=u'test_user', password=u'test_pass')
         self.DBSession.add(user)
         request = testing.DummyRequest()
+        request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'test_user'
         request.params['password'] = u'test_pass'
         response = login_view(request)
         self.assertEqual(response.location, '/')
-        #TODO test fail because of csrf
+        self.assertEqual(request.session.pop_flash('info')[0],
+                         u"You have successfuly connected.")
 
     def test_07_login_view_bad_credentials(self):
         """ Test the response of the `login_view` with bad credentials."""
@@ -84,11 +110,14 @@ class ViewRootTests(unittest.TestCase):
         user = AuthUser(username=u'test_user', password=u'test_pass')
         self.DBSession.add(user)
         request = testing.DummyRequest()
+        request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'bad_user'
         request.params['password'] = u'bad_pass'
         response = login_view(request)
         self.assertIsNotNone(response['renderer'])
+        self.assertEqual(request.session.pop_flash('error')[0],
+                        u"Please check your login credentials!")
 
     def test_08_logout_view(self):
         """ Test the response of the `logout_view`."""
@@ -96,6 +125,8 @@ class ViewRootTests(unittest.TestCase):
         request = testing.DummyRequest()
         response = logout_view(request)
         self.assertEqual(response.location, '/')
+        self.assertEqual(request.session.pop_flash('info')[0],
+                        u"You have been disconnected.")
 
 
 class FunctionalViewRootTests(unittest.TestCase):
@@ -108,23 +139,41 @@ class FunctionalViewRootTests(unittest.TestCase):
         app = main({}, **settings)
         from webtest import TestApp
         self.testapp = TestApp(app)
-        _initTestingDB()
+#        _initTestingDB()
 
     def tearDown(self):
         del self.testapp
         from wepwawet.models import DBSession
-        DBSession.remove()
+#        DBSession.remove()
 
 
-    def test_09_root(self):
+    def test_09_home_page(self):
+        """Test the home page"""
         response = self.testapp.get('/')
         self.assertEqual(response.status, '200 OK')
+        #TODO tests 'home' in title
+
+    def test_09_about_page(self):
+        """Test the about page"""
+        response = self.testapp.get('/about')
+        self.assertEqual(response.status, '200 OK')
+        #TODO tests 'about' in title
+
 
     def test_10_unexisting_page(self):
+        """Test the 404 error page."""
         response = self.testapp.get('/Some404Page')
         self.assertEqual(response.status, '200 OK')
-        self.assertTrue('404' in response.body)
+        response.mustcontain('404', 'Page not found!')
 
     def test_11_logout(self):
-        response = self.testapp.get('/logout')
-        self.assertEqual(response.status, '302 Found')
+        """ Test the logout."""
+        response = self.testapp.get('/logout', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/')
+        self.assertTrue('You have been disconnected' in redirect.body)
+
+
+
+
