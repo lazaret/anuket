@@ -1,11 +1,6 @@
 Todo
 ====
 
-0.1
----
-
-* Add Users / groups / perm models
-
 0.2
 ---
 

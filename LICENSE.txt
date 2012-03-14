@@ -34,5 +34,5 @@ Additional Licenses
 licencied under the Apache 2 license. See http://twitter.github.com/bootstrap/
 
 * Wepwawet use the Raphaël Icon-Set via @font-face for his templates. The
-Raphaël Icon-Set via @font-face is licencied under the MIT license (aka Expat
+Raphaël Icon-Set via @font-face is licencied under the MIT license (Expat
 license). See http://icons.marekventur.de/
