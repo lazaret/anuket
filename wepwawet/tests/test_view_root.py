@@ -104,7 +104,7 @@ class ViewRootTests(unittest.TestCase):
                          u"You have successfuly connected.")
 
     def test_07_login_view_bad_credentials(self):
-        """ Test the response of the `login_view` with bad credentials."""
+        """ Test the response of the `login_view` with wrong credentials."""
         from wepwawet.views.root import login_view
         from wepwawet.models import AuthUser
         user = AuthUser(username=u'test_user', password=u'test_pass')
@@ -139,35 +139,61 @@ class FunctionalViewRootTests(unittest.TestCase):
         app = main({}, **settings)
         from webtest import TestApp
         self.testapp = TestApp(app)
-#        _initTestingDB()
+        self.DBSession = _initTestingDB()
 
     def tearDown(self):
         del self.testapp
         from wepwawet.models import DBSession
-#        DBSession.remove()
+        DBSession.remove()
 
 
-    def test_09_home_page(self):
+    def test_01_home_page(self):
         """Test the home page"""
-        response = self.testapp.get('/')
-        self.assertEqual(response.status, '200 OK')
-        #TODO tests 'home' in title
+        response = self.testapp.get('/', status=200)
+        self.assertTrue('<title>Home' in response.body.replace('\n', ''))
 
-    def test_09_about_page(self):
+    def test_02_about_page(self):
         """Test the about page"""
-        response = self.testapp.get('/about')
-        self.assertEqual(response.status, '200 OK')
-        #TODO tests 'about' in title
+        response = self.testapp.get('/about', status=200)
+        self.assertTrue('<title>About' in response.body.replace('\n', ''))
 
-
-    def test_10_unexisting_page(self):
+    def test_03_unexisting_page(self):
         """Test the 404 error page."""
         response = self.testapp.get('/Some404Page')
+        # the status is 200 because managed by @notfound_view_config
         self.assertEqual(response.status, '200 OK')
+        self.assertTrue('<title>404' in response.body.replace('\n', ''))
         response.mustcontain('404', 'Page not found!')
 
-    def test_11_logout(self):
-        """ Test the logout."""
+    def test_04_login_page_non_loged(self):
+        """Test the login page."""
+        response = self.testapp.get('/login', status=200)
+        self.assertTrue('<title>Login' in response.body.replace('\n', ''))
+
+    def test_05_login_page_good_credentials(self):
+        from wepwawet.models import AuthUser
+        user = AuthUser(username=u'test_user', password=u'test_pass')
+        self.DBSession.add(user)
+
+        params = {'form_submitted': u'',
+                  'username': u'test_user',
+                  'password': u'test_pass'}
+        response = self.testapp.post('/login', params)
+
+#        self.assertEqual(response.status, '200 OK')
+#        self.assertEqual(response.request.path, '/')
+#        self.assertTrue('You have successfuly connected.' in response.body)
+
+    def test_06_login_page_bad_credentials(self):
+        response = self.testapp.post('/login', {})
+
+#        self.assertEqual(response.request.path, '/login')
+#        self.assertTrue('Please check your login credentials!' in response.body)
+#        #self.assertEqual(response.status, '302 Found')
+
+
+    def test_07_logout(self):
+        """ Test log out."""
         response = self.testapp.get('/logout', status=302)
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
