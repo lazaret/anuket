@@ -69,4 +69,5 @@ def login_view(request):
 def logout_view(request):
     """Clear credentials and redirect to the home page."""
     headers = forget(request)
+    request.session.flash(_(u"You have been disconnected."), 'info')
     return HTTPFound(location=request.route_path('home'), headers=headers)
