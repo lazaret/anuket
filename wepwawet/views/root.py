@@ -27,17 +27,16 @@ def includeme(config):
 @view_config(route_name='home', renderer='index.mako')
 def root_view(request):
     """Render the root pages."""
-#    request.session.flash(u"warning message", 'warn')
-#    request.session.flash(u"info message", 'info')
-#    request.session.flash(u"error message", 'error')
-#    request.session.flash(u"success message", 'success')
     return dict()
 
 
 @forbidden_view_config()
 def forbiden_view(request):
-    """Redirect the 403 forbiden view to login or home page and add a
+    """Redirect the 403 forbiden view to login or home pages and add a
     flash message to display the relevant error.
+
+    Non logged users, are redirected to the login page.
+    Logged but not permited users are redirected to the home page.
     """
     #TODO: take care of csrf error
     if request.auth_user:
@@ -50,7 +49,9 @@ def forbiden_view(request):
 
 @view_config(route_name='login', renderer='login.mako')
 def login_view(request):
-    """Render the login form."""
+    """Render the login form, check the credentials, and redirect the logged
+    users to the home page.
+    """
     form = Form(request, schema=LoginForm)
     if 'form_submitted' in request.params and form.validate():
         username = request.params['username']
