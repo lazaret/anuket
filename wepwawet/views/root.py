@@ -38,7 +38,6 @@ def forbiden_view(request):
     Non logged users, are redirected to the login page.
     Logged but not permited users are redirected to the home page.
     """
-    #TODO: take care of csrf error
     if request.auth_user:
         request.session.flash(_(u"You do not have the permission to do this!"), 'error')
         return HTTPFound(location=request.route_path('home'))
