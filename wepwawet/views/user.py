@@ -26,7 +26,7 @@ def includeme(config):
 
 
 @view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
-def list(request):
+def user_list_view(request):
     """Render the user list page."""
     search = request.params.get('search')
     if search:
@@ -42,7 +42,7 @@ def list(request):
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
-def add(request):
+def user_add_view(request):
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
         user = form.bind(AuthUser())
@@ -53,7 +53,7 @@ def add(request):
 
 
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
-def edit(request):
+def user_edit_view(request):
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -69,7 +69,7 @@ def edit(request):
 
 
 @view_config(route_name='tools.user_delete', permission='admin')
-def delete(request):
+def user_delete_view(request):
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -81,5 +81,5 @@ def delete(request):
 
 
 #@view_config(route_name='tools.user_search')
-#def search(request):
+#def user_search_view(request):
 #    pass
