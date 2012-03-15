@@ -13,25 +13,6 @@ def _initTestingDB():
     return DBSession
 
 
-#TODO: use with functional forms tests
-#def _csrf_tocken(post=None):
-#    from mock import Mock
-#    csrf = 'test_token'
-#    if not post:
-#        post = {}
-#    if not u'_csrf' in post.keys():
-#        post.update({
-#            '_csrf': csrf
-#        })
-#    request = testing.DummyRequest(post)
-#    request.session = Mock()
-#    csrf_token = Mock()
-#    csrf_token.return_value = csrf
-#    request.session.get_csrf_token = csrf_token
-#    return request
-
-
-
 class ViewRootTests(unittest.TestCase):
     def setUp(self):
         self.DBSession = _initTestingDB()
@@ -89,6 +70,7 @@ class ViewRootTests(unittest.TestCase):
 
     def test_06_login_view_good_credentials(self):
         """ Test the response of the `login_view` with good credentials."""
+        # no crsf_token check because the suscribers are not activated
         from wepwawet.views.root import login_view
         from wepwawet.models import AuthUser
         user = AuthUser(username=u'test_user', password=u'test_pass')
@@ -103,8 +85,9 @@ class ViewRootTests(unittest.TestCase):
         self.assertEqual(request.session.pop_flash('info')[0],
                          u"You have successfuly connected.")
 
-    def test_07_login_view_bad_credentials(self):
+    def test_07_login_view_wrong_credentials(self):
         """ Test the response of the `login_view` with wrong credentials."""
+        # no crsf_token check because the suscribers are not activated
         from wepwawet.views.root import login_view
         from wepwawet.models import AuthUser
         user = AuthUser(username=u'test_user', password=u'test_pass')
@@ -112,8 +95,8 @@ class ViewRootTests(unittest.TestCase):
         request = testing.DummyRequest()
         request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
-        request.params['username'] = u'bad_user'
-        request.params['password'] = u'bad_pass'
+        request.params['username'] = u'wrong_user'
+        request.params['password'] = u'wrong_pass'
         response = login_view(request)
         self.assertIsNotNone(response['renderer'])
         self.assertEqual(request.session.pop_flash('error')[0],
@@ -148,17 +131,17 @@ class FunctionalViewRootTests(unittest.TestCase):
 
 
     def test_01_home_page(self):
-        """Test the home page"""
+        """ Test the home page."""
         response = self.testapp.get('/', status=200)
         self.assertTrue('<title>Home' in response.body.replace('\n', ''))
 
     def test_02_about_page(self):
-        """Test the about page"""
+        """ Test the about page"""
         response = self.testapp.get('/about', status=200)
         self.assertTrue('<title>About' in response.body.replace('\n', ''))
 
     def test_03_unexisting_page(self):
-        """Test the 404 error page."""
+        """ Test the 404 error page."""
         response = self.testapp.get('/Some404Page')
         # the status is 200 because managed by @notfound_view_config
         self.assertEqual(response.status, '200 OK')
@@ -166,33 +149,58 @@ class FunctionalViewRootTests(unittest.TestCase):
         response.mustcontain('404', 'Page not found!')
 
     def test_04_login_page_non_loged(self):
-        """Test the login page."""
+        """ Test the login page."""
         response = self.testapp.get('/login', status=200)
         self.assertTrue('<title>Login' in response.body.replace('\n', ''))
 
-    def test_05_login_page_good_credentials(self):
-        from wepwawet.models import AuthUser
-        user = AuthUser(username=u'test_user', password=u'test_pass')
+    def test_05_login_page_admins_credentials(self):
+        """ Test login with admin credentials."""
+        from wepwawet.models import AuthUser, AuthGroup
+        admins_group = AuthGroup(groupname=u'admins')
+        user = AuthUser(
+            username=u'admin_user',
+            password=u'admin_pass',
+            group=admins_group)
         self.DBSession.add(user)
+        response = self.testapp.get('/login', status=200)
+        csrf_token = response.form.fields['_csrf'][0].value
+        params = {
+            'form_submitted': u'',
+            '_csrf': csrf_token,
+            'username': u'admin_user',
+            'password': u'admin_pass',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/')
+        self.assertTrue('You have successfuly connected.' in redirect.body)
 
-        params = {'form_submitted': u'',
-                  'username': u'test_user',
-                  'password': u'test_pass'}
-        response = self.testapp.post('/login', params)
+    def test_06_login_page_wrong_credentials(self):
+        """ Test login with wrong credentials."""
+        response = self.testapp.get('/login', status=200)
+        csrf_token = response.form.fields['_csrf'][0].value
+        params = {
+            'form_submitted': u'',
+            '_csrf': csrf_token,
+            'username': u'wrong_user',
+            'password': u'wrong_pass',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=200)
+        self.assertTrue('Please check your login credentials!' in response.body)
 
-#        self.assertEqual(response.status, '200 OK')
-#        self.assertEqual(response.request.path, '/')
-#        self.assertTrue('You have successfuly connected.' in response.body)
+    def test_07_login_without_csrf_token(self):
+        """ Test login without a csrf token."""
+        params = {
+            'form_submitted': u'',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.' in redirect.body)
 
-    def test_06_login_page_bad_credentials(self):
-        response = self.testapp.post('/login', {})
-
-#        self.assertEqual(response.request.path, '/login')
-#        self.assertTrue('Please check your login credentials!' in response.body)
-#        #self.assertEqual(response.status, '302 Found')
-
-
-    def test_07_logout(self):
+    def test_08_logout(self):
         """ Test log out."""
         response = self.testapp.get('/logout', status=302)
         redirect = response.follow()
