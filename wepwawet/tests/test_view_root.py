@@ -126,8 +126,7 @@ class FunctionalViewRootTests(unittest.TestCase):
 
     def tearDown(self):
         del self.testapp
-        from wepwawet.models import DBSession
-        DBSession.remove()
+        self.DBSession.remove()
 
 
     def test_01_home_page(self):

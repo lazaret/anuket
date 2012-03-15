@@ -3,10 +3,10 @@ import unittest
 from pyramid import testing
 
 
-class ViewRootTests(unittest.TestCase):
+class ViewToolsTests(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
-        # register the `root` routes
+        # register the `tools` routes
         self.config.include('wepwawet.views.tools')
 
     def tearDown(self):
@@ -25,7 +25,17 @@ class ViewRootTests(unittest.TestCase):
         self.assertEqual(response, {})
 
 
-class FunctionalViewRootTests(unittest.TestCase):
+#    def test_view_fn_forbidden(self):
+#        from pyramid.httpexceptions import HTTPForbidden
+#        from wepwawet.views.tools import tools_index_view
+#        self.config.testing_securitypolicy(userid='hank')
+#        request = testing.DummyRequest()
+#        request.context = testing.DummyResource()
+#        self.assertRaises(HTTPForbidden, tools_index_view, request)
+# do not work somewhere
+
+
+class FunctionalViewToolsTests(unittest.TestCase):
     def setUp(self):
         from wepwawet import main
         settings = { 'sqlalchemy.url': 'sqlite:///:memory:',
@@ -39,7 +49,19 @@ class FunctionalViewRootTests(unittest.TestCase):
     def tearDown(self):
         del self.testapp
 
-#    def test_03_tools(self):
+
+    def test_01_tools_page_is_forbiden(self):
+        """ Test than the tools page is forbiden for non logged users."""
+        response = self.testapp.get('/tools', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.' in redirect.body)
+
+#TODO add test for admin loged users
+#TODO add test for non authorised but logged user
+
+#    def test_01_tools(self):
 #        response = self.testapp.get('/tools')
 #        self.assertEqual(response.status, '200 OK')
 #        #TODO: error because need credentials
