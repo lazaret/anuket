@@ -40,7 +40,7 @@ class ViewUserTests(unittest.TestCase):
         self.DBSession.add(user)
         request = testing.DummyRequest()
         response = user_list_view(request)
-        #TODO add data test
+        #TODO add data  test
         #self.assertEqual(response, {})
 
 #    def test_03_user_add(self):
