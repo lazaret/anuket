@@ -20,15 +20,12 @@ class AuthUser(Base):
     email = Column(Unicode(255), unique=True)
     created = Column(DateTime, default=datetime.utcnow)
     _password = Column('password', Unicode(80))
-    #many to one
+    #many-to-one
     group_id = Column(Integer, ForeignKey('auth_group.group_id'))
     group = relationship('AuthGroup')
 
     def __repr__(self):
-        return '<AuthUser: %s>' % self.username
-
-    def __unicode__(self):
-        return self.username
+        return '<AuthUser: %s>' % self.username  #pragma: no cover
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -66,11 +63,8 @@ class AuthGroup(Base):
     groupname = Column(Unicode(16), unique=True, nullable=False, index=True)
 
     def __repr__(self):
-        return '<AuthGroup: %s>' % self.groupname
-
-    def __unicode__(self):
-        return self.groupname
+        return '<AuthGroup: %s>' % self.groupname  #pragma: no cover
 
     @classmethod
     def get_by_id(cls, group_id):
-        return DBSession.query(cls).get(user_id)
+        return DBSession.query(cls).get(group_id)
