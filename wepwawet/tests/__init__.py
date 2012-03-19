@@ -46,9 +46,9 @@ class WepwawetTestCase(TestCase):
             user = AuthUser()
             user.username = u'username'
             user.first_name = u'firstname'
-            user.last_name=u'lastname'
-            user.email=u'email@email.com'
-            user.password=u'password'
+            user.last_name = u'lastname'
+            user.email = u'email@email.com'
+            user.password = u'password'
             user.group = group
             self.DBSession.add(user)
             self.DBSession.flush()

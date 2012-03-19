@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-import unittest
 from pyramid import testing
 
+from wepwawet.tests import WepwawetTestCase
 
-class ViewToolsTests(unittest.TestCase):
+
+class ViewToolsTests(WepwawetTestCase):
     def setUp(self):
+        super(ViewToolsTests, self).setUp()
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('wepwawet.views.tools')
 
     def tearDown(self):
+        super(ViewToolsTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):
@@ -36,18 +39,16 @@ class ViewToolsTests(unittest.TestCase):
 # need a browser
 
 
-class FunctionalViewToolsTests(unittest.TestCase):
+class FunctionalViewToolsTests(WepwawetTestCase):
     def setUp(self):
+        super(FunctionalViewToolsTests, self).setUp()
         from wepwawet import main
-        settings = { 'sqlalchemy.url': 'sqlite:///:memory:',
-                    'pyramid.available_languages': 'en',
-                    'wepwawet.brand_name': 'Wepwawet',
-                    'mako.directories': 'wepwawet:templates'}
-        app = main({}, **settings)
+        app = main({}, **self.settings)
         from webtest import TestApp
         self.testapp = TestApp(app)
 
     def tearDown(self):
+        super(FunctionalViewToolsTests, self).tearDown()
         del self.testapp
 
 

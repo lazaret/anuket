@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import unittest
 from pyramid import testing
 
 from wepwawet.tests import WepwawetTestCase
@@ -104,11 +103,6 @@ class FunctionalViewRootTests(WepwawetTestCase):
     def setUp(self):
         super(FunctionalViewRootTests, self).setUp()
         from wepwawet import main
-#        settings = {'sqlalchemy.url': 'sqlite:///%(here)s/test.db',
-#                    'pyramid.available_languages': 'en',
-#                    'wepwawet.brand_name': 'Wepwawet',
-#                    'mako.directories': 'wepwawet:templates'}
-#        app = main({}, **settings)
         app = main({}, **self.settings)
         from webtest import TestApp
         self.testapp = TestApp(app)
@@ -143,7 +137,7 @@ class FunctionalViewRootTests(WepwawetTestCase):
 
     def test_05_login_page_valid_admins_credentials(self):
         """ Test login with valid admins credentials."""
-        #TODO: use fixtures
+        #TODO: use fixtures for this
         from wepwawet.models import AuthUser, AuthGroup
         admins_group = AuthGroup(groupname=u'admins')
         user = AuthUser(

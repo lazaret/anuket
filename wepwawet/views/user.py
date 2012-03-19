@@ -47,7 +47,7 @@ def user_add_view(request):
     if 'form_submitted' in request.params and form.validate():
         user = form.bind(AuthUser())
         DBSession.add(user)
-        request.session.flash(_(u"User added"), 'success')
+        request.session.flash(_(u"User added successfully."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form))
 
