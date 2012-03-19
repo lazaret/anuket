@@ -54,6 +54,6 @@ setup(name='wepwawet',
     [paste.app_factory]
     main = wepwawet:main
     [console_scripts]
-    populate_wepwawet = wepwawet.scripts.populate:main
+    initialize_wepwawet_db = wepwawet.scripts.initializedb:main
     """,
     )
