@@ -24,8 +24,8 @@ class AuthUser(Base):
     group_id = Column(Integer, ForeignKey('auth_group.group_id'))
     group = relationship('AuthGroup')
 
-    def __repr__(self):
-        return '<AuthUser: %s>' % self.username  #pragma: no cover
+    def __repr__(self):  #pragma: no cover
+        return '<AuthUser: %s>' % self.username
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -62,8 +62,8 @@ class AuthGroup(Base):
     group_id = Column(Integer, autoincrement=True, primary_key=True)
     groupname = Column(Unicode(16), unique=True, nullable=False, index=True)
 
-    def __repr__(self):
-        return '<AuthGroup: %s>' % self.groupname  #pragma: no cover
+    def __repr__(self):  #pragma: no cover
+        return '<AuthGroup: %s>' % self.groupname
 
     @classmethod
     def get_by_id(cls, group_id):

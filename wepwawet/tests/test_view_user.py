@@ -30,11 +30,22 @@ class ViewUserTests(WepwawetTestCase):
         from wepwawet.views.user import user_list_view
         request = testing.DummyRequest()
         response = user_list_view(request)
-        #TODO add data test
-        #self.assertEqual(response, {})
+        from webhelpers.paginate import Page
+        self.assertIsInstance(response['users'], Page)
 
-    def test_03_user_add(self):
-        """ test the response of the `user_add` view."""
+    def test_03_user_list_with_search(self):
+        """ Test the response of the `user_list` view with a search."""
+        self.auth_user_fixture()
+        from wepwawet.views.user import user_list_view
+        request = testing.DummyRequest()
+        request.method = 'POST'
+        request.params['search'] = u'user'
+        response = user_list_view(request)
+        from webhelpers.paginate import Page
+        self.assertIsInstance(response['users'], Page)
+
+    def test_04_user_add(self):
+        """ Test the response of the `user_add` view."""
         from wepwawet.views.user import user_add_view
         request = testing.DummyRequest()
         request.method = 'POST' #required for form.validate()
@@ -50,21 +61,85 @@ class ViewUserTests(WepwawetTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"User added successfully.")
 
-    def test_04_user_edit(self):
-        """ test the response of the `user_edit` view."""
+    def test_05_not_validate_user_add(self):
+        """ Test the response of the `user_add` view not validated."""
+        self.auth_user_fixture()
+        from wepwawet.views.user import user_add_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        request.method = 'POST' #required for form.validate()
+        request.params['form_submitted'] = u''
+        response = user_add_view(request)
+        from pyramid_simpleform.renderers import FormRenderer
+        self.assertIsInstance(response['renderer'], FormRenderer)
+
+    def test_06_user_edit(self):
+        """ Test the response of the `user_edit` view."""
         self.auth_user_fixture()
         from wepwawet.views.user import user_edit_view
         request = testing.DummyRequest()
-#        response = user_edit_view(request)
-        #TODO add db record
+        request.matchdict = {'user_id': 1}
+        request.method = 'POST' #required for form.validate()
+        request.params['form_submitted'] = u''
+        request.params['username'] = u'username'
+        request.params['first_name'] = u'firstname'
+        request.params['last_name'] = u'lastname'
+        request.params['email'] = u'email@email.com'
+        request.params['password'] = u'password'
+        request.params['password_confirm'] = u'password'
+        response = user_edit_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('success')[0],
+                         u"User updated successfully.")
 
-    def test_05_user_delete(self):
-        """ test the response of the `user_delete` view."""
+    def test_07_not_validate_user_edit(self):
+        """ Test the response of the `user_edit` view not validated."""
+        self.auth_user_fixture()
+        from wepwawet.views.user import user_edit_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        request.method = 'POST' #required for form.validate()
+        request.params['form_submitted'] = u''
+        response = user_edit_view(request)
+        from pyramid_simpleform.renderers import FormRenderer
+        self.assertIsInstance(response['renderer'], FormRenderer)
+
+    def test_08_not_exist_user_edit(self):
+        """ Test the response of the `user_edit` view with a non existent
+        `user_id`.
+        """
+        self.auth_user_fixture()
+        from wepwawet.views.user import user_edit_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 0}
+        response = user_edit_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"This user did not exist!")
+
+    def test_09_user_delete(self):
+        """ Test the response of the `user_delete` view."""
         self.auth_user_fixture()
         from wepwawet.views.user import user_delete_view
         request = testing.DummyRequest()
-#        response = user_delete_view(request)
-        #TODO add db record
+        request.matchdict = {'user_id': 1}
+        response = user_delete_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('warning')[0],
+                         u"User deleted.")
+
+    def test_10_not_exist_user_delete(self):
+        """ Test the response of the `user_delete` view with a non existent
+        `user_id`.
+        """
+        self.auth_user_fixture()
+        from wepwawet.views.user import user_delete_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 0}
+        response = user_delete_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"This user did not exist!")
 
 
 class FunctionalViewUserTests(WepwawetTestCase):

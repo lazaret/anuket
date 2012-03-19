@@ -34,9 +34,9 @@ class WepwawetTestCase(TestCase):
             self.DBSession.add(group)
             self.DBSession.flush()
             return group
-        except:
+        except: #pragma: no cover
             self.DBSession.rollback()
-            raise
+            raise AssertionError
 
     def auth_user_fixture(self):
         """ Auth user test fixture."""
@@ -53,6 +53,6 @@ class WepwawetTestCase(TestCase):
             self.DBSession.add(user)
             self.DBSession.flush()
             return user
-        except:
+        except: #pragma: no cover
             self.DBSession.rollback()
-            raise
+            raise AssertionError
