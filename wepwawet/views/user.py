@@ -30,7 +30,7 @@ def user_list_view(request):
     """Render the user list page."""
     search = request.params.get('search')
     if search:
-        users = DBSession.query(AuthUser).filter(User.username.like('%'+search+'%'))
+        users = DBSession.query(AuthUser).filter(AuthUser.username.like('%'+search+'%'))
     else:
         users = DBSession.query(AuthUser).all()
     page_url = paginate.PageURL_WebOb(request)
@@ -63,7 +63,7 @@ def user_edit_view(request):
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
         DBSession.add(user)
-        request.session.flash(_(u"User updated"), 'success')
+        request.session.flash(_(u"User updated successfully."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form))
 
@@ -76,7 +76,7 @@ def user_delete_view(request):
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
     DBSession.delete(user)
-    request.session.flash(_(u"User deleted"), 'warning')
+    request.session.flash(_(u"User deleted."), 'warning')
     return HTTPFound(location=request.route_path('tools.user_list'))
 
 
