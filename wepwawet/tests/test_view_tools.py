@@ -32,7 +32,8 @@ class ViewToolsTests(unittest.TestCase):
 #        request = testing.DummyRequest()
 #        request.context = testing.DummyResource()
 #        self.assertRaises(HTTPForbidden, tools_index_view, request)
-# do not work somewhere
+# do not work somewhere -> move to functional tests because @view_config
+# need a browser
 
 
 class FunctionalViewToolsTests(unittest.TestCase):

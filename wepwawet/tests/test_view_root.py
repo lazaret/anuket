@@ -2,26 +2,18 @@
 import unittest
 from pyramid import testing
 
-
-def _initTestingDB():
-    from wepwawet.models import DBSession, Base, AuthUser
-    from sqlalchemy import create_engine
-    engine = create_engine('sqlite:///:memory:')
-    DBSession.configure(bind=engine)
-    Base.metadata.bind = engine
-    Base.metadata.create_all(engine)
-    return DBSession
+from wepwawet.tests import WepwawetTestCase
 
 
-class ViewRootTests(unittest.TestCase):
+class ViewRootTests(WepwawetTestCase):
     def setUp(self):
-        self.DBSession = _initTestingDB()
+        super(ViewRootTests, self).setUp()
         self.config = testing.setUp()
         # register the `root` routes
         self.config.include('wepwawet.views.root')
 
     def tearDown(self):
-        self.DBSession.remove()
+        super(ViewRootTests, self).tearDown()
         testing.tearDown()
 
 
@@ -68,18 +60,16 @@ class ViewRootTests(unittest.TestCase):
         self.assertEqual(len(request.session.pop_flash('info')), 0)
         self.assertEqual(len(request.session.pop_flash('error')), 0)
 
-    def test_06_login_view_good_credentials(self):
-        """ Test the response of the `login_view` with good credentials."""
+    def test_06_login_view_valid_credentials(self):
+        """ Test the response of the `login_view` with valid credentials."""
         # no crsf_token check because the suscribers are not activated
         from wepwawet.views.root import login_view
-        from wepwawet.models import AuthUser
-        user = AuthUser(username=u'test_user', password=u'test_pass')
-        self.DBSession.add(user)
+        self.auth_user_fixture()
         request = testing.DummyRequest()
         request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
-        request.params['username'] = u'test_user'
-        request.params['password'] = u'test_pass'
+        request.params['username'] = u'username'
+        request.params['password'] = u'password'
         response = login_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('info')[0],
@@ -89,9 +79,7 @@ class ViewRootTests(unittest.TestCase):
         """ Test the response of the `login_view` with wrong credentials."""
         # no crsf_token check because the suscribers are not activated
         from wepwawet.views.root import login_view
-        from wepwawet.models import AuthUser
-        user = AuthUser(username=u'test_user', password=u'test_pass')
-        self.DBSession.add(user)
+        self.auth_user_fixture()
         request = testing.DummyRequest()
         request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
@@ -112,21 +100,22 @@ class ViewRootTests(unittest.TestCase):
                         u"You have been disconnected.")
 
 
-class FunctionalViewRootTests(unittest.TestCase):
+class FunctionalViewRootTests(WepwawetTestCase):
     def setUp(self):
+        super(FunctionalViewRootTests, self).setUp()
         from wepwawet import main
-        settings = { 'sqlalchemy.url': 'sqlite:///:memory:',
-                    'pyramid.available_languages': 'en',
-                    'wepwawet.brand_name': 'Wepwawet',
-                    'mako.directories': 'wepwawet:templates'}
-        app = main({}, **settings)
+#        settings = {'sqlalchemy.url': 'sqlite:///%(here)s/test.db',
+#                    'pyramid.available_languages': 'en',
+#                    'wepwawet.brand_name': 'Wepwawet',
+#                    'mako.directories': 'wepwawet:templates'}
+#        app = main({}, **settings)
+        app = main({}, **self.settings)
         from webtest import TestApp
         self.testapp = TestApp(app)
-        self.DBSession = _initTestingDB()
 
     def tearDown(self):
+        super(FunctionalViewRootTests, self).tearDown()
         del self.testapp
-        self.DBSession.remove()
 
 
     def test_01_home_page(self):
@@ -152,13 +141,14 @@ class FunctionalViewRootTests(unittest.TestCase):
         response = self.testapp.get('/login', status=200)
         self.assertTrue('<title>Login' in response.body.replace('\n', ''))
 
-    def test_05_login_page_admins_credentials(self):
-        """ Test login with admin credentials."""
+    def test_05_login_page_valid_admins_credentials(self):
+        """ Test login with valid admins credentials."""
+        #TODO: use fixtures
         from wepwawet.models import AuthUser, AuthGroup
         admins_group = AuthGroup(groupname=u'admins')
         user = AuthUser(
-            username=u'admin_user',
-            password=u'admin_pass',
+            username=u'username',
+            password=u'password',
             group=admins_group)
         self.DBSession.add(user)
         response = self.testapp.get('/login', status=200)
@@ -166,8 +156,8 @@ class FunctionalViewRootTests(unittest.TestCase):
         params = {
             'form_submitted': u'',
             '_csrf': csrf_token,
-            'username': u'admin_user',
-            'password': u'admin_pass',
+            'username': u'username',
+            'password': u'password',
             'submit': True}
         response = self.testapp.post('/login', params, status=302)
         redirect = response.follow()
@@ -206,7 +196,3 @@ class FunctionalViewRootTests(unittest.TestCase):
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
         self.assertTrue('You have been disconnected' in redirect.body)
-
-
-
-

@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
+import os
 from unittest import TestCase
 
+from paste.deploy.loadwsgi import appconfig
+from sqlalchemy import engine_from_config
 
-class ModelsTestCase(TestCase):
+from wepwawet.models import DBSession, Base
+
+
+here = os.path.dirname(__file__)
+settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
+
+
+class WepwawetTestCase(TestCase):
     def setUp(self):
-        from wepwawet.models import DBSession, Base
-        from sqlalchemy import create_engine
-        engine = create_engine('sqlite:///:memory:')
+        self.settings = settings
+        engine = engine_from_config(self.settings, prefix='sqlalchemy.')
         DBSession.configure(bind=engine)
         Base.metadata.bind = engine
         Base.metadata.create_all(engine)
@@ -36,7 +45,7 @@ class ModelsTestCase(TestCase):
             group = self.auth_group_fixture()
             user = AuthUser()
             user.username = u'username'
-            user.first_name = u'first_name'
+            user.first_name = u'firstname'
             user.last_name=u'lastname'
             user.email=u'email@email.com'
             user.password=u'password'

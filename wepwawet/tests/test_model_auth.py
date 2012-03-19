@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from wepwawet.tests import ModelsTestCase
+from wepwawet.tests import WepwawetTestCase
 
 
-class ModelAuthUserTests(ModelsTestCase):
+class ModelAuthUserTests(WepwawetTestCase):
     """Tests for the `AuthUser` model class."""
 
     def test_01_columns(self):
@@ -66,7 +66,7 @@ class ModelAuthUserTests(ModelsTestCase):
         self.assertFalse(AuthUser.check_password(u'nobody', u'password'))
 
 
-class ModelAuthGroupTests(ModelsTestCase):
+class ModelAuthGroupTests(WepwawetTestCase):
     """Tests for the `AuthGroup` model class."""
 
     def test_01_columns(self):
