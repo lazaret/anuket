@@ -1,16 +1,16 @@
-========
 Wepwawet
-========
-:Version: 0.2, released XXXX-XX-XX
+********
+:Author: LDPL - Laboratoire Départemental de Préhistoire du Lazaret
+:Version: 0.2, released 2012-XX-XX
 :PyPI:
-:License: MIT license (Expat license)
+:License: Expat license (MIT license)
 :Docs:
 :Source: https://bitbucket.org/miniwark/wepwawet (Git)
 :Bugs: https://bitbucket.org/miniwark/wepwawet/issues
 
 
 Introduction
-=======
+============
 **Wepwawet** is an opiniated Python web framework based on Pyramid_. It is
 intended to be used by other Pyramid applications as a base for common choices.
 
@@ -22,11 +22,24 @@ Choices done for you by Wepwawet:
 * Formencode_: Form validator
 * Pyramid_simpleform_: Form generator
 * Mako_: Templating engine
-* `Twitter Bootstrap`_: Default template
+* `Twitter Bootstrap`_: Default templates
 
 The project will also probably integrate:
 
 * Alembic_: SQLAlchemy migration toolkit
+
+
+Usage
+=====
+Wepwawet is writed so he can be extended by Pyramid applications. Normaly,
+it is not necessary to fork Wepwawet. Just use the extensibility mecanism. For
+details please read the `Pyramid documentation
+<http://pyramid.readthedocs.org/en/1.3-branch/narr/extending.html>`_
+
+The main objective of Wepwawet, is to be used for database related
+applications. We will use it at the `Lazaret laboratory`_ mostly for filling
+and quering relational databases with web forms. If your application is not
+like this, Wepwawet may not be suited for you.
 
 
 Warning
@@ -37,21 +50,8 @@ made before the 1.0 version. In particulary take care of the facts than:
 * The database schema is subject to change
 * Colander may be choised over Formencode for forms validation
 * Pyramid_simpleform may be replaced by another form generator
-* A password checker have to be choised. Probably ctypescracklib or Pwtools.
-* A database versioning mecanism will probably be integrated later
-
-
-Usage
-=====
-Wepwawet is writed so he can be extended by Pyramid applications. Normaly,
-it is not necessary to fork Wepwawet. Just use the extensibility mecanism. For
-details please read the `Pyramid documentation
-<http://docs.pylonsproject.org/projects/pyramid/en/1.3-branch/narr/extending.html>`_
-
-The main objective of Wepwawet, is to be used for database related
-applications. We will use it at the `Lazaret laboratory`_ mostly for filling
-and quering relational databases with web forms. If your application is not
-like this, Wepwawet may not be suited for you.
+* A password checker have to be choised. Probably ctypescracklib or Pwtools
+* Alembic database versioning mecanism will probably be integrated
 
 
 Alternatives
@@ -62,18 +62,31 @@ may be best suited to your needs. Have a look on Akhet_, Apex_, Kotti_, Khufu_,
 Ptah_, PyCK_, Pyrone_.
 
 
-.. include:: ../AUTHORS.txt
-
-.. include:: ../TODO.txt
-
-.. include:: ../LICENSE.txt
-
+Narative documentation
+======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-    flash_messages
-    testing
+   flash_messages.rst
+   testing.rst
+   authors.rst
+   licenses.rst
+   changes.rst
+   todo.rst
+
+
+API Documentation
+==================
+
+.. toctree::
+   :maxdepth: 1
+
+   api.rst
+
+
+Index and Glossary
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
@@ -85,7 +98,7 @@ Ptah_, PyCK_, Pyrone_.
 .. _Alembic: http://pypi.python.org/pypi/alembic
 .. _Formencode: http://www.formencode.org/
 .. _Mako: http://www.makotemplates.org/
-.. _Pyramid: http://docs.pylonsproject.org/en/latest/docs/pyramid.html
+.. _Pyramid: http://pylonsproject.org/
 .. _Pyramid_simpleform: http://packages.python.org/pyramid_simpleform/
 .. _SQLAlchemy: http://www.sqlalchemy.org/
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/

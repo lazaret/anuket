@@ -1,4 +1,21 @@
-0.1a
----
+Changelog
+=========
 
--  Initial version
+0.2: released 2012-03-20
+-------------------
+
+First public release with :
+
+* Add 100% tests coverage
+* Add minimalistic documentation
+
+
+0.1: released 2012-03-12
+------------------------
+
+Initial release release with :
+
+* Base templates with mako and Twitter Bootstrap
+* Basic Auth&Auth mecanism and model with SQLAlchemy
+
+

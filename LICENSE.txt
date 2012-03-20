@@ -1,9 +1,8 @@
 Wepwawet License
 ================
-
 The code in Wepwawet is supplied under this license:
 
-===============================================================================
+
 Copyright (c) 2012, LDPL - Laboratoire Départemental de Préhistoire du Lazaret
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -24,15 +23,14 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-===============================================================================
 
 
 Additional Licenses
 ===================
 
-* Wepwawet use the Twitter Bootstrap for his templates. Twitter Boostrap is
+Wepwawet use the Twitter Bootstrap for his templates. Twitter Boostrap is
 licencied under the Apache 2 license. See http://twitter.github.com/bootstrap/
 
-* Wepwawet use the Raphaël Icon-Set via @font-face for his templates. The
+Wepwawet use the Raphaël Icon-Set via @font-face for his templates. The
 Raphaël Icon-Set via @font-face is licencied under the MIT license (Expat
 license). See http://icons.marekventur.de/

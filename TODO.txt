@@ -1,11 +1,6 @@
 Todo
 ====
 
-0.2
----
-
-* Add tests and doc
-
 0.3
 ---
 
