@@ -17,4 +17,4 @@ Wepwawet is provided under the Expat licence (or MIT licence).
 Authors
 -------
 
-Wepwawet is maintained by the ``Lazaret laboratory <http://lazaret.unice.fr>`_.
+Wepwawet is maintained by the `Lazaret laboratory <http://lazaret.unice.fr>`_.
