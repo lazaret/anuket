@@ -9,6 +9,7 @@
   <thead>
     <tr>
       <th>${_(u"Username")}</th>
+      <th>${_(u"Group")}</th>
       <th>${_(u"First name")}</th>
       <th>${_(u"Last name")}</th>
       <th>${_(u"Email")}</th>
@@ -21,6 +22,7 @@
     % for user in users:
     <tr>
       <td>${user.username}</td>
+      <td>${user.group.groupname}</td>
       <td>${user.first_name}</td>
       <td>${user.last_name}</td>
       <td>${user.email}</td>

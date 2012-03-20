@@ -19,15 +19,16 @@ def includeme(config):
     """Add user management routes."""
     config.add_route('tools.user_list', '/tools/user')
     config.add_route('tools.user_add', '/tools/user/add')
+    config.add_route('tools.user_show', '/tools/user/{user_id}/show')
     config.add_route('tools.user_edit', '/tools/user/{user_id}/edit')
     config.add_route('tools.user_delete', '/tools/user/{user_id}/delete')
 #    config.add_route('tools.user_search', '/tools/user/search')
-#    config.add_route('tools.user_view', '/tools/user/{user_id}/view')
+
 
 
 @view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
 def user_list_view(request):
-    """Render the user list page."""
+    """ Render the user list page."""
     search = request.params.get('search')
     if search:
         users = DBSession.query(AuthUser).filter(AuthUser.username.like('%'+search+'%'))
@@ -39,10 +40,12 @@ def user_list_view(request):
                           items_per_page=20,
                           url=page_url)
     return dict(users=users)
+    #TODO add srtable collumns
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
 def user_add_view(request):
+    """ Render the add user form."""
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
         user = form.bind(AuthUser())
@@ -52,8 +55,22 @@ def user_add_view(request):
     return dict(renderer=FormRenderer(form))
 
 
+@view_config(route_name='tools.user_show', permission='admin', renderer='/tools/user/user_show.mako')
+def user_show_view(request):
+    """ Render the show user datas page."""
+    user_id = request.matchdict['user_id']
+    user = AuthUser.get_by_id(user_id)
+    if not user:
+        request.session.flash(_(u"This user did not exist!"), 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
+    #TODO return dict(renderer=FormRenderer(form))
+    #TODO create a template based on uneditables fields
+    #TODO add an edit and a delete butons on the template
+
+
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
 def user_edit_view(request):
+    """ Render the edit user form."""
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -66,10 +83,12 @@ def user_edit_view(request):
         request.session.flash(_(u"User updated successfully."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form))
+    #TODO move password fields to password_edit_view
 
 
 @view_config(route_name='tools.user_delete', permission='admin')
 def user_delete_view(request):
+    """ Delete an user."""
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -80,6 +99,12 @@ def user_delete_view(request):
     return HTTPFound(location=request.route_path('tools.user_list'))
 
 
-#@view_config(route_name='tools.user_search')
+#@view_config(route_name='tools.password_edit', permission='admin', renderer='/tools/user/password_edit.mako')
+#def password_edit_view(request):
+#    """ Render the change password form."""
+#    pass
+
+
+#@view_config(route_name='tools.user_search', permission='admin', renderer='/tools/user/user_search.mako')
 #def user_search_view(request):
 #    pass
