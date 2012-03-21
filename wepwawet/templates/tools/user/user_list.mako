@@ -8,11 +8,11 @@
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th>${_(u"Username")}</th>
-      <th>${_(u"Group")}</th>
-      <th>${_(u"First name")}</th>
-      <th>${_(u"Last name")}</th>
+      <th>${sortable_link('username')}${_(u"Username")}</a></th>
+      <th>${sortable_link('first_name')}${_(u"First name")}</a></th>
+      <th>${sortable_link('last_name')}${_(u"Last name")}</a></th>
       <th>${_(u"Email")}</th>
+      <th>${_(u"Group")}</th>
       <th style="width: 180px;"></th>
     </tr>
   </thead>
@@ -22,10 +22,10 @@
     % for user in users:
     <tr>
       <td>${user.username}</td>
-      <td>${user.group.groupname}</td>
       <td>${user.first_name}</td>
       <td>${user.last_name}</td>
       <td>${user.email}</td>
+      <td>${user.group.groupname}</td>
       <td>
         <div class="btn-group">
           <a href="${request.route_path("tools.user_show", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">z</span>${_(u"Show")}</a>
@@ -53,6 +53,16 @@ ${_(u"User list")}
 ## Add record button
 <%def name="add_button()">
   <a href="${request.route_path("tools.user_add")}" class="btn btn-primary pull-right"><span class="icon">@</span>${_(u"Add new user")}</a>
+</%def>
+
+## Sortable columns
+<%def name="sortable_link(column)">
+  <% search = request.params.get('search') %>
+  %if search:
+    <a href="${request.route_path('tools.user_list')}?sort=${column}&search=${search}">
+  %else:
+    <a href="${request.route_path('tools.user_list')}?sort=${column}">
+  %endif
 </%def>
 
 ## Search box
