@@ -9,7 +9,7 @@ from webhelpers import paginate
 
 from wepwawet.lib.i18n import MessageFactory as _
 from wepwawet.forms import UserForm
-from wepwawet.models import DBSession, AuthUser
+from wepwawet.models import DBSession, AuthUser, AuthGroup
 
 
 log = logging.getLogger(__name__)
@@ -24,6 +24,11 @@ def includeme(config):
     config.add_route('tools.user_delete', '/tools/user/{user_id}/delete')
 #    config.add_route('tools.user_search', '/tools/user/search')
 
+
+def get_grouplist():
+    groups = DBSession.query(AuthGroup).order_by(AuthGroup.groupname).all()
+    grouplist = [(group.group_id, group.groupname) for group in groups]
+    return grouplist
 
 
 @view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
@@ -40,19 +45,21 @@ def user_list_view(request):
                           items_per_page=20,
                           url=page_url)
     return dict(users=users)
-    #TODO add srtable collumns
+    #TODO add sortable collumns
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
 def user_add_view(request):
     """ Render the add user form."""
+    grouplist = get_grouplist()
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
         user = form.bind(AuthUser())
         DBSession.add(user)
         request.session.flash(_(u"User added successfully."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(renderer=FormRenderer(form))
+    return dict(renderer=FormRenderer(form),
+                grouplist=grouplist)
 
 
 @view_config(route_name='tools.user_show', permission='admin', renderer='/tools/user/user_show.mako')
@@ -63,9 +70,7 @@ def user_show_view(request):
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    #TODO return dict(renderer=FormRenderer(form))
-    #TODO create a template based on uneditables fields
-    #TODO add an edit and a delete butons on the template
+    return dict(user=user)
 
 
 @view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
@@ -76,13 +81,15 @@ def user_edit_view(request):
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
+    grouplist = get_grouplist()
     form = Form(request, schema=UserForm, obj=user)
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
         DBSession.add(user)
         request.session.flash(_(u"User updated successfully."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
-    return dict(renderer=FormRenderer(form))
+    return dict(renderer=FormRenderer(form),
+                grouplist=grouplist)
     #TODO move password fields to password_edit_view
 
 

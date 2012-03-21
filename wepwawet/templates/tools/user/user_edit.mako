@@ -10,11 +10,11 @@
       ${user_form_fields()}
       <div class="form-actions">
         <div class="row">
-          <div class="span1">
-            <button type="submit" name="form_submitted" class="btn btn-primary" >${_(u"Update")}</button>
+          <div class="span2">
+            <button type="submit" name="form_submitted" class="btn btn-primary"><span class="icon">Ã</span>${_(u"Update")}</button>
           </div>
-          <div class="span1">
-            <button type="button" onclick="window.location='/tools/user'" class="btn">${_(u"Cancel")}</button>
+          <div class="span2">
+            <button type="button" onclick="window.location='/tools/user'" class="btn"><span class="icon">Â</span>${_(u"Cancel")}</button>
           </div>
         </div>
       </div>

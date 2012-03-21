@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from formencode.schema import Schema
-from formencode.validators import String, Email, FieldsMatch
+from formencode.validators import String, Email, FieldsMatch, Int
 
 from wepwawet.lib.validators import UsernameString, CapitalString
 
@@ -21,6 +21,7 @@ class UserForm(Schema):
     email = Email()
     password = String(min=6, max=80, strip=True)
     password_confirm = String(strip=True)
+    group_id = Int(not_empty=True)
 
     chained_validators = [
         FieldsMatch('password', 'password_confirm'),

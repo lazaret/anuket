@@ -13,7 +13,7 @@
       <th>${_(u"First name")}</th>
       <th>${_(u"Last name")}</th>
       <th>${_(u"Email")}</th>
-      <th style="width: 175px;"></th>
+      <th style="width: 180px;"></th>
     </tr>
   </thead>
 ##  <tfoot>
@@ -28,9 +28,9 @@
       <td>${user.email}</td>
       <td>
         <div class="btn-group">
-          <a href="${request.route_path("home")}" class="btn btn-mini"><span class="icon">i</span>${_(u"Show")}</a>
+          <a href="${request.route_path("tools.user_show", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">z</span>${_(u"Show")}</a>
           <a href="${request.route_path("tools.user_edit", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">></span>${_(u"Edit")}</a>
-          <a href="#confirm_delete" class="btn btn-mini" data-toggle="modal" onclick="$('#confirm_delete #delete_button').attr('href', '${request.route_path("tools.user_delete", user_id=user.user_id)}');"><span class="icon">Â</span>${_(u"Delete")}</a>
+          <a href="#confirm_delete" class="btn btn-mini" data-toggle="modal" onclick="$('#confirm_delete #delete_button').attr('href', '${request.route_path("tools.user_delete", user_id=user.user_id)}');"><span class="icon">Ë</span>${_(u"Delete")}</a>
         </div>
       </td>
     </tr>
