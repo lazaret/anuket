@@ -5,15 +5,16 @@
 <%namespace file="wepwawet:templates/widgets/pager.mako" import="pager"/>
 
 
-<table class="table table-striped table-condensed">
+<table class="table table-striped table-condensed table-bordered">
   <thead>
     <tr>
+      <th style="width: 50px;"></th>
       <th>${sortable_link('username', u"Username")}</th>
       <th>${sortable_link('first_name', u"First name")}</th>
       <th>${sortable_link('last_name', u"Last name")}</th>
       <th>${_(u"Email")}</th>
       <th>${_(u"Group")}</th>
-      <th style="width: 180px;"></th>
+
     </tr>
   </thead>
 ##  <tfoot>
@@ -21,18 +22,23 @@
   <tbody>
     % for user in users:
     <tr>
+      <td> <!-- tool button -->
+        <div class="btn-group">
+          <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle"><span class="icon">`</span> <span class="caret"/></button>
+          <ul class="dropdown-menu">
+            <li><a href="${request.route_path("tools.user_show", user_id=user.user_id)}"><span class="icon">z</span>${_(u"Show")}</a></li>
+            <li><a href="${request.route_path("tools.user_edit", user_id=user.user_id)}"><span class="icon">></span>${_(u"Edit")}</a></li>
+            <li><a href="${request.route_path("tools.password_edit", user_id=user.user_id)}"><span class="icon">t</span>${_(u"Change password")}</a></li>
+            <li><a href="#confirm_delete" data-toggle="modal" onclick="$('#confirm_delete #delete_button').attr('href', '${request.route_path("tools.user_delete", user_id=user.user_id)}');"><span class="icon">Ë</span>${_(u"Delete")}</a></li>
+          </ul>
+        </div>
+      </td>
+
       <td>${user.username}</td>
       <td>${user.first_name}</td>
       <td>${user.last_name}</td>
       <td>${user.email}</td>
       <td>${user.group.groupname}</td>
-      <td>
-        <div class="btn-group">
-          <a href="${request.route_path("tools.user_show", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">z</span>${_(u"Show")}</a>
-          <a href="${request.route_path("tools.user_edit", user_id=user.user_id)}" class="btn btn-mini"><span class="icon">></span>${_(u"Edit")}</a>
-          <a href="#confirm_delete" class="btn btn-mini" data-toggle="modal" onclick="$('#confirm_delete #delete_button').attr('href', '${request.route_path("tools.user_delete", user_id=user.user_id)}');"><span class="icon">Ë</span>${_(u"Delete")}</a>
-        </div>
-      </td>
     </tr>
     % endfor
   </tbody>

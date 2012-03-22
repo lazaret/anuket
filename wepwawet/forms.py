@@ -26,3 +26,19 @@ class UserForm(Schema):
     chained_validators = [
         FieldsMatch('password', 'password_confirm'),
     ]
+
+
+class UserEditForm(UserForm):
+    """ Form validation schema for user pawword change."""
+    password = None
+    password_confirm = None
+
+
+class UserPasswordForm(UserForm):
+    """ Form validation schema for user pawword change."""
+    username = None
+    first_name = None
+    last_name = None
+    email = None
+    group_id = None
+

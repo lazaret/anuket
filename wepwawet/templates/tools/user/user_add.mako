@@ -2,12 +2,15 @@
 ##
 <%inherit file="wepwawet:templates/tools/user/base.mako" />
 <%namespace file="user_form_fields.mako" import="user_form_fields"/>
+<%namespace file="password_form_fields.mako" import="password_form_fields"/>
 
 
 <div class="row">
   <div class="span7 offset1">
     <form action="" method="post" class="form-horizontal">
+      ${renderer.csrf_token()}
       ${user_form_fields()}
+      ${password_form_fields()}
       <div class="form-actions">
         <div class="row">
           <div class="span2">
