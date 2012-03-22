@@ -46,6 +46,7 @@ class ViewUserTests(WepwawetTestCase):
 
     def test_04_user_add(self):
         """ Test the response of the `user_add` view."""
+        self.auth_group_fixture()
         from wepwawet.views.user import user_add_view
         request = testing.DummyRequest()
         request.method = 'POST' #required for form.validate()
@@ -54,6 +55,7 @@ class ViewUserTests(WepwawetTestCase):
         request.params['first_name'] = u'firstname'
         request.params['last_name'] = u'lastname'
         request.params['email'] = u'email@email.com'
+        request.params['group_id'] = 1
         request.params['password'] = u'password'
         request.params['password_confirm'] = u'password'
         response = user_add_view(request)
@@ -85,8 +87,7 @@ class ViewUserTests(WepwawetTestCase):
         request.params['first_name'] = u'firstname'
         request.params['last_name'] = u'lastname'
         request.params['email'] = u'email@email.com'
-        request.params['password'] = u'password'
-        request.params['password_confirm'] = u'password'
+        request.params['group_id'] = 1
         response = user_edit_view(request)
         self.assertEqual(response.location, '/tools/user')
         self.assertEqual(request.session.pop_flash('success')[0],
