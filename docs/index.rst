@@ -1,12 +1,12 @@
 Wepwawet
 ********
 :Author: LDPL - Laboratoire Départemental de Préhistoire du Lazaret
-:Version: 0.2, released 2012-XX-XX
+:Version: 0.3, released 2012-XX-XX
 :PyPI:
 :License: Expat license (MIT license)
-:Docs:
-:Source: https://bitbucket.org/miniwark/wepwawet (Git)
-:Bugs: https://bitbucket.org/miniwark/wepwawet/issues
+:Docs: http://wepwawet.readthedocs.org/
+:Source: https://github.com/lazaret/wepwawet (Git)
+:Bugs: https://github.com/lazaret/wepwawet/issues
 
 
 Introduction
