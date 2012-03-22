@@ -3,13 +3,11 @@ language: python
 python:
     - 2.7
 
-# command to install software
+# command to install software and tests prerequistes
 install:
-    python setup.py install
-
-# command to install tests prerequistes
-after_install:
-    pip install WebTest
+    - python setup.py develop
+    - pip install coverage webtest --use-mirrors
 
 # command to run tests
-script: nosetests
+script:
+    - nosetests
