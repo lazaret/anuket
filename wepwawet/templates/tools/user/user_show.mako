@@ -1,6 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
-<%inherit file="wepwawet:templates/tools/base.mako" />
+<%inherit file="wepwawet:templates/tools/user/base.mako" />
 <%namespace file="wepwawet:templates/widgets/confirm_delete.mako" import="confirm_delete"/>
 
 
