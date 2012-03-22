@@ -34,19 +34,18 @@ def get_grouplist():
 @view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
 def user_list_view(request):
     """ Render the user list page."""
-
+    sortable_columns = ['username', 'first_name', 'last_name']
     column = request.params.get('sort')
-#    direction = request.params.get('direction')
     search = request.params.get('search')
-
+    # construct the query
     users = DBSession.query(AuthUser)
-
-    columns = ['username', 'first_name', 'last_name']
-    if column and column in columns:
+    if column and column in sortable_columns:
         users = users.order_by(column)
-
+    else:
+        users = users.order_by(AuthUser.username)
     if search:
         users = users.filter(AuthUser.username.like('%'+search+'%'))
+
 
     #TODO add a flash message for empty searchs
 
@@ -56,31 +55,6 @@ def user_list_view(request):
                           items_per_page=20,
                           url=page_url)
     return dict(users=users)
-
-
-    # set the sort column
-#    column = request.params.get('column')
-#    columns = ['username', 'first_name', 'last_name', 'email']
-#    if not column or column not in columns:
-#        column = AuthUser.username
-#    # set the sort direction
-#    direction = request.params.get('direction')
-#    directions = ['asc', 'desc']
-#    if not direction or direction not in directions:
-#        direction = 'asc'
-#
-#    search = request.params.get('search')
-#    if search:
-#        users = DBSession.query(AuthUser).order_by(column).filter(AuthUser.username.like('%'+search+'%'))
-#    else:
-#        users = DBSession.query(AuthUser).order_by(column).all()
-#    page_url = paginate.PageURL_WebOb(request)
-#    users = paginate.Page(users,
-#                          page=int(request.params.get("page", 1)),
-#                          items_per_page=20,
-#                          url=page_url)
-#    return dict(users=users)
-#    #TODO add sortable collumns
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')

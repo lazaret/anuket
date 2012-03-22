@@ -8,9 +8,9 @@
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th>${sortable_link('username')}${_(u"Username")}</a></th>
-      <th>${sortable_link('first_name')}${_(u"First name")}</a></th>
-      <th>${sortable_link('last_name')}${_(u"Last name")}</a></th>
+      <th>${sortable_link('username', u"Username")}</th>
+      <th>${sortable_link('first_name', u"First name")}</th>
+      <th>${sortable_link('last_name', u"Last name")}</th>
       <th>${_(u"Email")}</th>
       <th>${_(u"Group")}</th>
       <th style="width: 180px;"></th>
@@ -38,6 +38,7 @@
   </tbody>
 </table>
 
+
 ## Pager
 ${pager(users)}
 
@@ -55,14 +56,20 @@ ${_(u"User list")}
   <a href="${request.route_path("tools.user_add")}" class="btn btn-primary pull-right"><span class="icon">@</span>${_(u"Add new user")}</a>
 </%def>
 
-## Sortable columns
-<%def name="sortable_link(column)">
+## Sortable column link
+<%def name="sortable_link(column, textlink)">
   <% search = request.params.get('search') %>
+  <% sort = request.params.get('sort') %>
+  <% postlink = "?sort="+column %>
   %if search:
-    <a href="${request.route_path('tools.user_list')}?sort=${column}&search=${search}">
-  %else:
-    <a href="${request.route_path('tools.user_list')}?sort=${column}">
+    <% postlink = postlink+"&search="+search %>
   %endif
+  %if sort==column:
+    <% arrow = u" ▾" %>
+  % else:
+    <% arrow = None %>
+  %endif
+  <a href="${request.route_path('tools.user_list')}${postlink}">${_(textlink)}${arrow}</a>
 </%def>
 
 ## Search box
