@@ -5,6 +5,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 ##from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+
 from sqlalchemy import engine_from_config
 
 from wepwawet.lib import subscribers
@@ -15,13 +16,21 @@ from wepwawet.views import root, tools, user
 
 def get_auth_user(request):
 
-    #TODO: bind to user model
     auth_user = unauthenticated_userid(request)
     return auth_user
 
 
+def add_authorization(config):
+    """ Configure authorization and authentification."""
+    authorization_policy = ACLAuthorizationPolicy()
+##    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
+    authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
+    config.set_authentication_policy(authentication_policy)
+    config.set_authorization_policy(authorization_policy)
+
+
 def add_static_views(config):
-    """ Congigure the static view."""
+    """ Configure the static view."""
     config.add_static_view('static', 'static', cache_max_age=3600)
 
 
@@ -39,16 +48,10 @@ def main(global_config, **settings):
     # configure session
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     config.set_session_factory(session_factory)
-
     # configure auth & auth
-    authorization_policy = ACLAuthorizationPolicy()
-##    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
-    authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
-    config.set_authentication_policy(authentication_policy)
-    config.set_authorization_policy(authorization_policy)
+    config.include(add_authorization)
     # set an auth_user object
     config.set_request_property(get_auth_user, 'auth_user', reify=True)
-
     # configure subscribers
     config.include(subscribers)
     # configure static views
