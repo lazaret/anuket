@@ -32,9 +32,18 @@ def get_grouplist():
     return grouplist
 
 
+def get_user_stats():
+    """ Get basic database statistics."""
+    # users and groups counts
+    usercount = DBSession.query(AuthUser.user_id).count()
+    groupcount = DBSession.query(AuthGroup.group_id).count()
+    return dict(usercount=usercount, groupcount=groupcount)
+
+
 @view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
 def user_list_view(request):
     """ Render the user list page."""
+    stats = get_user_stats()
     sortable_columns = ['username', 'first_name', 'last_name']
     column = request.params.get('sort')
     search = request.params.get('search')
@@ -46,16 +55,16 @@ def user_list_view(request):
         users = users.order_by(AuthUser.username)
     if search:
         users = users.filter(AuthUser.username.like('%'+search+'%'))
-
-
-    #TODO add a flash message for empty searchs
+    #add a flash message for empty results
+    if users.count() == 0:
+        request.session.flash(_(u"There is no results!"), 'error')
 
     page_url = paginate.PageURL_WebOb(request)
     users = paginate.Page(users,
                           page=int(request.params.get("page", 1)),
                           items_per_page=20,
                           url=page_url)
-    return dict(users=users)
+    return dict(users=users, stats=stats)
 
 
 @view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')

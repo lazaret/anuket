@@ -14,7 +14,6 @@
       <th>${sortable_link('last_name', u"Last name")}</th>
       <th>${_(u"Email")}</th>
       <th>${_(u"Group")}</th>
-
     </tr>
   </thead>
 ##  <tfoot>
@@ -33,7 +32,6 @@
           </ul>
         </div>
       </td>
-
       <td>${user.username}</td>
       <td>${user.first_name}</td>
       <td>${user.last_name}</td>
@@ -72,16 +70,41 @@ ${_(u"User list")}
   %endif
   %if sort==column:
     <% arrow = u" ▾" %>
-  % else:
+  %else:
     <% arrow = None %>
   %endif
   <a href="${request.route_path('tools.user_list')}${postlink}">${_(textlink)}${arrow}</a>
 </%def>
 
-## Search box
+## Aside search box
 <%def name="aside_search()">
+  <% search = request.params.get('search') %>
+  %if search:
+    <% placeholder = search %>
+  %else:
+    <% placeholder = _(u"Search") %>
+  %endif
 <form action="${request.route_path('tools.user_list')}" class="well form-search">
-  <input type="search" name="search" placeholder="${_(u"Search")}" class="input-small search-query">
+  <input type="search" name="search" placeholder="${placeholder}" class="input-small search-query">
 <button type="submit" class="btn btn-small pull-right"><span class="icon">z</span>${_(u"Search")}</button>
 </form>
+</%def>
+
+## Aside stats box
+<%def name="aside_stats()">
+<table class="table table-condensed table-bordered">
+  <thead>
+   <tr><th>${_(u"Statistics")}</th></tr>
+  <thead>
+  <tbody>
+    <tr>
+      <td>${_("Users")}</td>
+      <td>${stats['usercount']}</td>
+    </tr>
+    <tr>
+      <td>${_("Groups")}</td>
+      <td>${stats['groupcount']}</td>
+    </tr>
+  </tbody>
+</table>
 </%def>

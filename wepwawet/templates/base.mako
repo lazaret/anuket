@@ -58,6 +58,7 @@
       <aside class="span3">
         ${self.aside_menu()}
         ${self.aside_search()}
+        ${self.aside_stats()}
       </aside>
       </div>
     </div><!-- /container -->
@@ -87,3 +88,6 @@
 
 ## Aside search box
 <%def name="aside_search()"></%def>
+
+## Aside stats box
+<%def name="aside_stats()"></%def>
