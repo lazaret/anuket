@@ -11,14 +11,15 @@ install_requires = [
     'pyramid',
     'SQLAlchemy',
     'transaction',
+    'pyramid_exclog',
+    'pyramid_simpleform',
     'pyramid_tm',
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
     'Babel',
     'cryptacular',
-    'formencode',
-    'pyramid_simpleform',
+    'formencode'
     ]
 
 tests_require = [
