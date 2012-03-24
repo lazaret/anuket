@@ -83,6 +83,7 @@ class ViewUserTests(WepwawetTestCase):
         request.matchdict = {'user_id': 1}
         request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
+        request.params['user_id'] = 1
         request.params['username'] = u'username'
         request.params['first_name'] = u'firstname'
         request.params['last_name'] = u'lastname'

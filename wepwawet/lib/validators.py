@@ -59,7 +59,7 @@ class UniqueAuthEmail(validators.FancyValidator):
                 user_id = values['user_id']
             else:
                 user_id = None
-            if email and (user.user_id != user_id):
+            if user and (user.user_id != user_id):
                 errors = {'email': self.message('not_unique_email', state)}
                 raise Invalid(self.message('not_unique_email', state),
                                            values, state, error_dict=errors)
