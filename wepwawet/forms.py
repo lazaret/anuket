@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from formencode.schema import Schema
-from formencode.validators import String, Email, FieldsMatch, Int
+from formencode.validators import Email, FieldsMatch, Int, String
 
-from wepwawet.lib.validators import UsernameString, CapitalString
+from wepwawet.lib.validators import CapitalString, UsernameString
+from wepwawet.lib.validators import UniqueAuthEmail, UniqueAuthUsername
 
 
 class LoginForm(Schema):
@@ -25,17 +26,21 @@ class UserForm(Schema):
 
     chained_validators = [
         FieldsMatch('password', 'password_confirm'),
+        UniqueAuthUsername(),
+        UniqueAuthEmail(),
     ]
 
 
 class UserEditForm(UserForm):
-    """ Form validation schema for user pawword change."""
+    """ Form validation schema for user edit."""
+
+    user_id = Int() #used in forms hidden field
     password = None
     password_confirm = None
 
 
 class UserPasswordForm(UserForm):
-    """ Form validation schema for user pawword change."""
+    """ Form validation schema for user password change."""
     username = None
     first_name = None
     last_name = None

@@ -109,7 +109,6 @@ def user_edit_view(request):
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form),
                 grouplist=grouplist)
-    #TODO move password fields to password_edit_view
 
 
 @view_config(route_name='tools.user_delete', permission='admin')

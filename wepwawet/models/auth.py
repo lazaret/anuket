@@ -17,7 +17,7 @@ class AuthUser(Base):
     username = Column(Unicode(16), unique=True, nullable=False, index=True)
     first_name = Column(Unicode(255))
     last_name = Column(Unicode(255))
-    email = Column(Unicode(255), unique=True)
+    email = Column(Unicode(255), unique=True, index=True)
     created = Column(DateTime, default=datetime.utcnow)
     _password = Column('password', Unicode(80))
     #many-to-one
@@ -34,6 +34,10 @@ class AuthUser(Base):
     @classmethod
     def get_by_username(cls, username):
         return DBSession.query(cls).filter(cls.username == username).first()
+
+    @classmethod
+    def get_by_email(cls, email):
+        return DBSession.query(cls).filter(cls.email == email).first()
 
     @classmethod
     def check_password(cls, username, password):
