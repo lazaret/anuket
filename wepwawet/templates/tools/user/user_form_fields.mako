@@ -7,27 +7,39 @@
     <label for="username" class="control-label">${_(u"Username")}</label>
     <div class="controls">
       ${renderer.text('username', autofocus='autofocus')}
-      % for message in renderer.errors_for('username'):
-        <span class="help-inline"><span class="icon">8</span>${message}</span>
-      % endfor
+      %if renderer.errors_for('username'):
+        %for message in renderer.errors_for('username'):
+          <span class="help-inline"><span class="icon">8</span>${message}</span>
+        %endfor
+      %else:
+        ✩
+      %endif
     </div>
   </div>
   <div class="${'control-group error' if renderer.errors_for('first_name') else 'control-group'}">
     <label for="first_name" class="control-label">${_(u"First name")}</label>
     <div class="controls">
       ${renderer.text('first_name')}
-      % for message in renderer.errors_for('first_name'):
-        <span class="help-inline"><span class="icon">8</span>${message}</span>
-      % endfor
+      %if renderer.errors_for('first_name'):
+        %for message in renderer.errors_for('first_name'):
+          <span class="help-inline"><span class="icon">8</span>${message}</span>
+        %endfor
+      %else:
+        ✩
+      %endif
     </div>
   </div>
   <div class="${'control-group error' if renderer.errors_for('last_name') else 'control-group'}">
     <label for="last_name" class="control-label">${_(u"Last name")}</label>
     <div class="controls">
       ${renderer.text('last_name')}
-      % for message in renderer.errors_for('last_name'):
-        <span class="help-inline"><span class="icon">8</span>${message}</span>
-      % endfor
+      %if renderer.errors_for('last_name'):
+        %for message in renderer.errors_for('last_name'):
+          <span class="help-inline"><span class="icon">8</span>${message}</span>
+        %endfor
+      %else:
+        ✩
+      %endif
     </div>
   </div>
   <div class="${'control-group error' if renderer.errors_for('email') else 'control-group'}">

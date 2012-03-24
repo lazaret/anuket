@@ -21,7 +21,7 @@ class UserForm(Schema):
     last_name = CapitalString(not_empty=True, strip=True)
     email = Email()
     password = String(min=6, max=80, strip=True)
-    password_confirm = String(strip=True)
+    password_confirm = String(min=6, max=80, strip=True)
     group_id = Int(not_empty=True)
 
     chained_validators = [
