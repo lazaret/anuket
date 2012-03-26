@@ -18,6 +18,7 @@ install_requires = [
     'zope.sqlalchemy',
     'waitress',
     'Babel',
+    'cracklib',
     'cryptacular',
     'formencode'
     ]

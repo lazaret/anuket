@@ -74,3 +74,20 @@ class UniqueAuthEmail(validators.FancyValidator):
                 errors = {'email': self.message('not_unique_email', state)}
                 raise Invalid(self.message('not_unique_email', state),
                                            values, state, error_dict=errors)
+
+
+class SecurePassword(validators.String):
+    """ Secure password validator."""
+
+    messages = {
+        'not_secure': "This password is not secure"
+    }
+
+    def validate_python(self, value, state):
+        """ Use cracklib to check the strenght of passwords."""
+        from cracklib import VeryFascistCheck
+        try:
+            VeryFascistCheck(value)
+        except ValueError:
+            raise Invalid(self.message('not_secure', state), value, state)
+        return value

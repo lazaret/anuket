@@ -4,6 +4,7 @@ from formencode.validators import Email, FieldsMatch, Int, String
 
 from wepwawet.lib.validators import FirstNameString, LastNameString, UsernamePlainText
 from wepwawet.lib.validators import UniqueAuthEmail, UniqueAuthUsername
+from wepwawet.lib.validators import SecurePassword
 
 
 class LoginForm(Schema):
@@ -20,8 +21,8 @@ class UserForm(Schema):
     first_name = FirstNameString(not_empty=True, strip=True)
     last_name = LastNameString(not_empty=True, strip=True)
     email = Email()
-    password = String(min=6, max=80, strip=True)
-    password_confirm = String(min=6, max=80, strip=True)
+    password = SecurePassword(min=6, max=80, strip=True)
+    password_confirm = String(strip=True)
     group_id = Int(not_empty=True)
 
     chained_validators = [
