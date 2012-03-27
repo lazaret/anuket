@@ -1,3 +1,4 @@
+/* font face for icons */
 @font-face {font-family:
     'RaphaelIcons';
     src: url('../fonts/raphaelicons-webfont.eot');
@@ -27,12 +28,94 @@
     letter-spacing: 0.3em;
 }
 
-
+/* 60px to make the container go all the way to the bottom of the topbar */
 body {
-    /* 60px to make the container go all the way to the bottom of the topbar */
     padding-top: 60px;
 }
 
+
+/* animated menus */
+ .ca-menu{
+    padding:0;
+    margin:20px auto;
+    width: 1020px;
+}
+.ca-menu li{
+    width: 160px;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    float:left;
+    background: #fff;
+    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    margin-right: 12px;
+    -webkit-transition: all 200ms linear;
+    -moz-transition: all 200ms linear;
+    -o-transition: all 200ms linear;
+    -ms-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.ca-menu li:last-child{
+    margin-right: 0px;
+}
+.ca-menu li a{
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: #333;
+    position: relative;
+}
+.ca-icon{
+    font-family: 'RaphaelIcons', cursive;
+    font-size: 80px;
+    color: #333;
+    text-shadow: 0px 0px 1px #333;
+    line-height: 150px;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0px;
+    top: 0px;
+    text-align: center;
+    -webkit-transition: all 200ms linear;
+    -moz-transition: all 200ms linear;
+    -o-transition: all 200ms linear;
+    -ms-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.ca-content{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 50%;
+    top: 50%;
+}
+.ca-main{
+    font-size: 23px;
+    opacity: 0.8;
+    text-align: center;
+    -webkit-transition: all 200ms linear;
+    -moz-transition: all 200ms linear;
+    -o-transition: all 200ms linear;
+    -ms-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.ca-menu li:hover{
+    background-color: #000;
+}
+.ca-menu li:hover .ca-icon{
+    color: #fff;
+    font-size: 110px;
+}
+.ca-menu li:hover .ca-main{
+    color: #fff;
+}
+
+
+/* various */
 .flash-placeholder {
     min-height: 50px;
     -webkit-border-radius: 4px;

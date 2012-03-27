@@ -2,8 +2,26 @@
 ##
 <%inherit file="wepwawet:templates/tools/base.mako" />
 
-##TODO add Tools links
-<p></p>
+
+## Tools menu
+<ul class="ca-menu">
+  <li>
+    <a href="${request.route_path('tools.user_list')}">
+      <span class="ca-icon">L</span>
+      <div class="ca-content">
+        <h2 class="ca-main">${_(u"User management")}</h2>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a href="#">
+      <span class="ca-icon">F</span>
+      <div class="ca-content">
+        <h2 class="ca-main">Test</h2>
+      </div>
+    </a>
+  </li>
+</ul>
 
 
 ## Page title
