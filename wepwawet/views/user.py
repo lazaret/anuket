@@ -140,6 +140,10 @@ def password_edit_view(request):
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form))
 
+
 #@view_config(route_name='tools.user_search', permission='admin', renderer='/tools/user/user_search.mako')
 #def user_search_view(request):
-#    pass
+#    grouplist = get_grouplist()
+#    form = Form(request, schema=UserForm)
+#    return dict(renderer=FormRenderer(form),
+#                grouplist=grouplist)

@@ -68,11 +68,7 @@
     <!-- javascrip imports -->
     <script src="${request.static_url('wepwawet:static/js/jquery.min.js')}"></script>
     <script src="${request.static_url('wepwawet:static/js/bootstrap.min.js')}"></script>
-
-    <script>$(function() {
-      $('.dropdown-toggle').dropdown();}
-      );
-    </script>
+    <script src="${request.static_url('wepwawet:static/js/wepwawet.js')}"></script>
 
   </body>
 </html>
