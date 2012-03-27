@@ -56,3 +56,23 @@ class WepwawetTestCase(TestCase):
         except: #pragma: no cover
             self.DBSession.rollback()
             raise AssertionError
+
+    def password_fixture(self):
+        """ Prandom password generator fixture."""
+        from random import choice
+        from string import letters
+        try:
+            from cracklib import VeryFascistCheck
+            while True:
+                # generate 8 letters random password
+                password = u''.join([choice(letters) for i in range(8)])
+                try:
+                    VeryFascistCheck(password)
+                    break
+                except ValueError:
+                    # the generated password is not secure
+                    pass
+            return password
+        except: #pragma: no cover
+            # cracklib is probably missing
+            raise AssertionError
