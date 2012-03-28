@@ -65,10 +65,8 @@ class ViewUserTests(WepwawetTestCase):
 
     def test_05_not_validate_user_add(self):
         """ Test the response of the `user_add` view not validated."""
-        self.auth_user_fixture()
         from wepwawet.views.user import user_add_view
         request = testing.DummyRequest()
-        request.matchdict = {'user_id': 1}
         request.method = 'POST' #required for form.validate()
         request.params['form_submitted'] = u''
         response = user_add_view(request)
