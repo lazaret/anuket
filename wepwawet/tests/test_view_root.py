@@ -15,7 +15,6 @@ class ViewRootTests(WepwawetTestCase):
         super(ViewRootTests, self).tearDown()
         testing.tearDown()
 
-
     def test_01_routes(self):
         """ Test the routes of the `root` views."""
         request = testing.DummyRequest()
@@ -65,7 +64,7 @@ class ViewRootTests(WepwawetTestCase):
         from wepwawet.views.root import login_view
         self.auth_user_fixture()
         request = testing.DummyRequest()
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'username'
         request.params['password'] = u'password'
@@ -80,7 +79,7 @@ class ViewRootTests(WepwawetTestCase):
         from wepwawet.views.root import login_view
         self.auth_user_fixture()
         request = testing.DummyRequest()
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'wrong_user'
         request.params['password'] = u'wrong_pass'
@@ -110,7 +109,6 @@ class FunctionalViewRootTests(WepwawetTestCase):
     def tearDown(self):
         super(FunctionalViewRootTests, self).tearDown()
         del self.testapp
-
 
     def test_01_home_page(self):
         """ Test the home page."""
@@ -170,7 +168,8 @@ class FunctionalViewRootTests(WepwawetTestCase):
             'password': u'wrong_pass',
             'submit': True}
         response = self.testapp.post('/login', params, status=200)
-        self.assertTrue('Please check your login credentials!' in response.body)
+        self.assertTrue('Please check your login credentials!'
+                        in response.body)
 
     def test_07_login_without_csrf_token(self):
         """ Test login without a csrf token."""
@@ -181,7 +180,8 @@ class FunctionalViewRootTests(WepwawetTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.' in redirect.body)
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
 
     def test_08_logout(self):
         """ Test log out."""

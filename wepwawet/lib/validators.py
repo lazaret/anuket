@@ -42,7 +42,7 @@ class UniqueAuthUsername(validators.FancyValidator):
         user = AuthUser.get_by_username(username)
         # user_id is used to not raise an error when editing the user
         # the user_id must be available as hidden field in the edit form
-        if values.has_key('user_id'):
+        if 'user_id' in values:
             user_id = values['user_id']
         else:
             user_id = None
@@ -62,11 +62,11 @@ class UniqueAuthEmail(validators.FancyValidator):
     def validate_python(self, values, state):
         """ Check for the uniqueness of `email`."""
         email = values['email']
-        if email: # no check for None emails
+        if email:  # no check for None emails
             user = AuthUser.get_by_email(email)
             # user_id is used to not raise an error when editing the user
             # the user_id must be available as hidden field in the edit form
-            if values.has_key('user_id'):
+            if 'user_id' in values:
                 user_id = values['user_id']
             else:
                 user_id = None

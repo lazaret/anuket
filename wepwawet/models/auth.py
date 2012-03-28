@@ -24,7 +24,7 @@ class AuthUser(Base):
     group_id = Column(Integer, ForeignKey('auth_group.group_id'))
     group = relationship('AuthGroup')
 
-    def __repr__(self):  #pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return '<AuthUser: %s>' % self.username
 
     @classmethod
@@ -66,7 +66,7 @@ class AuthGroup(Base):
     group_id = Column(Integer, autoincrement=True, primary_key=True)
     groupname = Column(Unicode(16), unique=True, nullable=False, index=True)
 
-    def __repr__(self):  #pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return '<AuthGroup: %s>' % self.groupname
 
     @classmethod

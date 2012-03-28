@@ -3,6 +3,10 @@ language: python
 python:
     - 2.7
 
+# add requirement to build python cracklib
+before_install:
+    - sudo apt-get install libcrack2-dev
+
 # command to install software and tests prerequistes
 install:
     - python setup.py develop

@@ -20,7 +20,6 @@ class ScriptInitializedbTests(WepwawetTestCase):
         super(ScriptInitializedbTests, self).tearDown()
         Base.metadata.drop_all()
 
-
     def test_01_default_datas(self):
         """ test than the script create the default values."""
         from wepwawet.scripts.initializedb import initialize_db

@@ -40,7 +40,8 @@ def get_user_stats():
     return dict(usercount=usercount, groupcount=groupcount)
 
 
-@view_config(route_name='tools.user_list', permission='admin', renderer='/tools/user/user_list.mako')
+@view_config(route_name='tools.user_list', permission='admin',
+             renderer='/tools/user/user_list.mako')
 def user_list_view(request):
     """ Render the user list page."""
     stats = get_user_stats()
@@ -54,7 +55,7 @@ def user_list_view(request):
     else:
         users = users.order_by(AuthUser.username)
     if search:
-        users = users.filter(AuthUser.username.like('%'+search+'%'))
+        users = users.filter(AuthUser.username.like('%' + search + '%'))
     #add a flash message for empty results
     if users.count() == 0:
         request.session.flash(_(u"There is no results!"), 'error')
@@ -67,7 +68,8 @@ def user_list_view(request):
     return dict(users=users, stats=stats)
 
 
-@view_config(route_name='tools.user_add', permission='admin', renderer='/tools/user/user_add.mako')
+@view_config(route_name='tools.user_add', permission='admin',
+             renderer='/tools/user/user_add.mako')
 def user_add_view(request):
     """ Render the add user form."""
     grouplist = get_grouplist()
@@ -81,7 +83,8 @@ def user_add_view(request):
                 grouplist=grouplist)
 
 
-@view_config(route_name='tools.user_show', permission='admin', renderer='/tools/user/user_show.mako')
+@view_config(route_name='tools.user_show', permission='admin',
+             renderer='/tools/user/user_show.mako')
 def user_show_view(request):
     """ Render the show user datas page."""
     user_id = request.matchdict['user_id']
@@ -92,7 +95,8 @@ def user_show_view(request):
     return dict(user=user)
 
 
-@view_config(route_name='tools.user_edit', permission='admin', renderer='/tools/user/user_edit.mako')
+@view_config(route_name='tools.user_edit', permission='admin',
+             renderer='/tools/user/user_edit.mako')
 def user_edit_view(request):
     """ Render the edit user form."""
     user_id = request.matchdict['user_id']
@@ -124,7 +128,8 @@ def user_delete_view(request):
     return HTTPFound(location=request.route_path('tools.user_list'))
 
 
-@view_config(route_name='tools.password_edit', permission='admin', renderer='/tools/user/password_edit.mako')
+@view_config(route_name='tools.password_edit', permission='admin',
+             renderer='/tools/user/password_edit.mako')
 def password_edit_view(request):
     """ Render the change password form."""
     user_id = request.matchdict['user_id']
@@ -141,7 +146,8 @@ def password_edit_view(request):
     return dict(renderer=FormRenderer(form))
 
 
-#@view_config(route_name='tools.user_search', permission='admin', renderer='/tools/user/user_search.mako')
+#@view_config(route_name='tools.user_search', permission='admin',
+#              renderer='/tools/user/user_search.mako')
 #def user_search_view(request):
 #    grouplist = get_grouplist()
 #    form = Form(request, schema=UserForm)

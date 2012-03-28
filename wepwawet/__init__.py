@@ -23,7 +23,8 @@ def get_auth_user(request):
 def add_authorization(config):
     """ Configure authorization and authentification."""
     authorization_policy = ACLAuthorizationPolicy()
-##    authentication_policy = AuthTktAuthenticationPolicy('sosecret', callback=groupfinder)
+#    authentication_policy = AuthTktAuthenticationPolicy('sosecret',
+#                                                        callback=groupfinder)
     authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
     config.set_authentication_policy(authentication_policy)
     config.set_authorization_policy(authorization_policy)
