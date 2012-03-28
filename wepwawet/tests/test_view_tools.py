@@ -51,14 +51,14 @@ class FunctionalViewToolsTests(WepwawetTestCase):
         super(FunctionalViewToolsTests, self).tearDown()
         del self.testapp
 
-
     def test_01_tools_page_is_forbiden(self):
         """ Test than the tools page is forbiden for non logged users."""
         response = self.testapp.get('/tools', status=302)
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.' in redirect.body)
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
 
 #TODO add test for admin loged users
 #TODO add test for non authorised but logged user

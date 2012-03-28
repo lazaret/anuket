@@ -12,7 +12,8 @@ def includeme(config):
     config.add_route('tools.index', '/tools')
 
 
-@view_config(route_name='tools.index', permission='admin', renderer='/tools/index.mako')
+@view_config(route_name='tools.index', permission='admin',
+             renderer='/tools/index.mako')
 def tools_index_view(request):
     """Render the tools main page."""
     return dict()

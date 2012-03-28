@@ -24,7 +24,6 @@ class WepwawetTestCase(TestCase):
     def tearDown(self):
         self.DBSession.remove()
 
-
     def auth_group_fixture(self):
         """ Auth group test fixture."""
         try:
@@ -34,14 +33,14 @@ class WepwawetTestCase(TestCase):
             self.DBSession.add(group)
             self.DBSession.flush()
             return group
-        except: #pragma: no cover
+        except:  # pragma: no cover
             self.DBSession.rollback()
             raise AssertionError
 
     def auth_user_fixture(self):
         """ Auth user test fixture."""
         try:
-            from wepwawet.models import AuthUser, AuthGroup
+            from wepwawet.models import AuthUser
             group = self.auth_group_fixture()
             user = AuthUser()
             user.username = u'username'
@@ -53,6 +52,6 @@ class WepwawetTestCase(TestCase):
             self.DBSession.add(user)
             self.DBSession.flush()
             return user
-        except: #pragma: no cover
+        except:  # pragma: no cover
             self.DBSession.rollback()
             raise AssertionError

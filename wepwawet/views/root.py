@@ -2,7 +2,8 @@
 import logging
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget, remember
-from pyramid.view import view_config, forbidden_view_config, notfound_view_config
+from pyramid.view import view_config, forbidden_view_config
+from pyramid.view import notfound_view_config
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
@@ -39,10 +40,12 @@ def forbiden_view(request):
     Logged but not permited users are redirected to the home page.
     """
     if request.auth_user:
-        request.session.flash(_(u"You do not have the permission to do this!"), 'error')
+        request.session.flash(_(u"You do not have the permission to do this!"),
+                              'error')
         return HTTPFound(location=request.route_path('home'))
     else:
-        request.session.flash(_(u"You are not connected, please log in."), 'error')
+        request.session.flash(_(u"You are not connected, please log in."),
+                              'error')
         return HTTPFound(location=request.route_path('login'))
 
 
@@ -57,10 +60,13 @@ def login_view(request):
         password = request.params['password']
         if AuthUser.check_password(username, password):
             headers = remember(request, username)
-            request.session.flash(_(u"You have successfuly connected."), 'info')
-            return HTTPFound(location=request.route_path('home'), headers=headers)
+            request.session.flash(_(u"You have successfuly connected."),
+                                  'info')
+            return HTTPFound(location=request.route_path('home'),
+                             headers=headers)
         else:
-            request.session.flash(_(u"Please check your login credentials!"), 'error')
+            request.session.flash(_(u"Please check your login credentials!"),
+                                  'error')
     return dict(renderer=FormRenderer(form))
 
 

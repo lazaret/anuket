@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pyramid.events import BeforeRender, NewRequest
 from pyramid.httpexceptions import HTTPForbidden
-from pyramid.i18n import get_localizer, TranslationStringFactory
+from pyramid.i18n import get_localizer
 from pyramid.security import forget
 
 from wepwawet.lib.i18n import MessageFactory
@@ -23,18 +23,23 @@ def add_renderer_globals(event):
     settings = request.registry.settings
     event['brand_name'] = settings['wepwawet.brand_name']
 
+
 def add_localizer(event):
-    request = event.request
-    localizer = get_localizer(request)
+
     def auto_translate(string):
         return localizer.translate(MessageFactory(string))
+
+    request = event.request
+    localizer = get_localizer(request)
     request.localizer = localizer
     request.translate = auto_translate
+
 
 def csrf_validation(event):
     if event.request.method == 'POST':
         token = event.request.POST.get('_csrf')
         if token is None or token != event.request.session.get_csrf_token():
-            headers = forget(event.request) # force a log out
-            raise HTTPForbidden('CSRF token is missing or invalid', headers=headers)
+            headers = forget(event.request)  # force a log out
+            raise HTTPForbidden('CSRF token is missing or invalid',
+                                headers=headers)
             #TODO add CSRF errors to a log

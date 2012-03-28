@@ -15,14 +15,16 @@ class ViewUserTests(WepwawetTestCase):
         super(ViewUserTests, self).tearDown()
         testing.tearDown()
 
-
     def test_01_routes(self):
         """ Test the route of the `user` view."""
         request = testing.DummyRequest()
         self.assertEqual(request.route_path('tools.user_list'), '/tools/user')
-        self.assertEqual(request.route_path('tools.user_add'), '/tools/user/add')
-        self.assertEqual(request.route_path('tools.user_edit', user_id=1), '/tools/user/1/edit')
-        self.assertEqual(request.route_path('tools.user_delete', user_id=1), '/tools/user/1/delete')
+        self.assertEqual(request.route_path('tools.user_add'),
+                         '/tools/user/add')
+        self.assertEqual(request.route_path('tools.user_edit', user_id=1),
+                         '/tools/user/1/edit')
+        self.assertEqual(request.route_path('tools.user_delete', user_id=1),
+                         '/tools/user/1/delete')
 
     def test_02_user_list(self):
         """ Test the response of the `user_list` view."""
@@ -49,7 +51,7 @@ class ViewUserTests(WepwawetTestCase):
         self.auth_group_fixture()
         from wepwawet.views.user import user_add_view
         request = testing.DummyRequest()
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'username'
         request.params['first_name'] = u'firstname'
@@ -67,7 +69,7 @@ class ViewUserTests(WepwawetTestCase):
         """ Test the response of the `user_add` view not validated."""
         from wepwawet.views.user import user_add_view
         request = testing.DummyRequest()
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         response = user_add_view(request)
         from pyramid_simpleform.renderers import FormRenderer
@@ -79,7 +81,7 @@ class ViewUserTests(WepwawetTestCase):
         from wepwawet.views.user import user_edit_view
         request = testing.DummyRequest()
         request.matchdict = {'user_id': 1}
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['user_id'] = 1
         request.params['username'] = u'username'
@@ -98,7 +100,7 @@ class ViewUserTests(WepwawetTestCase):
         from wepwawet.views.user import user_edit_view
         request = testing.DummyRequest()
         request.matchdict = {'user_id': 1}
-        request.method = 'POST' #required for form.validate()
+        request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         response = user_edit_view(request)
         from pyramid_simpleform.renderers import FormRenderer
@@ -154,12 +156,11 @@ class FunctionalViewUserTests(WepwawetTestCase):
         super(FunctionalViewUserTests, self).tearDown()
         del self.testapp
 
-
     def test_01_user_list_page_is_forbiden(self):
         """ Test than the user list page is forbiden for non logged users."""
         response = self.testapp.get('/tools/user', status=302)
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.' in redirect.body)
-
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)

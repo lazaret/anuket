@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wepwawet.models import AuthUser, AuthGroup
+from wepwawet.models import AuthUser
 
 
 def groupfinder(username, request):

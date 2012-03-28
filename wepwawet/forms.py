@@ -2,12 +2,16 @@
 from formencode.schema import Schema
 from formencode.validators import Email, FieldsMatch, Int, String
 
-from wepwawet.lib.validators import FirstNameString, LastNameString, UsernamePlainText
-from wepwawet.lib.validators import UniqueAuthEmail, UniqueAuthUsername
+from wepwawet.lib.validators import FirstNameString
+from wepwawet.lib.validators import LastNameString
+from wepwawet.lib.validators import UsernamePlainText
+from wepwawet.lib.validators import UniqueAuthEmail
+from wepwawet.lib.validators import UniqueAuthUsername
 from wepwawet.lib.validators import SecurePassword
 
 
 class LoginForm(Schema):
+    """ Form validation schema for login."""
     filter_extra_fields = True
     allow_extra_fields = True
 
@@ -34,8 +38,7 @@ class UserForm(Schema):
 
 class UserEditForm(UserForm):
     """ Form validation schema for user edit."""
-
-    user_id = Int() #used in forms hidden field
+    user_id = Int()  # used in forms hidden field
     password = None
     password_confirm = None
 
@@ -47,4 +50,3 @@ class UserPasswordForm(UserForm):
     last_name = None
     email = None
     group_id = None
-

@@ -54,7 +54,6 @@ class ModelAuthUserTests(WepwawetTestCase):
     def test_06_crypted_password(self):
         """ Test than the recorded password is crypted in the database."""
         user = self.auth_user_fixture()
-        from wepwawet.models import AuthUser
         self.assertNotEqual(user._password, u'password')
 
     def test_07_check_password(self):
