@@ -27,19 +27,20 @@ tests_require = [
     'WebTest',
     ]
 
-setup(name='wepwawet',
-    version='0.2a',
+setup(
+    name='wepwawet',
+    version='0.3',
     description='Wepwawet web application',
-    long_description=README + '\n\n' +  CHANGES,
+    long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Programming Language :: Python",
         "Framework :: Pylons",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-    author='Bertrand Lecervoisier',
-    author_email='miniwark@gmail.com',
-    url='',
+    author='LDPL - Laboratoire Départemental de Préhistoire du Lazaret',
+    author_email='opensource@lazaret.unice.fr',
+    url='http://github.com/lazaret/wepwawet',
     license='LICENSE.txt',
     keywords='web wsgi pyramid',
     packages=find_packages(),
@@ -48,7 +49,7 @@ setup(name='wepwawet',
     install_requires=install_requires,
     tests_require=tests_require,
     test_suite='wepwawet',
-    message_extractors = {'wepwawet': [
+    message_extractors= {'wepwawet': [
         ('**.py', 'python', None),
         ('templates/**.mako', 'mako', None),
         ('static/**', 'ignore', None)]},
