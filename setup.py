@@ -28,9 +28,9 @@ tests_require = [
     ]
 
 setup(
-    name='wepwawet',
+    name='anuket',
     version='0.3',
-    description='Wepwawet web application',
+    description='Anuket web application',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Programming Language :: Python",
@@ -40,7 +40,7 @@ setup(
         ],
     author='LDPL - Laboratoire Départemental de Préhistoire du Lazaret',
     author_email='opensource@lazaret.unice.fr',
-    url='http://github.com/lazaret/wepwawet',
+    url='http://github.com/lazaret/anuket',
     license='LICENSE.txt',
     keywords='web wsgi pyramid',
     packages=find_packages(),
@@ -48,15 +48,15 @@ setup(
     zip_safe=False,
     install_requires=install_requires,
     tests_require=tests_require,
-    test_suite='wepwawet',
-    message_extractors= {'wepwawet': [
+    test_suite='anuket',
+    message_extractors= {'anuket': [
         ('**.py', 'python', None),
         ('templates/**.mako', 'mako', None),
         ('static/**', 'ignore', None)]},
     entry_points="""\
     [paste.app_factory]
-    main = wepwawet:main
+    main = anuket:main
     [console_scripts]
-    initialize_wepwawet_db = wepwawet.scripts.initializedb:main
+    initialize_anuket_db = anuket.scripts.initializedb:main
     """,
     )

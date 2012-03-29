@@ -1,0 +1,252 @@
+# French translations for Wepwawet.
+# Copyright (C) 2012 ORGANIZATION
+# This file is distributed under the same license as the Wepwawet project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Wepwawet 0.1a\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2012-03-29 15:34+0200\n"
+"PO-Revision-Date: 2012-02-22 20:35+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: anuket/templates/404.mako:6
+msgid "The page you're looking for isn't here."
+msgstr ""
+
+#: anuket/templates/404.mako:11
+msgid "Page not found!"
+msgstr "Page non trouvée !"
+
+#: anuket/templates/about.mako:12
+msgid "About"
+msgstr ""
+
+#: anuket/templates/index.mako:11 anuket/templates/widgets/top_navbar.mako:11
+msgid "Home"
+msgstr "Accueil"
+
+#: anuket/templates/login.mako:11
+#: anuket/templates/tools/user/user_form_fields.mako:7
+#: anuket/templates/tools/user/user_search.mako:16
+#: anuket/templates/tools/user/user_show.mako:13
+msgid "Username"
+msgstr ""
+
+#: anuket/templates/login.mako:17
+#: anuket/templates/tools/user/password_form_fields.mako:7
+msgid "Password"
+msgstr ""
+
+#: anuket/templates/login.mako:23 anuket/templates/login.mako:32
+#: anuket/templates/widgets/top_navbar.mako:27
+msgid "Login"
+msgstr "Connection"
+
+#: anuket/templates/tools/base.mako:11 anuket/templates/tools/index.mako:29
+#: anuket/templates/tools/user/base.mako:11
+#: anuket/templates/widgets/top_navbar.mako:17
+msgid "Tools"
+msgstr "Outils"
+
+#: anuket/templates/tools/base.mako:12 anuket/templates/tools/user/base.mako:12
+msgid "Tool list"
+msgstr ""
+
+#: anuket/templates/tools/base.mako:13 anuket/templates/tools/index.mako:12
+#: anuket/templates/tools/user/base.mako:13
+msgid "User management"
+msgstr ""
+
+#: anuket/templates/tools/user/password_edit.mako:15
+#: anuket/templates/tools/user/user_edit.mako:16
+msgid "Update"
+msgstr ""
+
+#: anuket/templates/tools/user/password_edit.mako:18
+#: anuket/templates/tools/user/user_add.mako:20
+#: anuket/templates/tools/user/user_edit.mako:19
+#: anuket/templates/widgets/confirm_delete.mako:22
+msgid "Cancel"
+msgstr ""
+
+#: anuket/templates/tools/user/password_edit.mako:28
+msgid "Edit password"
+msgstr ""
+
+#: anuket/templates/tools/user/password_form_fields.mako:20
+msgid "Confirm password"
+msgstr ""
+
+#: anuket/templates/tools/user/user_add.mako:17
+msgid "Submit"
+msgstr ""
+
+#: anuket/templates/tools/user/user_add.mako:30
+msgid "Add user"
+msgstr ""
+
+#: anuket/templates/tools/user/user_edit.mako:29
+msgid "Edit user"
+msgstr ""
+
+#: anuket/templates/tools/user/user_form_fields.mako:5
+#: anuket/templates/tools/user/user_show.mako:11
+msgid "User informations"
+msgstr ""
+
+#: anuket/templates/tools/user/user_form_fields.mako:20
+#: anuket/templates/tools/user/user_search.mako:22
+#: anuket/templates/tools/user/user_show.mako:19
+msgid "First name"
+msgstr ""
+
+#: anuket/templates/tools/user/user_form_fields.mako:33
+#: anuket/templates/tools/user/user_search.mako:38
+#: anuket/templates/tools/user/user_show.mako:25
+msgid "Last name"
+msgstr ""
+
+#: anuket/templates/tools/user/user_form_fields.mako:46
+#: anuket/templates/tools/user/user_list.mako:15
+#: anuket/templates/tools/user/user_show.mako:31
+msgid "Email"
+msgstr ""
+
+#: anuket/templates/tools/user/user_form_fields.mako:58
+#: anuket/templates/tools/user/user_list.mako:16
+#: anuket/templates/tools/user/user_show.mako:40
+msgid "Group"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:28
+msgid "Show"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:29
+#: anuket/templates/tools/user/user_show.mako:49
+msgid "Edit"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:30
+msgid "Change password"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:31
+#: anuket/templates/tools/user/user_show.mako:52
+#: anuket/templates/widgets/confirm_delete.mako:21
+msgid "Delete"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:55
+msgid "User list"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:60
+msgid "Add new user"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:85
+#: anuket/templates/tools/user/user_list.mako:89
+#: anuket/templates/tools/user/user_search.mako:57
+msgid "Search"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:97
+msgid "Statistics"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:101
+msgid "Users"
+msgstr ""
+
+#: anuket/templates/tools/user/user_list.mako:105
+msgid "Groups"
+msgstr ""
+
+#: anuket/templates/tools/user/user_search.mako:28
+#: anuket/templates/tools/user/user_search.mako:44
+msgid "OR"
+msgstr ""
+
+#: anuket/templates/tools/user/user_search.mako:29
+#: anuket/templates/tools/user/user_search.mako:45
+msgid "AND"
+msgstr ""
+
+#: anuket/templates/tools/user/user_search.mako:72
+msgid "Advanced user search"
+msgstr ""
+
+#: anuket/templates/tools/user/user_show.mako:66
+msgid "user"
+msgstr ""
+
+#: anuket/templates/widgets/confirm_delete.mako:7
+msgid "Confirm deletion"
+msgstr ""
+
+#: anuket/templates/widgets/confirm_delete.mako:15
+msgid "Are you sure?"
+msgstr ""
+
+#: anuket/templates/widgets/confirm_delete.mako:16
+msgid "Do you really want to delete this user?"
+msgstr ""
+
+#: anuket/templates/widgets/top_navbar.mako:22
+msgid "Logout"
+msgstr ""
+
+#: anuket/views/root.py:58
+msgid "You do not have the permission to do this!"
+msgstr ""
+
+#: anuket/views/root.py:62
+msgid "You are not connected, please log in."
+msgstr ""
+
+#: anuket/views/root.py:90
+msgid "You have successfuly connected."
+msgstr ""
+
+#: anuket/views/root.py:95
+msgid "Please check your login credentials!"
+msgstr ""
+
+#: anuket/views/root.py:115
+msgid "You have been disconnected."
+msgstr ""
+
+#: anuket/views/user.py:61
+msgid "There is no results!"
+msgstr ""
+
+#: anuket/views/user.py:80
+msgid "User added successfully."
+msgstr ""
+
+#: anuket/views/user.py:93 anuket/views/user.py:105 anuket/views/user.py:124
+#: anuket/views/user.py:138
+msgid "This user did not exist!"
+msgstr ""
+
+#: anuket/views/user.py:112
+msgid "User updated successfully."
+msgstr ""
+
+#: anuket/views/user.py:127
+msgid "User deleted."
+msgstr ""
+
+#: anuket/views/user.py:144
+msgid "Password updated successfully."
+msgstr ""
+

@@ -4,9 +4,7 @@ Todo
 0.3
 ---
 
-* Add logging and log display tool
-* Add security checks in tool (like default paswords alerts)
-* Add database export tool
+* Add logging
 
 0.4
 ---
@@ -16,6 +14,9 @@ Todo
 0.5
 ---
 
+* Add a logs display tool
+* Add security checks in tool (like default paswords alerts)
+* Add database export tool
 * Add database import / migration check
 * Add a database migration tool and base migration scripts -> alembic
 * Add data versioning in the database

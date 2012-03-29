@@ -1,8 +1,14 @@
 Changelog
 =========
 
+0.3 released 2012-03-
+-----------------------
+
+* Change package name to Anuket
+
+
 0.2: released 2012-03-20
--------------------
+------------------------
 
 First public release with :
 

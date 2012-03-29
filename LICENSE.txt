@@ -1,6 +1,6 @@
-Wepwawet License
+Anuket License
 ================
-The code in Wepwawet is supplied under this license:
+The code in Anuket is supplied under this license:
 
 
 Copyright (c) 2012, LDPL - Laboratoire Départemental de Préhistoire du Lazaret
@@ -28,9 +28,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Additional Licenses
 ===================
 
-Wepwawet use the Twitter Bootstrap for his templates. Twitter Boostrap is
+Anuket use the Twitter Bootstrap for his templates. Twitter Boostrap is
 licencied under the Apache 2 license. See http://twitter.github.com/bootstrap/
 
-Wepwawet use the Raphaël Icon-Set via @font-face for his templates. The
+Anuket use the Raphaël Icon-Set via @font-face for his templates. The
 Raphaël Icon-Set via @font-face is licencied under the MIT license (Expat
 license). See http://icons.marekventur.de/

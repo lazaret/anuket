@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Wepwawet documentation build configuration file, created by
+# Anuket documentation build configuration file, created by
 # sphinx-quickstart on Sat Feb 25 11:17:43 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Wepwawet'
+project = u'Anuket'
 copyright = u'2012, LDPL - Laboratoire Départemental de Préhistoire du Lazaret'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -110,7 +110,7 @@ html_theme = 'default'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/wepwawet.svg'
+html_logo = '_static/anuket.svg'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Wepwawetdoc'
+htmlhelp_basename = 'Anuketdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Wepwawet.tex', u'Wepwawet Documentation',
+  ('index', 'Anuket.tex', u'Anuket Documentation',
    u'Bertrand Lecervoisier', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'wepwawet', u'Wepwawet Documentation',
+    ('index', 'anuket', u'Anuket Documentation',
      [u'Bertrand Lecervoisier'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Wepwawet', u'Wepwawet Documentation',
-   u'Bertrand Lecervoisier', 'Wepwawet', 'One line description of project.',
+  ('index', 'Anuket', u'Anuket Documentation',
+   u'Bertrand Lecervoisier', 'Anuket', 'One line description of project.',
    'Miscellaneous'),
 ]
 

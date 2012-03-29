@@ -1,20 +1,20 @@
-Wepwawet
+Anuket
 ********
 :Author: LDPL - Laboratoire Départemental de Préhistoire du Lazaret
 :Version: 0.3, released 2012-XX-XX
 :PyPI:
 :License: Expat license (MIT license)
-:Docs: http://wepwawet.readthedocs.org/
-:Source: https://github.com/lazaret/wepwawet (Git)
-:Bugs: https://github.com/lazaret/wepwawet/issues
+:Docs: http://anuket.readthedocs.org/
+:Source: https://github.com/lazaret/anuket (Git)
+:Bugs: https://github.com/lazaret/anuket/issues
 
 
 Introduction
 ============
-**Wepwawet** is an opiniated Python web framework based on Pyramid_. It is
+**Anuket** is an opiniated Python web framework based on Pyramid_. It is
 intended to be used by other Pyramid applications as a base for common choices.
 
-Choices done for you by Wepwawet:
+Choices done for you by Anuket:
 
 * Pyramid_: Core web framework
 * URLDispatch: Resources location mecanism
@@ -31,15 +31,15 @@ The project will also probably integrate:
 
 Usage
 =====
-Wepwawet is writed so he can be extended by Pyramid applications. Normaly,
-it is not necessary to fork Wepwawet. Just use the extensibility mecanism. For
+Anuket is writed so he can be extended by Pyramid applications. Normaly,
+it is not necessary to fork Anuket. Just use the extensibility mecanism. For
 details please read the `Pyramid documentation
 <http://pyramid.readthedocs.org/en/1.3-branch/narr/extending.html>`_
 
-The main objective of Wepwawet, is to be used for database related
+The main objective of Anuket, is to be used for database related
 applications. We will use it at the `Lazaret laboratory`_ mostly for filling
 and quering relational databases with web forms. If your application is not
-like this, Wepwawet may not be suited for you.
+like this, Anuket may not be suited for you.
 
 
 Warning
@@ -56,7 +56,7 @@ made before the 1.0 version. In particulary take care of the facts than:
 
 Alternatives
 ============
-There are already other web frameworks and CMS based on Pyramid. Wepwawet have
+There are already other web frameworks and CMS based on Pyramid. Anuket have
 take  inspiration from them but the choices made are sometime different. They
 may be best suited to your needs. Have a look on Akhet_, Apex_, Kotti_, Khufu_,
 Ptah_, PyCK_, Pyrone_.
