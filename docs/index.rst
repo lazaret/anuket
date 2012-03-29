@@ -58,8 +58,8 @@ Alternatives
 ============
 There are already other web frameworks and CMS based on Pyramid. Anuket have
 take  inspiration from them but the choices made are sometime different. They
-may be best suited to your needs. Have a look on Akhet_, Apex_, Kotti_, Khufu_,
-Ptah_, PyCK_, Pyrone_.
+may be best suited to your needs. Have a look on Akhet_, Apex_, Cone.app_,
+Kotti_, Khufu_, Ptah_, PyCK_, Pyrone_ and more.
 
 
 Narative documentation
@@ -105,6 +105,7 @@ Index and Glossary
 
 .. _Akhet: http://pypi.python.org/pypi/Akhet
 .. _Apex: http://thesoftwarestudio.com/apex/
+.. _Cone.app: http://pypi.python.org/pypi/cone.app
 .. _Kotti: http://pypi.python.org/pypi/Kotti
 .. _Khufu: http://khufuproject.github.com/
 .. _Ptah: http://pypi.python.org/pypi/ptah

@@ -72,6 +72,6 @@ class AnuketTestCase(TestCase):
                     # the generated password is not secure
                     pass
             return password
-        except: #pragma: no cover
+        except:  # pragma: no cover
             # cracklib is probably missing
             raise AssertionError
