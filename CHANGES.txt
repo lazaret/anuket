@@ -5,6 +5,8 @@ Changelog
 -----------------------
 
 * Change package name to Anuket
+* Extend the user management tool
+* Add cracklib password checker
 
 
 0.2: released 2012-03-20
