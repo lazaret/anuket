@@ -8,12 +8,12 @@ log = logging.getLogger(__name__)
 
 
 def includeme(config):
-    """Add tools pages routes."""
+    """ Configure the tools home pages route."""
     config.add_route('tools.index', '/tools')
 
 
 @view_config(route_name='tools.index', permission='admin',
              renderer='/tools/index.mako')
 def tools_index_view(request):
-    """Render the tools main page."""
+    """ Render the tools home page."""
     return dict()
