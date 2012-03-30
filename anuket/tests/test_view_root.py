@@ -70,7 +70,7 @@ class ViewRootTests(AnuketTestCase):
         request.params['password'] = u'password'
         response = login_view(request)
         self.assertEqual(response.location, '/')
-        self.assertEqual(request.session.pop_flash('info')[0],
+        self.assertEqual(request.session.pop_flash('success')[0],
                          u"You have successfuly connected.")
 
     def test_07_login_view_wrong_credentials(self):
