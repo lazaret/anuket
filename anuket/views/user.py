@@ -42,7 +42,8 @@ def get_grouplist():
 def get_user_stats():
     """ Get basic database statistics.
 
-    Return users and group counts from the database."""
+    Return users and group counts from the database.
+    """
     usercount = DBSession.query(AuthUser.user_id).count()
     groupcount = DBSession.query(AuthGroup.group_id).count()
     return dict(usercount=usercount, groupcount=groupcount)

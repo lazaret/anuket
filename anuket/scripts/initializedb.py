@@ -10,6 +10,7 @@ from anuket.models import DBSession, Base, AuthUser, AuthGroup
 
 
 def usage(argv):  # pragma: no cover
+    """ Display the usage command."""
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri>\n'
           '(example: "%s development.ini")' % (cmd, cmd))
@@ -36,6 +37,9 @@ def initialize_db(config_uri=None):
 
 
 def main(argv=sys.argv):  # pragma: no cover
+    """ Create the database using the configuration from the ini file passed
+    in argv. If no argv then dispaly the usage command.
+    """
     if len(argv) != 2:
         usage(argv)
     config_uri = argv[1]
