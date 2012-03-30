@@ -11,4 +11,4 @@ Base = declarative_base()
 from anuket.models.auth import AuthUser, AuthGroup
 
 # Root factory (ACLS)
-from rootfactory import RootFactory
+from anuket.models.rootfactory import RootFactory

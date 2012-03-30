@@ -8,14 +8,14 @@ from pyramid.authorization import ACLAuthorizationPolicy
 
 from sqlalchemy import engine_from_config
 
-from anuket.lib import subscribers
+from anuket import subscribers
 from anuket.models import DBSession, RootFactory
 from anuket.security import groupfinder
 from anuket.views import root, tools, user
 
 
 def get_auth_user(request):
-
+    """ Get the authenticated user id from the request."""
     auth_user = unauthenticated_userid(request)
     return auth_user
 
@@ -36,7 +36,7 @@ def add_static_views(config):
 
 
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
+    """ Configure and returns a Pyramid WSGI application.
     """
     # configure SQLAlchemy
     engine = engine_from_config(settings, 'sqlalchemy.')
