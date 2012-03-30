@@ -68,8 +68,8 @@ class AnuketTestCase(TestCase):
                 try:
                     VeryFascistCheck(password)
                     break
-                except ValueError:
-                    # the generated password is not secure
+                except ValueError:  # pragma: no cover
+                    # the generated password did not pass cracklib check
                     pass
             return password
         except:  # pragma: no cover

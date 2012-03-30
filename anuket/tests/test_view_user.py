@@ -21,10 +21,14 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.route_path('tools.user_list'), '/tools/user')
         self.assertEqual(request.route_path('tools.user_add'),
                          '/tools/user/add')
+        self.assertEqual(request.route_path('tools.user_show', user_id=1),
+                         '/tools/user/1/show')
         self.assertEqual(request.route_path('tools.user_edit', user_id=1),
                          '/tools/user/1/edit')
         self.assertEqual(request.route_path('tools.user_delete', user_id=1),
                          '/tools/user/1/delete')
+        self.assertEqual(request.route_path('tools.password_edit', user_id=1),
+                         '/tools/user/1/password')
 
     def test_02_user_list(self):
         """ Test the response of the `user_list` view."""
@@ -120,7 +124,32 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-    def test_09_user_delete(self):
+    def test_09_user_show(self):
+        """ Test the response of the `user_show` view."""
+        self.auth_user_fixture()
+        from anuket.views.user import user_show_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        response = user_show_view(request)
+        from anuket.models import AuthUser
+        user = AuthUser.get_by_id(1)
+        self.assertIsInstance(response['user'], AuthUser)
+        self.assertEqual(response['user'], user)
+
+    def test_10_not_exist_user_show(self):
+        """ Test the response of the `user_show` view with a non existent
+        `user_id`.
+        """
+        self.auth_user_fixture()
+        from anuket.views.user import user_show_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 0}
+        response = user_show_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"This user did not exist!")
+
+    def test_11_user_delete(self):
         """ Test the response of the `user_delete` view."""
         self.auth_user_fixture()
         from anuket.views.user import user_delete_view
@@ -131,7 +160,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('warning')[0],
                          u"User deleted.")
 
-    def test_10_not_exist_user_delete(self):
+    def test_12_not_exist_user_delete(self):
         """ Test the response of the `user_delete` view with a non existent
         `user_id`.
         """
@@ -143,6 +172,42 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(response.location, '/tools/user')
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
+
+
+    def test_13_password_edit(self):
+        """ Test the response of the `password_edit_view` view."""
+        self.auth_user_fixture()
+        password = self.password_fixture()
+        from anuket.views.user import password_edit_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+#        request.method = 'POST'  # required for form.validate()
+#        request.params['form_submitted'] = u''
+#        request.params['user_id'] = 1
+#        request.params['password'] = password
+#        request.params['password_confirm'] = password
+#        response = password_edit_view(request)
+#        self.assertEqual(response.location, '/tools/user')
+#        self.assertEqual(request.session.pop_flash('success')[0],
+#                         u"Password updated successfully.")
+#TODO check the validation process seems than there is an unecessary unique
+#user check
+
+    def test_14_not_exist_password_edit(self):
+        """ Test the response of the `password_edit_view` view with a non
+        existent `user_id`.
+        """
+        self.auth_user_fixture()
+        from anuket.views.user import password_edit_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 0}
+        response = password_edit_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"This user did not exist!")
+
+#TODO: tests for sorted user list
+#TODO: non-validate tests for unsecure pass, user/mail not unique
 
 
 class FunctionalViewUserTests(AnuketTestCase):
