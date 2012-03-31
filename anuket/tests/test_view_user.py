@@ -230,3 +230,31 @@ class FunctionalViewUserTests(AnuketTestCase):
         self.assertEqual(redirect.request.path, '/login')
         self.assertTrue('You are not connected, please log in.'
                         in redirect.body)
+
+#TODO add a forbiden test for logged non-admin
+
+    def test_02_user_list_page_for_admin(self):
+        """ Test the user list page with admin credentials."""
+
+        # connect admin user
+        from anuket.models import AuthUser, AuthGroup
+        admins_group = AuthGroup(groupname=u'admins')
+        user = AuthUser(
+            username=u'username',
+            password=u'password',
+            group=admins_group)
+        self.DBSession.add(user)
+        response = self.testapp.get('/login', status=200)
+        csrf_token = response.form.fields['_csrf'][0].value
+        params = {
+            'form_submitted': u'',
+            '_csrf': csrf_token,
+            'username': u'username',
+            'password': u'password',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=302)
+        # realy tests the user list
+        response = self.testapp.get('/tools/user', status=200)
+        self.assertEqual(response.request.path, '/tools/user')
+        self.assertTrue('<title>User list' in response.body.replace('\n', ''))
+#TODO add a fixture to connect admin
