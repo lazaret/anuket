@@ -25,7 +25,7 @@ class AnuketTestCase(TestCase):
         self.DBSession.remove()
 
     def auth_group_fixture(self):
-        """ Auth group test fixture."""
+        """ Create a dummy auth group test fixture in the database."""
         try:
             from anuket.models import AuthGroup
             group = AuthGroup()
@@ -38,7 +38,7 @@ class AnuketTestCase(TestCase):
             raise AssertionError
 
     def auth_user_fixture(self):
-        """ Auth user test fixture."""
+        """ Create a dummy auth user test fixture in the database."""
         try:
             from anuket.models import AuthUser
             group = self.auth_group_fixture()
@@ -56,8 +56,37 @@ class AnuketTestCase(TestCase):
             self.DBSession.rollback()
             raise AssertionError
 
+    def admin_group_fixture(self):
+        """ Create an admin group test fixture in the database."""
+        try:
+            from anuket.models import AuthGroup
+            group = AuthGroup()
+            group.groupname = u'admins'
+            self.DBSession.add(group)
+            self.DBSession.flush()
+            return group
+        except:  # pragma: no cover
+            self.DBSession.rollback()
+            raise AssertionError
+
+    def admin_user_fixture(self):
+        """ Create an admin auth user test fixture in the database."""
+        try:
+            from anuket.models import AuthUser
+            group = self.admin_group_fixture()
+            user = AuthUser()
+            user.username = u'admin'
+            user.password = u'admin'
+            user.group = group
+            self.DBSession.add(user)
+            self.DBSession.flush()
+            return user
+        except:  # pragma: no cover
+            self.DBSession.rollback()
+            raise AssertionError
+
     def password_fixture(self):
-        """ Prandom password generator fixture."""
+        """ Random valid password generator fixture."""
         from random import choice
         from string import letters
         try:
@@ -75,3 +104,4 @@ class AnuketTestCase(TestCase):
         except:  # pragma: no cover
             # cracklib is probably missing
             raise AssertionError
+

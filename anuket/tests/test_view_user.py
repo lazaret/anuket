@@ -5,6 +5,7 @@ from anuket.tests import AnuketTestCase
 
 
 class ViewUserTests(AnuketTestCase):
+    """ Integration tests for the `user` view."""
     def setUp(self):
         super(ViewUserTests, self).setUp()
         self.config = testing.setUp()
@@ -173,7 +174,6 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-
     def test_13_password_edit(self):
         """ Test the response of the `password_edit_view` view."""
         self.auth_user_fixture()
@@ -211,6 +211,7 @@ class ViewUserTests(AnuketTestCase):
 
 
 class FunctionalViewUserTests(AnuketTestCase):
+    """ Functional tests for the `user` view."""
     def setUp(self):
         super(FunctionalViewUserTests, self).setUp()
         from anuket import main
@@ -231,26 +232,26 @@ class FunctionalViewUserTests(AnuketTestCase):
         self.assertTrue('You are not connected, please log in.'
                         in redirect.body)
 
+
+
+#    def test_02_user_list_page_is_forbiden_for_non_admin(self):
+#        """ Test than the user list page is forbiden for non admin users."""
+#        pass
 #TODO add a forbiden test for logged non-admin
 
-    def test_02_user_list_page_for_admin(self):
+
+    def test_03_user_list_page_for_admin(self):
         """ Test the user list page with admin credentials."""
 
         # connect admin user
-        from anuket.models import AuthUser, AuthGroup
-        admins_group = AuthGroup(groupname=u'admins')
-        user = AuthUser(
-            username=u'username',
-            password=u'password',
-            group=admins_group)
-        self.DBSession.add(user)
+        self.admin_user_fixture()
         response = self.testapp.get('/login', status=200)
         csrf_token = response.form.fields['_csrf'][0].value
         params = {
             'form_submitted': u'',
             '_csrf': csrf_token,
-            'username': u'username',
-            'password': u'password',
+            'username': u'admin',
+            'password': u'admin',
             'submit': True}
         response = self.testapp.post('/login', params, status=302)
         # realy tests the user list
@@ -258,3 +259,55 @@ class FunctionalViewUserTests(AnuketTestCase):
         self.assertEqual(response.request.path, '/tools/user')
         self.assertTrue('<title>User list' in response.body.replace('\n', ''))
 #TODO add a fixture to connect admin
+
+
+
+    def test_04_user_add_page_is_forbiden(self):
+        """ Test than the add user form is forbiden for non logged users."""
+        response = self.testapp.get('/tools/user/add', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
+
+    def test_05_user_show_page_is_forbiden(self):
+        """ Test than the show user page is forbiden for non logged users."""
+        self.auth_user_fixture()
+        response = self.testapp.get('/tools/user/1/show', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
+
+    def test_06_user_edit_page_is_forbiden(self):
+        """ Test than the edit user form is forbiden for non logged users."""
+        self.auth_user_fixture()
+        response = self.testapp.get('/tools/user/1/edit', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
+
+    def test_07_user_delete_is_forbiden(self):
+        """ Test than deleting an user is forbiden for non logged users."""
+        self.auth_user_fixture()
+        response = self.testapp.get('/tools/user/1/delete', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)
+        #TODO add a db check than the user is not deleted
+
+    def test_08_password_edit_page_is_forbiden(self):
+        """ Test than password change page is forbiden for non logged users."""
+        self.auth_user_fixture()
+        response = self.testapp.get('/tools/user/1/password', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/login')
+        self.assertTrue('You are not connected, please log in.'
+                        in redirect.body)

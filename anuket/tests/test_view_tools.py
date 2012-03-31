@@ -5,6 +5,7 @@ from anuket.tests import AnuketTestCase
 
 
 class ViewToolsTests(AnuketTestCase):
+    """ Integration tests for the `tools` view."""
     def setUp(self):
         super(ViewToolsTests, self).setUp()
         self.config = testing.setUp()
@@ -28,18 +29,8 @@ class ViewToolsTests(AnuketTestCase):
         self.assertEqual(response, {})
 
 
-#    def test_view_fn_forbidden(self):
-#        from pyramid.httpexceptions import HTTPForbidden
-#        from anuket.views.tools import tools_index_view
-#        self.config.testing_securitypolicy(userid='hank')
-#        request = testing.DummyRequest()
-#        request.context = testing.DummyResource()
-#        self.assertRaises(HTTPForbidden, tools_index_view, request)
-# do not work somewhere -> move to functional tests because @view_config
-# need a browser
-
-
 class FunctionalViewToolsTests(AnuketTestCase):
+    """ Functional tests for the `user` view."""
     def setUp(self):
         super(FunctionalViewToolsTests, self).setUp()
         from anuket import main
@@ -60,10 +51,46 @@ class FunctionalViewToolsTests(AnuketTestCase):
         self.assertTrue('You are not connected, please log in.'
                         in redirect.body)
 
-#TODO add test for admin loged users
-#TODO add test for non authorised but logged user
+    def test_02_tools_page_is_forbiden_for_non_admin(self):
+        """ Test than the tools page is forbiden for non admin users."""
+        # connect dummy user
+        self.auth_user_fixture()
+        response = self.testapp.get('/login', status=200)
+        csrf_token = response.form.fields['_csrf'][0].value
+        params = {
+            'form_submitted': u'',
+            '_csrf': csrf_token,
+            'username': u'username',
+            'password': u'password',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=302)
+        # realy test the tools page
+        response = self.testapp.get('/tools', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/')
+        self.assertTrue('You do not have the permission to do this!'
+                        in redirect.body)
 
-#    def test_01_tools(self):
-#        response = self.testapp.get('/tools')
-#        self.assertEqual(response.status, '200 OK')
-#        #TODO: error because need credentials
+    def test_03_tools_page_for_admin(self):
+        """ Test the tools page with admin credentials."""
+        # connect admin user
+        self.admin_user_fixture()
+        response = self.testapp.get('/login', status=200)
+        csrf_token = response.form.fields['_csrf'][0].value
+        params = {
+            'form_submitted': u'',
+            '_csrf': csrf_token,
+            'username': u'admin',
+            'password': u'admin',
+            'submit': True}
+        response = self.testapp.post('/login', params, status=302)
+        # realy test the tools page
+        response = self.testapp.get('/tools', status=200)
+        self.assertEqual(response.request.path, '/tools')
+        self.assertTrue('<title>Tools' in response.body.replace('\n', ''))
+
+
+#TODO add a fixture for loggin dummy user and admin
+
+
