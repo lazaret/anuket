@@ -45,8 +45,13 @@ class UserEditForm(UserForm):
 
 class UserPasswordForm(UserForm):
     """ Form validation schema for user password change."""
+    user_id = Int()  # used in forms hidden field
     username = None
     first_name = None
     last_name = None
     email = None
     group_id = None
+
+    chained_validators = [
+        FieldsMatch('password', 'password_confirm'),
+    ]

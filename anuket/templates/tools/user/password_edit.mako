@@ -8,6 +8,7 @@
   <div class="span7 offset1">
     <form action="" method="post" class="form-horizontal">
       ${renderer.csrf_token()}
+      ${renderer.hidden('user_id')}
       ${password_form_fields()}
       <div class="form-actions">
         <div class="row">

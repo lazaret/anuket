@@ -51,11 +51,33 @@ class ViewUserTests(AnuketTestCase):
         from webhelpers.paginate import Page
         self.assertIsInstance(response['users'], Page)
 
+    def test_04_user_list_with_search_empty(self):
+        """ Test the response of the `user_list` view with a search who have an
+        empty result.
+        """
+        self.dummy_user_fixture()
+        from anuket.views.user import user_list_view
+        request = testing.DummyRequest()
+        request.method = 'POST'
+        request.params['search'] = u'donotfoundme'
+        response = user_list_view(request)
+        from webhelpers.paginate import Page
+        self.assertIsInstance(response['users'], Page)
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"There is no results!")
 
-#TODO: tests for sorted user list
+    def test_05_user_list_with_sort(self):
+        """ Test the response of the `user_list` view with a column sort."""
+        self.dummy_user_fixture()
+        from anuket.views.user import user_list_view
+        request = testing.DummyRequest()
+        request.method = 'POST'
+        request.params['sort'] = 'username'
+        response = user_list_view(request)
+        from webhelpers.paginate import Page
+        self.assertIsInstance(response['users'], Page)
 
-
-    def test_04_user_add(self):
+    def test_06_user_add(self):
         """ Test the response of the `user_add` view."""
         self.dummy_group_fixture()
         password = self.password_fixture()
@@ -75,7 +97,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"User added successfully.")
 
-    def test_05_not_validate_user_add(self):
+    def test_07_not_validate_user_add(self):
         """ Test the response of the `user_add` view not validated."""
         from anuket.views.user import user_add_view
         request = testing.DummyRequest()
@@ -85,7 +107,7 @@ class ViewUserTests(AnuketTestCase):
         from pyramid_simpleform.renderers import FormRenderer
         self.assertIsInstance(response['renderer'], FormRenderer)
 
-    def test_06_user_edit(self):
+    def test_08_user_edit(self):
         """ Test the response of the `user_edit` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_edit_view
@@ -104,7 +126,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"User updated successfully.")
 
-    def test_07_not_validate_user_edit(self):
+    def test_09_not_validate_user_edit(self):
         """ Test the response of the `user_edit` view not validated."""
         self.dummy_user_fixture()
         from anuket.views.user import user_edit_view
@@ -116,7 +138,7 @@ class ViewUserTests(AnuketTestCase):
         from pyramid_simpleform.renderers import FormRenderer
         self.assertIsInstance(response['renderer'], FormRenderer)
 
-    def test_08_not_exist_user_edit(self):
+    def test_10_not_exist_user_edit(self):
         """ Test the response of the `user_edit` view with a non existent
         `user_id`.
         """
@@ -129,7 +151,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-    def test_09_user_show(self):
+    def test_11_user_show(self):
         """ Test the response of the `user_show` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_show_view
@@ -141,7 +163,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertIsInstance(response['user'], AuthUser)
         self.assertEqual(response['user'], user)
 
-    def test_10_not_exist_user_show(self):
+    def test_12_not_exist_user_show(self):
         """ Test the response of the `user_show` view with a non existent
         `user_id`.
         """
@@ -154,7 +176,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-    def test_11_user_delete(self):
+    def test_13_user_delete(self):
         """ Test the response of the `user_delete` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
@@ -165,7 +187,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('warning')[0],
                          u"User deleted.")
 
-    def test_12_not_exist_user_delete(self):
+    def test_14_not_exist_user_delete(self):
         """ Test the response of the `user_delete` view with a non existent
         `user_id`.
         """
@@ -178,26 +200,24 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-    def test_13_password_edit(self):
+    def test_15_password_edit(self):
         """ Test the response of the `password_edit_view` view."""
         self.dummy_user_fixture()
         password = self.password_fixture()
         from anuket.views.user import password_edit_view
         request = testing.DummyRequest()
         request.matchdict = {'user_id': 1}
-#        request.method = 'POST'  # required for form.validate()
-#        request.params['form_submitted'] = u''
-#        request.params['user_id'] = 1
-#        request.params['password'] = password
-#        request.params['password_confirm'] = password
-#        response = password_edit_view(request)
-#        self.assertEqual(response.location, '/tools/user')
-#        self.assertEqual(request.session.pop_flash('success')[0],
-#                         u"Password updated successfully.")
-#TODO check the validation process seems than there is an unecessary unique
-#user check
+        request.method = 'POST'  # required for form.validate()
+        request.params['form_submitted'] = u''
+        request.params['user_id'] = 1
+        request.params['password'] = password
+        request.params['password_confirm'] = password
+        response = password_edit_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('success')[0],
+                         u"Password updated successfully.")
 
-    def test_14_not_exist_password_edit(self):
+    def test_16_not_exist_password_edit(self):
         """ Test the response of the `password_edit_view` view with a non
         existent `user_id`.
         """
@@ -444,14 +464,14 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertEqual(response.request.path, '/tools/user/1/password')
         self.assertTrue('<title>Edit password'
                         in response.body.replace('\n', ''))
-#        # edit the admin user password with the form
-#        form = response.form
-#        form.set('password', password)
-#        form.set('password_confirm', password)
-#        submit = form.submit('form_submitted')
-#        redirect = submit.follow()
-#        self.assertEqual(redirect.request.path, '/tools/user')
-#        self.assertTrue('Password updated successfully.' in redirect.body)
+        # edit the admin user password with the form
+        form = response.form
+        form.set('password', password)
+        form.set('password_confirm', password)
+        submit = form.submit('form_submitted')
+        redirect = submit.follow()
+        self.assertEqual(redirect.request.path, '/tools/user')
+        self.assertTrue('Password updated successfully.' in redirect.body)
 
     def test_17_password_edit_page_is_forbiden_for_non_admin(self):
         """ Test than edit password form is forbiden for non admin users."""
