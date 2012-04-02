@@ -9,7 +9,7 @@ class ModelAuthUserTests(AnuketTestCase):
 
     def test_01_columns(self):
         """ Test the `AuthUser` model class columns and types."""
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         from anuket.models import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
         self.assertIsInstance(user.user_id, int)
@@ -22,7 +22,7 @@ class ModelAuthUserTests(AnuketTestCase):
 
     def test_02_username_unique_constraint(self):
         """ Test `username` uniqueness in the `AuthUser` model class."""
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         from anuket.models import AuthUser
         from sqlalchemy.exc import IntegrityError
         duplicate = AuthUser(username=u'username')
@@ -31,7 +31,7 @@ class ModelAuthUserTests(AnuketTestCase):
 
     def test_03_group_relation(self):
         """ Test the relationship with the `AuthGroup` model class."""
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         from anuket.models import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
         self.assertIsInstance(user.group_id, int)
@@ -39,26 +39,26 @@ class ModelAuthUserTests(AnuketTestCase):
 
     def test_04_get_by_id(self):
         """ Test the `get_by_id` method of the `AuthUser` model class."""
-        user = self.auth_user_fixture()
+        user = self.dummy_user_fixture()
         from anuket.models import AuthUser
         self.assertTrue(AuthUser.get_by_id(1))
         self.assertEqual(user, AuthUser.get_by_id(1))
 
     def test_05_get_by_username(self):
         """ Test the `get_by_username` method of the `AuthUser` model class."""
-        user = self.auth_user_fixture()
+        user = self.dummy_user_fixture()
         from anuket.models import AuthUser
         self.assertTrue(AuthUser.get_by_username(u'username'))
         self.assertEqual(user, AuthUser.get_by_username(u'username'))
 
     def test_06_crypted_password(self):
         """ Test than the recorded password is crypted in the database."""
-        user = self.auth_user_fixture()
+        user = self.dummy_user_fixture()
         self.assertNotEqual(user._password, u'password')
 
     def test_07_check_password(self):
         """ Test the `check_password` method of the `AuthUser` model class."""
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         from anuket.models import AuthUser
         self.assertTrue(AuthUser.check_password(u'username', u'password'))
         self.assertFalse(AuthUser.check_password(u'username', u'wrongpass'))
@@ -70,7 +70,7 @@ class ModelAuthGroupTests(AnuketTestCase):
 
     def test_01_columns(self):
         """ Test the `AuthGroup` model class columns and types."""
-        self.auth_group_fixture()
+        self.dummy_group_fixture()
         from anuket.models import AuthGroup
         group = self.DBSession.query(AuthGroup).filter_by().first()
         self.assertIsInstance(group.group_id, int)
@@ -78,7 +78,7 @@ class ModelAuthGroupTests(AnuketTestCase):
 
     def test_02_groupname_unique_constraint(self):
         """ Test `groupname` uniqueness in the `AuthGroup` model class."""
-        self.auth_group_fixture()
+        self.dummy_group_fixture()
         from anuket.models import AuthGroup
         from sqlalchemy.exc import IntegrityError
         duplicate = AuthGroup(groupname=u'groupname')
@@ -87,7 +87,7 @@ class ModelAuthGroupTests(AnuketTestCase):
 
     def test_03_get_by_id(self):
         """ Test the `get_by_id` method of the `AuthGroup` model class."""
-        group = self.auth_group_fixture()
+        group = self.dummy_group_fixture()
         from anuket.models import AuthGroup
         self.assertTrue(AuthGroup.get_by_id(1))
         self.assertEqual(group, AuthGroup.get_by_id(1))

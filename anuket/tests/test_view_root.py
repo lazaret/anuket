@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pyramid import testing
 
-from anuket.tests import AnuketTestCase
+from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
 class ViewRootTests(AnuketTestCase):
@@ -63,7 +63,7 @@ class ViewRootTests(AnuketTestCase):
         """ Test the response of the `login_view` with valid credentials."""
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         request = testing.DummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -78,7 +78,7 @@ class ViewRootTests(AnuketTestCase):
         """ Test the response of the `login_view` with wrong credentials."""
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
-        self.auth_user_fixture()
+        self.dummy_user_fixture()
         request = testing.DummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -99,31 +99,26 @@ class ViewRootTests(AnuketTestCase):
                         u"You have been disconnected.")
 
 
-class FunctionalViewRootTests(AnuketTestCase):
+class FunctionalViewRootTests(AnuketFunctionalTestCase):
     """ Functional tests for the `root` view."""
     def setUp(self):
         super(FunctionalViewRootTests, self).setUp()
-        from anuket import main
-        app = main({}, **self.settings)
-        from webtest import TestApp
-        self.testapp = TestApp(app)
 
     def tearDown(self):
         super(FunctionalViewRootTests, self).tearDown()
-        del self.testapp
 
     def test_01_home_page(self):
-        """ Test the home page response."""
+        """ Test the home page response for everybody."""
         response = self.testapp.get('/', status=200)
         self.assertTrue('<title>Home' in response.body.replace('\n', ''))
 
     def test_02_about_page(self):
-        """ Test the about page response."""
+        """ Test the about page response for everybody."""
         response = self.testapp.get('/about', status=200)
         self.assertTrue('<title>About' in response.body.replace('\n', ''))
 
     def test_03_unexisting_page(self):
-        """ Test the 404 error page response."""
+        """ Test the 404 error page response for everybody."""
         response = self.testapp.get('/Some404Page')
         # the status is 200 because managed by @notfound_view_config
         self.assertEqual(response.status, '200 OK')
@@ -131,30 +126,19 @@ class FunctionalViewRootTests(AnuketTestCase):
         response.mustcontain('404', 'Page not found!')
 
     def test_04_login_page_non_loged(self):
-        """ Test the login page response."""
+        """ Test the login page response for everybody."""
         response = self.testapp.get('/login', status=200)
         self.assertTrue('<title>Login' in response.body.replace('\n', ''))
 
-    def test_05_login_page_valid_admins_credentials(self):
-        """ Test login with valid admins credentials."""
-        #TODO: use fixtures for this
-        self.admin_user_fixture()
-        response = self.testapp.get('/login', status=200)
-        csrf_token = response.form.fields['_csrf'][0].value
-        params = {
-            'form_submitted': u'',
-            '_csrf': csrf_token,
-            'username': u'admin',
-            'password': u'admin',
-            'submit': True}
-        response = self.testapp.post('/login', params, status=302)
+    def test_05_login_page_valid_credentials(self):
+        """ Test login with valid user credentials."""
+        response = self.connect_dummy_user_fixture()
+
+        self.assertEqual(response.status, '302 Found')
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
         self.assertTrue('You have successfuly connected.' in redirect.body)
-
-#TODO: add a login test for non-admin users or change the above test to
-# a generic user
 
     def test_06_login_page_wrong_credentials(self):
         """ Test login with wrong credentials."""
