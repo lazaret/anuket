@@ -184,7 +184,7 @@ class ViewUserTests(AnuketTestCase):
         request.matchdict = {'user_id': 1}
         response = user_delete_view(request)
         self.assertEqual(response.location, '/tools/user')
-        self.assertEqual(request.session.pop_flash('warning')[0],
+        self.assertEqual(request.session.pop_flash('warn')[0],
                          u"User deleted.")
 
     def test_14_not_exist_user_delete(self):
@@ -231,7 +231,7 @@ class ViewUserTests(AnuketTestCase):
                          u"This user did not exist!")
 
 
-#TODO: non-validate tests for unsecure pass, user/mail not unique
+#TODO: non-validate tests for unsecure pass, user/mail not unique tests
 
 
 class FunctionalViewUserTests(AnuketFunctionalTestCase):
@@ -343,33 +343,35 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('You are not connected, please log in.'
                         in redirect.body)
 
-#    def test_10_user_edit_page_for_admin(self):
-#        """ Test the edit user form with admin credentials."""
-#        response = self.connect_admin_user_fixture()
-#
-#        response = self.testapp.get('/tools/user/1/edit', status=200)
-#        self.assertEqual(response.request.path, '/tools/user/1/edit')
-#        self.assertTrue('<title>Edit user' in response.body.replace('\n', ''))
-#        # edit the admin user with the form
-#        form = response.form
-#        form.set('username', 'username')
-#        form.set('first_name', 'firstname')
-#        form.set('last_name', 'lastname')
-#        form.set('email', 'email@email.com')
-#        # we do not change the group
-#        form.set('group_id', 1)
-#        submit = form.submit('form_submitted')
-#        redirect = submit.follow()
-#        self.assertEqual(redirect.request.path, '/tools/user')
-#        self.assertTrue('User updated successfully.' in redirect.body)
-#        self.assertTrue('email@email.com' in redirect.body)
-#
-#TOTO understand why admin editing himself is forbiden and add a tests for this
-#apparently this is due to the do nod validat change of group for only admin
-
-
     def test_10_user_edit_page_for_admin(self):
         """ Test the edit user form with admin credentials."""
+        response = self.connect_admin_user_fixture()
+
+        response = self.testapp.get('/tools/user/1/edit', status=200)
+        self.assertEqual(response.request.path, '/tools/user/1/edit')
+        self.assertTrue('<title>Edit user' in response.body.replace('\n', ''))
+        # edit the admin user with the form
+        form = response.form
+#        form.set('username', 'username')
+        form.set('first_name', 'firstname')
+        form.set('last_name', 'lastname')
+        form.set('email', 'email@email.com')
+        # we do not change the group
+        form.set('group_id', 1)
+        submit = form.submit('form_submitted')
+        redirect = submit.follow()
+        self.assertEqual(redirect.request.path, '/tools/user')
+        self.assertTrue('User updated successfully.' in redirect.body)
+        self.assertTrue('email@email.com' in redirect.body)
+#
+#TOTO understand why admin editing his username is disconected and add a test
+#for this case
+# the changes seem to be done correctly it's probably an auth problem because
+#the username is changed
+
+
+    def test_11_user_edit_page_for_admin(self):
+        """ Test the edit user form of a dummy user with admin credentials."""
         self.dummy_user_fixture()
         response = self.connect_admin_user_fixture()
 
@@ -390,7 +392,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('User updated successfully.' in redirect.body)
         self.assertTrue('newemail@email.com' in redirect.body)
 
-    def test_11_user_edit_page_is_forbiden_for_non_admin(self):
+    def test_12_user_edit_page_is_forbiden_for_non_admin(self):
         """ Test than the edit user form is forbiden for non admin users."""
         response = self.connect_dummy_user_fixture()
 
@@ -401,7 +403,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('You do not have the permission to do this!'
                         in redirect.body)
 
-    def test_12_user_edit_page_is_forbiden_for_anonymous(self):
+    def test_13_user_edit_page_is_forbiden_for_anonymous(self):
         """ Test than the edit user form is forbiden for non logged users."""
         response = self.testapp.get('/tools/user/1/edit', status=302)
         redirect = response.follow()
@@ -410,27 +412,22 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('You are not connected, please log in.'
                         in redirect.body)
 
+    def test_14_user_delete_for_admin(self):
+        """ Test the deletion of a dummy user by an admin user."""
+        self.dummy_user_fixture()
+        response = self.connect_admin_user_fixture()
 
-#    def test_13_user_delete_for_admin(self):
-#        """ Test the deletion of a dummy user by an admin user."""
-#        self.dummy_user_fixture()
-#        response = self.connect_admin_user_fixture()
-#
-#        #response = self.testapp.get('/tools/user/1/delete', status=200)
-#        response = self.testapp.get('/tools/user/1/delete', status=302)
-#        redirect = response.follow()
-#        self.assertEqual(redirect.status, '200 OK')
-#        self.assertEqual(redirect.request.path, '/tools/user')
-#        print(redirect.body)
-#        self.assertTrue('User deleted.' in redirect.body)
-#        self.assertFalse('email@email.com' in redirect.body)
-##TODO try to understood why this test do not pass
-##maybe because of crsf token ?
+        response = self.testapp.get('/tools/user/1/delete', status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/tools/user')
+        self.assertTrue('User deleted.' in redirect.body)
+        self.assertFalse('email@email.com' in redirect.body)
 
 #TODO delete an user from link with confirm modal
 #TODO try to delete the only admin
 
-    def test_14_user_delete_is_forbiden_for_non_admin(self):
+    def test_15_user_delete_is_forbiden_for_non_admin(self):
         """ Test than deleting and user is forbiden for non admin users."""
         response = self.connect_dummy_user_fixture()
 
@@ -441,7 +438,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('You do not have the permission to do this!'
                         in redirect.body)
 
-    def test_15_user_delete_is_forbiden_for_anonymous(self):
+    def test_16_user_delete_is_forbiden_for_anonymous(self):
         """ Test than deleting an user is forbiden for non logged users."""
         user = self.dummy_user_fixture()
         response = self.testapp.get('/tools/user/1/delete', status=302)
@@ -455,7 +452,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         usercheck = AuthUser.get_by_id(1)
         self.assertTrue(usercheck, user)
 
-    def test_16_password_edit_page_for_admin(self):
+    def test_17_password_edit_page_for_admin(self):
         """ Test the edit password form with admin credentials."""
         password = self.password_fixture()
         response = self.connect_admin_user_fixture()
@@ -473,7 +470,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/tools/user')
         self.assertTrue('Password updated successfully.' in redirect.body)
 
-    def test_17_password_edit_page_is_forbiden_for_non_admin(self):
+    def test_18_password_edit_page_is_forbiden_for_non_admin(self):
         """ Test than edit password form is forbiden for non admin users."""
         response = self.connect_dummy_user_fixture()
 
@@ -484,7 +481,7 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('You do not have the permission to do this!'
                         in redirect.body)
 
-    def test_18_password_edit_page_is_forbiden_for_anonymous(self):
+    def test_19_password_edit_page_is_forbiden_for_anonymous(self):
         """ Test than edit password form is forbiden for non logged users."""
         response = self.testapp.get('/tools/user/1/password', status=302)
         redirect = response.follow()
