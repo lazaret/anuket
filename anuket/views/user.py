@@ -167,8 +167,9 @@ def user_delete_view(request):
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
     DBSession.delete(user)
-    request.session.flash(_(u"User deleted."), 'warning')
+    request.session.flash(_(u"User deleted."), 'warn')
     return HTTPFound(location=request.route_path('tools.user_list'))
+#TODO forbid direct deletion from adress bar even for admin
 
 
 @view_config(route_name='tools.password_edit', permission='admin',
