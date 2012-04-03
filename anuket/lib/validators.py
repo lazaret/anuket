@@ -51,6 +51,8 @@ class UniqueAuthUsername(validators.FancyValidator):
             raise Invalid(self.message('not_unique_username', state),
                                        values, state, error_dict=errors)
 
+#TODO manage a keyerror if values are empty
+
 
 class UniqueAuthEmail(validators.FancyValidator):
     """ Unique email validator."""
@@ -74,6 +76,8 @@ class UniqueAuthEmail(validators.FancyValidator):
                 errors = {'email': self.message('not_unique_email', state)}
                 raise Invalid(self.message('not_unique_email', state),
                                            values, state, error_dict=errors)
+
+#TODO manage a keyerror if values are empty
 
 
 class SecurePassword(validators.String):
