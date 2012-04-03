@@ -49,18 +49,34 @@ class ValidatorsUnitTests(TestCase):
         # test than unsecure password are not accepted
         self.assertRaises(Invalid, password.validate_python, "PassW0rd", None)
 
+    def test_UniqueAuthUsername(self):
+        """ Test the UniqueAuthUsername validator."""
+        from anuket.lib.validators import UniqueAuthUsername
+        username = UniqueAuthUsername()
+        # test than the validator is a formencode validators.FancyValidator
+        self.assertIsInstance(username, validators.FancyValidator)
+        #TODO extend the test with a mock + duplicate check
 
-class ValidatorsFynctionalTests(AnuketTestCase):
+    def test_UniqueAuthEmail(self):
+        """ Test the UniqueAuthEmail validator."""
+        from anuket.lib.validators import UniqueAuthEmail
+        email = UniqueAuthEmail()
+        # test than the validator is a formencode validators.FancyValidator
+        self.assertIsInstance(email, validators.FancyValidator)
+        #TODO extend the test with a mock + duplicate check
+
+
+class ValidatorsFunctionalTests(AnuketTestCase):
     """ Functional tests for the validators library."""
 
     def setUp(self):
-        super(ValidatorsFynctionalTests, self).setUp()
+        super(ValidatorsFunctionalTests, self).setUp()
 
     def tearDown(self):
-        super(ValidatorsFynctionalTests, self).tearDown()
+        super(ValidatorsFunctionalTests, self).tearDown()
 
     def test_UniqueAuthUsername(self):
-        """ Test the UniqueAuthUsername validator."""
+        """ Functional test of the UniqueAuthUsername validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthUsername
         username = UniqueAuthUsername()
@@ -69,10 +85,10 @@ class ValidatorsFynctionalTests(AnuketTestCase):
         self.assertRaises(Invalid, username.validate_python, values, None)
 
     def test_UniqueAuthEmail(self):
-        """ Test the UniqueAuthEmail validator."""
+        """ Functional test of the UniqueAuthEmail validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthEmail
         email = UniqueAuthEmail()
-        # test than duplicate email are not accepted
+        # test than duplicate email is not accepted
         values = {'email': u'email@email.com'}
         self.assertRaises(Invalid, email.validate_python, values, None)

@@ -361,7 +361,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('User updated successfully.' in redirect.body)
         self.assertTrue('email@email.com' in redirect.body)
 #
-#TOTO understand why admin editing his username is disconected and add a test
+#TODO understand why admin editing his username is disconected and add a test
 #for this case
 # the changes seem to be done correctly it's probably an auth problem because
 #the username is changed
