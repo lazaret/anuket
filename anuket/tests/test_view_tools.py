@@ -4,16 +4,16 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
-class ViewToolsTests(AnuketTestCase):
+class ViewToolsIntegrationTests(AnuketTestCase):
     """ Integration tests for the `tools` view."""
     def setUp(self):
-        super(ViewToolsTests, self).setUp()
+        super(ViewToolsIntegrationTests, self).setUp()
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.tools')
 
     def tearDown(self):
-        super(ViewToolsTests, self).tearDown()
+        super(ViewToolsIntegrationTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):
@@ -29,13 +29,13 @@ class ViewToolsTests(AnuketTestCase):
         self.assertEqual(response, {})
 
 
-class FunctionalViewToolsTests(AnuketFunctionalTestCase):
+class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `user` view."""
     def setUp(self):
-        super(FunctionalViewToolsTests, self).setUp()
+        super(ViewToolsFunctionalTests, self).setUp()
 
     def tearDown(self):
-        super(FunctionalViewToolsTests, self).tearDown()
+        super(ViewToolsFunctionalTests, self).tearDown()
 
     def test_01_tools_page_for_admin(self):
         """ Test the tools page with admin credentials."""

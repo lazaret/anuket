@@ -4,16 +4,16 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
-class ViewUserTests(AnuketTestCase):
+class ViewUserIntegrationTests(AnuketTestCase):
     """ Integration tests for the `user` view."""
     def setUp(self):
-        super(ViewUserTests, self).setUp()
+        super(ViewUserIntegrationTests, self).setUp()
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.user')
 
     def tearDown(self):
-        super(ViewUserTests, self).tearDown()
+        super(ViewUserIntegrationTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):
@@ -231,16 +231,13 @@ class ViewUserTests(AnuketTestCase):
                          u"This user did not exist!")
 
 
-#TODO: non-validate tests for unsecure pass, user/mail not unique tests
-
-
-class FunctionalViewUserTests(AnuketFunctionalTestCase):
+class ViewUserFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `user` view."""
     def setUp(self):
-        super(FunctionalViewUserTests, self).setUp()
+        super(ViewUserFunctionalTests, self).setUp()
 
     def tearDown(self):
-        super(FunctionalViewUserTests, self).tearDown()
+        super(ViewUserFunctionalTests, self).tearDown()
 
     def test_01_user_list_page_for_admin(self):
         """ Test the user list page with admin credentials."""
@@ -369,7 +366,6 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
 # the changes seem to be done correctly it's probably an auth problem because
 #the username is changed
 
-
     def test_11_user_edit_page_for_admin(self):
         """ Test the edit user form of a dummy user with admin credentials."""
         self.dummy_user_fixture()
@@ -424,6 +420,8 @@ class FunctionalViewUserTests(AnuketFunctionalTestCase):
         self.assertTrue('User deleted.' in redirect.body)
         self.assertFalse('email@email.com' in redirect.body)
 
+#TODO change the last test to a forbiden test, as we will forbid admin to
+#directly hit the delete link
 #TODO delete an user from link with confirm modal
 #TODO try to delete the only admin
 

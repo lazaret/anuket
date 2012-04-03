@@ -4,16 +4,16 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
-class ViewRootTests(AnuketTestCase):
+class ViewRootIntegrationTests(AnuketTestCase):
     """ Integration tests for the `root` view."""
     def setUp(self):
-        super(ViewRootTests, self).setUp()
+        super(ViewRootIntegrationTests, self).setUp()
         self.config = testing.setUp()
         # register the `root` routes
         self.config.include('anuket.views.root')
 
     def tearDown(self):
-        super(ViewRootTests, self).tearDown()
+        super(ViewRootIntegrationTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):
@@ -99,13 +99,13 @@ class ViewRootTests(AnuketTestCase):
                         u"You have been disconnected.")
 
 
-class FunctionalViewRootTests(AnuketFunctionalTestCase):
+class ViewRootFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `root` view."""
     def setUp(self):
-        super(FunctionalViewRootTests, self).setUp()
+        super(ViewRootFunctionalTests, self).setUp()
 
     def tearDown(self):
-        super(FunctionalViewRootTests, self).tearDown()
+        super(ViewRootFunctionalTests, self).tearDown()
 
     def test_01_home_page(self):
         """ Test the home page response for everybody."""
