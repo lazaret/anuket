@@ -4,16 +4,16 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
-class ViewToolsIntegrationTests(AnuketTestCase):
+class ViewToolsTests(AnuketTestCase):
     """ Integration tests for the `tools` view."""
     def setUp(self):
-        super(ViewToolsIntegrationTests, self).setUp()
+        super(ViewToolsTests, self).setUp()
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.tools')
 
     def tearDown(self):
-        super(ViewToolsIntegrationTests, self).tearDown()
+        super(ViewToolsTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):

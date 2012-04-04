@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-from unittest import TestCase
 from formencode import Invalid
 from formencode import validators
 
 from anuket.tests import AnuketTestCase
 
 
-class ValidatorsUnitTests(TestCase):
-    """ Unit tests for the validators library."""
+class ValidatorsTests(AnuketTestCase):
+    """ Tests for the validators library."""
+
+    def setUp(self):
+        super(ValidatorsTests, self).setUp()
+
+    def tearDown(self):
+        super(ValidatorsTests, self).tearDown()
 
     def test_FirstNameString(self):
         """ Test the FirstNameString validator."""
@@ -48,47 +53,35 @@ class ValidatorsUnitTests(TestCase):
         self.assertIsInstance(password, validators.String)
         # test than unsecure password are not accepted
         self.assertRaises(Invalid, password.validate_python, "PassW0rd", None)
+        self.assertRaises(Invalid, password.validate_python, "123456789", None)
+        self.assertRaises(Invalid, password.validate_python, "azerty", None)
+        # tests than cracklib secure password are accepted
+        secure_password = self.password_fixture()
+        self.assertEqual(password.validate_python(secure_password, None),
+                         secure_password)
 
     def test_UniqueAuthUsername(self):
         """ Test the UniqueAuthUsername validator."""
-        from anuket.lib.validators import UniqueAuthUsername
-        username = UniqueAuthUsername()
-        # test than the validator is a formencode validators.FancyValidator
-        self.assertIsInstance(username, validators.FancyValidator)
-        #TODO extend the test with a mock + duplicate check
-
-    def test_UniqueAuthEmail(self):
-        """ Test the UniqueAuthEmail validator."""
-        from anuket.lib.validators import UniqueAuthEmail
-        email = UniqueAuthEmail()
-        # test than the validator is a formencode validators.FancyValidator
-        self.assertIsInstance(email, validators.FancyValidator)
-        #TODO extend the test with a mock + duplicate check
-
-
-class ValidatorsFunctionalTests(AnuketTestCase):
-    """ Functional tests for the validators library."""
-
-    def setUp(self):
-        super(ValidatorsFunctionalTests, self).setUp()
-
-    def tearDown(self):
-        super(ValidatorsFunctionalTests, self).tearDown()
-
-    def test_UniqueAuthUsername(self):
-        """ Functional test of the UniqueAuthUsername validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthUsername
         username = UniqueAuthUsername()
         # test than duplicate username is not accepted
         values = {'username': u'username'}
         self.assertRaises(Invalid, username.validate_python, values, None)
+        # test than the validator do not raise an error in case of edition
+        # of the user with the username
+        values = {'user_id':1, 'username': u'username'}
+        self.assertEqual(username.validate_python(values, None), None)
 
     def test_UniqueAuthEmail(self):
-        """ Functional test of the UniqueAuthEmail validator."""
+        """ Test the UniqueAuthEmail validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthEmail
         email = UniqueAuthEmail()
         # test than duplicate email is not accepted
         values = {'email': u'email@email.com'}
         self.assertRaises(Invalid, email.validate_python, values, None)
+        # test than the validator do not raise an error in case of edition
+        # of the user with the email
+        values = {'user_id':1, 'email': u'email@email.com'}
+        self.assertEqual(email.validate_python(values, None), None)

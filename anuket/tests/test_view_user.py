@@ -4,16 +4,16 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 
-class ViewUserIntegrationTests(AnuketTestCase):
+class ViewUserTests(AnuketTestCase):
     """ Integration tests for the `user` view."""
     def setUp(self):
-        super(ViewUserIntegrationTests, self).setUp()
+        super(ViewUserTests, self).setUp()
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.user')
 
     def tearDown(self):
-        super(ViewUserIntegrationTests, self).tearDown()
+        super(ViewUserTests, self).tearDown()
         testing.tearDown()
 
     def test_01_routes(self):
@@ -201,7 +201,7 @@ class ViewUserIntegrationTests(AnuketTestCase):
                          u"This user did not exist!")
 
     def test_15_password_edit(self):
-        """ Test the response of the `password_edit_view` view."""
+        """ Test the response of the `password_edit` view."""
         self.dummy_user_fixture()
         password = self.password_fixture()
         from anuket.views.user import password_edit_view
@@ -217,8 +217,20 @@ class ViewUserIntegrationTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"Password updated successfully.")
 
-    def test_16_not_exist_password_edit(self):
-        """ Test the response of the `password_edit_view` view with a non
+    def test_16_not_validate_password_edit(self):
+        """ Test the response of the `password_edit` view not validated."""
+        self.dummy_user_fixture()
+        from anuket.views.user import password_edit_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        request.method = 'POST'  # required for form.validate()
+        request.params['form_submitted'] = u''
+        response = password_edit_view(request)
+        from pyramid_simpleform.renderers import FormRenderer
+        self.assertIsInstance(response['renderer'], FormRenderer)
+
+    def test_17_not_exist_password_edit(self):
+        """ Test the response of the `password_edit` view with a non
         existent `user_id`.
         """
         self.dummy_user_fixture()

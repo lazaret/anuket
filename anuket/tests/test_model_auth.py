@@ -51,12 +51,19 @@ class ModelAuthUserTests(AnuketTestCase):
         self.assertTrue(AuthUser.get_by_username(u'username'))
         self.assertEqual(user, AuthUser.get_by_username(u'username'))
 
-    def test_06_crypted_password(self):
+    def test_06_get_by_email(self):
+        """ Test the `get_by_email` method of the `AuthUser` model class."""
+        user = self.dummy_user_fixture()
+        from anuket.models import AuthUser
+        self.assertTrue(AuthUser.get_by_email(u'email@email.com'))
+        self.assertEqual(user, AuthUser.get_by_email(u'email@email.com'))
+
+    def test_07_crypted_password(self):
         """ Test than the recorded password is crypted in the database."""
         user = self.dummy_user_fixture()
         self.assertNotEqual(user._password, u'password')
 
-    def test_07_check_password(self):
+    def test_08_check_password(self):
         """ Test the `check_password` method of the `AuthUser` model class."""
         self.dummy_user_fixture()
         from anuket.models import AuthUser
