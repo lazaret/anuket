@@ -245,11 +245,6 @@ class ViewUserTests(AnuketTestCase):
 
 class ViewUserFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `user` view."""
-    def setUp(self):
-        super(ViewUserFunctionalTests, self).setUp()
-
-    def tearDown(self):
-        super(ViewUserFunctionalTests, self).tearDown()
 
     def test_01_user_list_page_for_admin(self):
         """ Test the user list page with admin credentials."""

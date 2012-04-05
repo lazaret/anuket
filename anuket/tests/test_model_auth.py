@@ -5,7 +5,7 @@ from anuket.tests import AnuketTestCase
 
 
 class ModelAuthUserTests(AnuketTestCase):
-    """Tests for the `AuthUser` model class."""
+    """ Tests for the `AuthUser` model class."""
 
     def test_01_columns(self):
         """ Test the `AuthUser` model class columns and types."""
@@ -73,7 +73,7 @@ class ModelAuthUserTests(AnuketTestCase):
 
 
 class ModelAuthGroupTests(AnuketTestCase):
-    """Tests for the `AuthGroup` model class."""
+    """ Tests for the `AuthGroup` model class."""
 
     def test_01_columns(self):
         """ Test the `AuthGroup` model class columns and types."""

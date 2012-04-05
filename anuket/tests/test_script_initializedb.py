@@ -21,7 +21,7 @@ class ScriptInitializedbTests(AnuketTestCase):
         Base.metadata.drop_all()
 
     def test_01_default_datas(self):
-        """ test than the script create the default values."""
+        """ Test than the initializedb script create the default values."""
         from anuket.scripts.initializedb import initialize_db
         initialize_db(filename)
         from anuket.models import AuthUser

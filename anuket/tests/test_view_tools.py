@@ -31,11 +31,6 @@ class ViewToolsTests(AnuketTestCase):
 
 class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `user` view."""
-    def setUp(self):
-        super(ViewToolsFunctionalTests, self).setUp()
-
-    def tearDown(self):
-        super(ViewToolsFunctionalTests, self).tearDown()
 
     def test_01_tools_page_for_admin(self):
         """ Test the tools page with admin credentials."""

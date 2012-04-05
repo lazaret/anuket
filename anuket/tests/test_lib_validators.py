@@ -8,12 +8,6 @@ from anuket.tests import AnuketTestCase
 class ValidatorsTests(AnuketTestCase):
     """ Tests for the validators library."""
 
-    def setUp(self):
-        super(ValidatorsTests, self).setUp()
-
-    def tearDown(self):
-        super(ValidatorsTests, self).tearDown()
-
     def test_FirstNameString(self):
         """ Test the FirstNameString validator."""
         from anuket.lib.validators import FirstNameString

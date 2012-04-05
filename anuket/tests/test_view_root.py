@@ -6,6 +6,7 @@ from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
 
 class ViewRootTests(AnuketTestCase):
     """ Integration tests for the `root` view."""
+
     def setUp(self):
         super(ViewRootTests, self).setUp()
         self.config = testing.setUp()
@@ -101,11 +102,6 @@ class ViewRootTests(AnuketTestCase):
 
 class ViewRootFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `root` view."""
-    def setUp(self):
-        super(ViewRootFunctionalTests, self).setUp()
-
-    def tearDown(self):
-        super(ViewRootFunctionalTests, self).tearDown()
 
     def test_01_home_page(self):
         """ Test the home page response for everybody."""
