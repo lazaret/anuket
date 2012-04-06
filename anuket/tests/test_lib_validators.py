@@ -64,7 +64,7 @@ class ValidatorsTests(AnuketTestCase):
         self.assertRaises(Invalid, username.validate_python, values, None)
         # test than the validator do not raise an error in case of edition
         # of the user with the username
-        values = {'user_id':1, 'username': u'username'}
+        values = {'user_id': 1, 'username': u'username'}
         self.assertEqual(username.validate_python(values, None), None)
 
     def test_UniqueAuthEmail(self):
@@ -77,5 +77,5 @@ class ValidatorsTests(AnuketTestCase):
         self.assertRaises(Invalid, email.validate_python, values, None)
         # test than the validator do not raise an error in case of edition
         # of the user with the email
-        values = {'user_id':1, 'email': u'email@email.com'}
+        values = {'user_id': 1, 'email': u'email@email.com'}
         self.assertEqual(email.validate_python(values, None), None)

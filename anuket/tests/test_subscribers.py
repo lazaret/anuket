@@ -4,7 +4,6 @@ from pyramid import testing
 from anuket.tests import AnuketTestCase
 
 
-
 class DummyEvent(object):
     """ Empty testing event."""
     pass
@@ -33,9 +32,9 @@ class SubscribersTests(AnuketTestCase):
         request.registry.settings.update(self.settings)
         # test than the rendered globals are added
         add_renderer_globals(event)
-        self.assertIn('_' ,event)
-        self.assertIn('localizer' ,event)
-        self.assertIn('brand_name' ,event)
+        self.assertIn('_', event)
+        self.assertIn('localizer', event)
+        self.assertIn('brand_name', event)
 
     def test_add_localizer(self):
         """ Test the `add_localizer` event subscriber."""
