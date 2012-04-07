@@ -10,4 +10,4 @@ class RootFactory(object):
         ]
 
     def __init__(self, request):
-        pass
+        pass  # pragma: no cover
