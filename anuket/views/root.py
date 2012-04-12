@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from formencode.schema import Schema
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget, remember
 from pyramid.view import view_config, forbidden_view_config
@@ -8,7 +9,6 @@ from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
 from anuket.lib.i18n import MessageFactory as _
-from anuket.forms import LoginForm
 from anuket.models import AuthUser
 
 
@@ -91,3 +91,10 @@ def logout_view(request):
     headers = forget(request)
     request.session.flash(_(u"You have been disconnected."), 'info')
     return HTTPFound(location=request.route_path('home'), headers=headers)
+
+
+# Formencode schema
+class LoginForm(Schema):
+    """ Form validation schema for login."""
+    filter_extra_fields = True
+    allow_extra_fields = True

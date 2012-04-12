@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ Admin tools for user management."""
 import logging
+from formencode.schema import Schema
+from formencode.validators import Email, FieldsMatch, Int, String
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid_simpleform import Form
@@ -8,7 +10,9 @@ from pyramid_simpleform.renderers import FormRenderer
 from webhelpers import paginate
 
 from anuket.lib.i18n import MessageFactory as _
-from anuket.forms import UserForm, UserEditForm, UserPasswordForm
+from anuket.lib.validators import FirstNameString, LastNameString
+from anuket.lib.validators import SecurePassword, UniqueAuthUsername
+from anuket.lib.validators import UniqueAuthEmail, UsernamePlainText
 from anuket.models import DBSession, AuthUser, AuthGroup
 
 
@@ -206,3 +210,45 @@ def password_edit_view(request):
 #    form = Form(request, schema=UserForm)
 #    return dict(renderer=FormRenderer(form),
 #                grouplist=grouplist)
+
+
+# Formencode schemas
+class UserForm(Schema):
+    """ Form validation schema for users."""
+    filter_extra_fields = True
+    allow_extra_fields = True
+
+    username = UsernamePlainText(min=5, max=16, strip=True)
+    first_name = FirstNameString(not_empty=True, strip=True)
+    last_name = LastNameString(not_empty=True, strip=True)
+    email = Email()
+    password = SecurePassword(min=6, max=80, strip=True)
+    password_confirm = String(strip=True)
+    group_id = Int(not_empty=True)
+
+    chained_validators = [
+        FieldsMatch('password', 'password_confirm'),
+        UniqueAuthUsername(),
+        UniqueAuthEmail(),
+    ]
+
+
+class UserEditForm(UserForm):
+    """ Form validation schema for user edit."""
+    user_id = Int()  # used in forms hidden field
+    password = None
+    password_confirm = None
+
+
+class UserPasswordForm(UserForm):
+    """ Form validation schema for user password change."""
+    user_id = Int()  # used in forms hidden field
+    username = None
+    first_name = None
+    last_name = None
+    email = None
+    group_id = None
+
+    chained_validators = [
+        FieldsMatch('password', 'password_confirm'),
+    ]
