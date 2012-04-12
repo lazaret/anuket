@@ -66,6 +66,12 @@ class ValidatorsTests(AnuketTestCase):
         # of the user with the username
         values = {'user_id': 1, 'username': u'username'}
         self.assertEqual(username.validate_python(values, None), None)
+        # test than empty username is allowed
+        values = {'username': u''}
+        self.assertEqual(username.validate_python(values, None), None)
+        # test than empty values do not raise a KeyError
+        values = {}
+        self.assertEqual(username.validate_python(values, None), None)
 
     def test_UniqueAuthEmail(self):
         """ Test the UniqueAuthEmail validator."""
@@ -78,4 +84,10 @@ class ValidatorsTests(AnuketTestCase):
         # test than the validator do not raise an error in case of edition
         # of the user with the email
         values = {'user_id': 1, 'email': u'email@email.com'}
+        self.assertEqual(email.validate_python(values, None), None)
+        # test than empty email is allowed
+        values = {'email': u''}
+        self.assertEqual(email.validate_python(values, None), None)
+        # test than empty values do not raise a KeyError
+        values = {}
         self.assertEqual(email.validate_python(values, None), None)

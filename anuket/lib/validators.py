@@ -38,8 +38,11 @@ class UniqueAuthUsername(validators.FancyValidator):
 
     def validate_python(self, values, state):
         """ Check for the uniqueness of `username`."""
-        username = values['username']
-        user = AuthUser.get_by_username(username)
+        if 'username' in values:
+            username = values['username']
+            user = AuthUser.get_by_username(username)
+        else:
+            user = None # no check for empty value
         # user_id is used to not raise an error when editing the user
         # the user_id must be available as hidden field in the edit form
         if 'user_id' in values:
@@ -51,8 +54,6 @@ class UniqueAuthUsername(validators.FancyValidator):
             raise Invalid(self.message('not_unique_username', state),
                                        values, state, error_dict=errors)
 
-#TODO manage a keyerror if values are empty
-
 
 class UniqueAuthEmail(validators.FancyValidator):
     """ Unique email validator."""
@@ -63,21 +64,21 @@ class UniqueAuthEmail(validators.FancyValidator):
 
     def validate_python(self, values, state):
         """ Check for the uniqueness of `email`."""
-        email = values['email']
-        if email:  # no check for None emails
+        if 'email' in values:
+            email = values['email']
             user = AuthUser.get_by_email(email)
-            # user_id is used to not raise an error when editing the user
-            # the user_id must be available as hidden field in the edit form
-            if 'user_id' in values:
-                user_id = values['user_id']
-            else:
-                user_id = None
-            if user and (user.user_id != user_id):
-                errors = {'email': self.message('not_unique_email', state)}
-                raise Invalid(self.message('not_unique_email', state),
-                                           values, state, error_dict=errors)
-
-#TODO manage a keyerror if values are empty
+        else:
+            user = None # no check for None emails or empty value
+        # user_id is used to not raise an error when editing the user
+        # the user_id must be available as hidden field in the edit form
+        if 'user_id' in values:
+            user_id = values['user_id']
+        else:
+            user_id = None
+        if user and (user.user_id != user_id):
+            errors = {'email': self.message('not_unique_email', state)}
+            raise Invalid(self.message('not_unique_email', state),
+                                       values, state, error_dict=errors)
 
 
 class SecurePassword(validators.String):
