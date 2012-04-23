@@ -39,7 +39,8 @@ class AuthUser(Base):
     def get_by_username(cls, username=None):
         """ Query the auth_user table by username."""
         if username:
-            return DBSession.query(cls).filter(cls.username == username).first()
+            return DBSession.query(cls).filter(
+                       cls.username == username).first()
 
     @classmethod
     def get_by_email(cls, email=None):

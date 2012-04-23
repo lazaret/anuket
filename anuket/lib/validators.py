@@ -42,7 +42,7 @@ class UniqueAuthUsername(validators.FancyValidator):
             username = values['username']
             user = AuthUser.get_by_username(username)
         else:
-            user = None # no check for empty value
+            user = None  # no check for empty value
         # user_id is used to not raise an error when editing the user
         # the user_id must be available as hidden field in the edit form
         if 'user_id' in values:
@@ -68,7 +68,7 @@ class UniqueAuthEmail(validators.FancyValidator):
             email = values['email']
             user = AuthUser.get_by_email(email)
         else:
-            user = None # no check for None emails or empty value
+            user = None  # no check for None emails or empty value
         # user_id is used to not raise an error when editing the user
         # the user_id must be available as hidden field in the edit form
         if 'user_id' in values:
