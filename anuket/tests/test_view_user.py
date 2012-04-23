@@ -356,7 +356,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('<title>Edit user' in response.body.replace('\n', ''))
         # edit the admin user with the form
         form = response.form
-#        form.set('username', 'username')
+        form.set('username', 'username')
         form.set('first_name', 'firstname')
         form.set('last_name', 'lastname')
         form.set('email', 'email@email.com')
@@ -367,11 +367,6 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/tools/user')
         self.assertTrue('User updated successfully.' in redirect.body)
         self.assertTrue('email@email.com' in redirect.body)
-#
-#TODO understand why admin editing his username is disconected and add a test
-#for this case
-# the changes seem to be done correctly it's probably an auth problem because
-#the username is changed
 
     def test_11_user_edit_page_for_admin(self):
         """ Test the edit user form of a dummy user with admin credentials."""

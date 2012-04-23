@@ -9,15 +9,18 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from sqlalchemy import engine_from_config
 
 from anuket import subscribers
-from anuket.models import DBSession, RootFactory
+from anuket.models import DBSession, RootFactory, AuthUser
 from anuket.security import groupfinder
 from anuket.views import root, tools, user
 
 
 def get_auth_user(request):
-    """ Get the authenticated user id from the request."""
-    auth_user = unauthenticated_userid(request)
-    return auth_user
+    """ Get the authenticated user id from the request and eturn an `AuthUser`
+    object.
+    """
+    user_id = unauthenticated_userid(request)
+    if user_id:
+        return AuthUser.get_by_id(user_id)
 
 
 def add_authorization(config):

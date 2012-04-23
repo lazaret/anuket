@@ -70,7 +70,8 @@ def login_view(request):
         username = request.params['username']
         password = request.params['password']
         if AuthUser.check_password(username, password):
-            headers = remember(request, username)
+            auth_user = AuthUser.get_by_username(username)
+            headers = remember(request, auth_user.user_id)
             request.session.flash(_(u"You have successfuly connected."),
                                   'success')
             return HTTPFound(location=request.route_path('home'),

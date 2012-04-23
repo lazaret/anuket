@@ -30,19 +30,22 @@ class AuthUser(Base):
         return '<AuthUser: %s>' % self.username
 
     @classmethod
-    def get_by_id(cls, user_id):
+    def get_by_id(cls, user_id=None):
         """ Query the auth_user table by user id."""
-        return DBSession.query(cls).get(user_id)
+        if user_id:
+            return DBSession.query(cls).get(user_id)
 
     @classmethod
-    def get_by_username(cls, username):
+    def get_by_username(cls, username=None):
         """ Query the auth_user table by username."""
-        return DBSession.query(cls).filter(cls.username == username).first()
+        if username:
+            return DBSession.query(cls).filter(cls.username == username).first()
 
     @classmethod
-    def get_by_email(cls, email):
+    def get_by_email(cls, email=None):
         """ Query the auth_user table by email."""
-        return DBSession.query(cls).filter(cls.email == email).first()
+        if email:
+            return DBSession.query(cls).filter(cls.email == email).first()
 
     @classmethod
     def check_password(cls, username, password):

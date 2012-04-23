@@ -11,8 +11,8 @@ class SecurityTests(AnuketTestCase):
         user = self.dummy_user_fixture()
         from anuket.security import groupfinder
         request = testing.DummyRequest()
-        # test with a valid username
-        groupname = groupfinder(u'username', request)
+        # test with a valid user_id
+        groupname = groupfinder(1, request)
         self.assertEqual(groupname, [('group:%s' % user.group.groupname)])
         # test with a wrong username
         groupname = groupfinder(u'wrongname', request)

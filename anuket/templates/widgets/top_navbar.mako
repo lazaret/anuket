@@ -17,7 +17,7 @@
             <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
           %endif
           <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user}</b><b class="caret"/></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user.username}</b><b class="caret"/></b></a>
             <ul class="dropdown-menu">
               <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
               <li><a href="#">Test</a></li>
