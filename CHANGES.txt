@@ -4,6 +4,10 @@ Changelog
 0.4 released 2012
 -----------------
 
+* Change the auth_user request property to an AuthUser object
+* Extend the tests suite
+* Extend the documentation
+
 
 0.3 released 2012-03-30
 -----------------------
