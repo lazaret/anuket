@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
+import argparse
 import transaction
 
 from sqlalchemy import engine_from_config
@@ -9,14 +8,6 @@ from alembic.config import Config
 from alembic import command
 
 from anuket.models import DBSession, Base, AuthUser, AuthGroup
-
-
-def usage(argv):  # pragma: no cover
-    """ Display the usage command."""
-    cmd = os.path.basename(argv[0])
-    print('usage: %s <config_uri>\n'
-          '(example: "%s development.ini")' % (cmd, cmd))
-    sys.exit(1)
 
 
 def initialize_db(config_uri=None):
@@ -45,13 +36,20 @@ def alembic_stamp():
     alembic_cfg = Config("alembic.ini")
     command.stamp(alembic_cfg, "head")
 
-
-def main(argv=sys.argv):  # pragma: no cover
+def main():
     """ Create the database using the configuration from the ini file passed
-    in argv. If no argv then dispaly the usage command.
+    as a positional argument.
     """
-    if len(argv) != 2:
-        usage(argv)
-    config_uri = argv[1]
-    initialize_db(config_uri)
+    # get option from comand line
+    parser = argparse.ArgumentParser(
+                description='Initialize the database',
+                usage='%(prog)s file.ini',
+                epilog='example: %(prog)s developement.ini')
+    parser.add_argument(
+                'file',
+                help='The application config file')
+    args = parser.parse_args()
+    # initialize the db
+    initialize_db(args.file)
     alembic_stamp()
+
