@@ -59,5 +59,6 @@ setup(
     main = anuket:main
     [console_scripts]
     initialize_anuket_db = anuket.scripts.initializedb:main
+    upgrade_anuket_db = anuket.scripts.upgradedb:main
     """,
     )
