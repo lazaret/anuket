@@ -17,6 +17,7 @@ install_requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'alembic',
     'Babel',
     'cracklib',
     'cryptacular',

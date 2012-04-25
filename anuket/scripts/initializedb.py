@@ -5,6 +5,8 @@ import transaction
 
 from sqlalchemy import engine_from_config
 from pyramid.paster import get_appsettings, setup_logging
+from alembic.config import Config
+from alembic import command
 
 from anuket.models import DBSession, Base, AuthUser, AuthGroup
 
@@ -35,6 +37,14 @@ def initialize_db(config_uri=None):
                 group=admins_group)
             DBSession.add(admin_user)
 
+def alembic_stamp():
+    """ Stamp the database with the most recent schema revision.
+
+    Create a `alembic_version` in the database with a `version_num` field and
+    set the version value to the last almebic revision."""
+    alembic_cfg = Config("alembic.ini")
+    command.stamp(alembic_cfg, "head")
+
 
 def main(argv=sys.argv):  # pragma: no cover
     """ Create the database using the configuration from the ini file passed
@@ -44,3 +54,4 @@ def main(argv=sys.argv):  # pragma: no cover
         usage(argv)
     config_uri = argv[1]
     initialize_db(config_uri)
+    alembic_stamp()
