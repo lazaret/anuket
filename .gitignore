@@ -7,5 +7,4 @@ dist/
 .directory
 .tox
 /.coverage
-
 /.noseids
