@@ -4,9 +4,10 @@ import sqlite3
 import bz2
 from datetime import date
 
-
 from sqlalchemy import engine_from_config
 from pyramid.paster import get_appsettings
+
+from anuket.lib.util import verify_directory
 
 
 def dump_sqlite(connect_args):
@@ -17,11 +18,12 @@ def dump_sqlite(connect_args):
     return sql_dump
 
 
-def bzip(sql_dump):
+def bzip(sql_dump, backup_dir):
     """ Compress the SQL dump with bzip2."""
     today = date.today().isoformat()
     filename = 'anuket-'+today+'.sql.bz2'
-    bz = bz2.BZ2File(filename, 'w')
+    path = os.path.join(backup_dir, filename)
+    bz = bz2.BZ2File(path, 'w')
     bz.write(sql_dump)
     bz.close()
 
@@ -31,6 +33,9 @@ def main():
 
     Supported database: SQLite.
     """
+    # verify and/or create the backup directory
+    backup_dir = 'var/backups'
+    verify_directory(backup_dir)
     # get db engine from config
     config_uri = 'development.ini'
     settings = get_appsettings(config_uri)
@@ -46,9 +51,10 @@ def main():
     else:
         return "Sorry unsuported database!"
 
-    bzip(sql_dump)
+    bzip(sql_dump, backup_dir)
 
 
 #TODO: this is a very simple script we need to :
-#Add other dadatase support (MySQL and Postgres)
-#Save in var/backup
+#Add other dadatases support (MySQL and Postgres)
+#Get var/backup path fron config file
+#Gat db name from config file
