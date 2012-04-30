@@ -58,6 +58,7 @@ setup(
     [paste.app_factory]
     main = anuket:main
     [console_scripts]
+    backup_anuket_db = anuket.scripts.backupdb:main
     initialize_anuket_db = anuket.scripts.initializedb:main
     upgrade_anuket_db = anuket.scripts.upgradedb:main
     """,

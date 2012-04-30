@@ -8,3 +8,9 @@ def main():
     alembic_cfg = Config("alembic.ini")
     command.upgrade(alembic_cfg, "head")
 
+
+#TODO:
+# dump db before by default
+# add argpase fo dump/nodump
+# do nothing but check db version by default / user need to add "upgrade"
+# as argument
