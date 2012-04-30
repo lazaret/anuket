@@ -2,25 +2,27 @@
 import os
 import sqlite3
 import bz2
+from datetime import date
 
 
-def dump_sqlite():
+from sqlalchemy import engine_from_config
+from pyramid.paster import get_appsettings
+
+
+def dump_sqlite(connect_args):
     """ Dump a SQLite database."""
-    con = sqlite3.connect('anuket.db')
-    full_dump = os.linesep.join(con.iterdump())
+    con = sqlite3.connect(connect_args['database'])
+    sql_dump = os.linesep.join(con.iterdump())
     con.close()
-    f = open('anuket.sql', 'w')
-    f.writelines(full_dump)
-    f.close()
+    return sql_dump
 
 
-def bzip_dump():
+def bzip(sql_dump):
     """ Compress the SQL dump with bzip2."""
-    bz = bz2.BZ2File('anuket.sql.bz2', 'w')
-    f = open('anuket.sql', 'rb')
-    data = f.read()
-    f.close()
-    bz.write(data)
+    today = date.today().isoformat()
+    filename = 'anuket-'+today+'.sql.bz2'
+    bz = bz2.BZ2File(filename, 'w')
+    bz.write(sql_dump)
     bz.close()
 
 
@@ -29,12 +31,24 @@ def main():
 
     Supported database: SQLite.
     """
-    dump_sqlite()
-    bzip_dump()
+    # get db engine from config
+    config_uri = 'development.ini'
+    settings = get_appsettings(config_uri)
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    connect_args = engine.url.translate_connect_args()
+    # dump the database based on the engine
+    if engine.dialect.name == 'sqlite':
+        sql_dump = dump_sqlite(connect_args)
+#    if engine.dialect.name == 'mysql':
+#        pass
+#    if engine.dialect.name == 'postgresql':
+#        pass
+    else:
+        return "Sorry unsuported database!"
+
+    bzip(sql_dump)
 
 
 #TODO: this is a very simple script we need to :
-#Get database engine from config
 #Add other dadatase support (MySQL and Postgres)
-#Add timestamp
 #Save in var/backup
