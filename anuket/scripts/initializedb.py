@@ -20,7 +20,7 @@ def set_alembic_settings(config_uri):
     # get setting from the pyramid config file
     settings = get_appsettings(config_uri)
     # set alembic settings
-    alembic_cfg = Config(config_uri) # workaround for the alembic #45 bug
+    alembic_cfg = Config(config_uri)
     alembic_cfg.set_section_option(
         'alembic',
         'script_location',
