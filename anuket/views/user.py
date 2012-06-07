@@ -164,7 +164,13 @@ def user_delete_view(request):
     user list. If the user exist then delete the user in the database, add a
     warning flash message and then redirect to the user list.
     """
-    # The confirm delete must be managed by modal messages in the templates.
+    # The confirm delete must be managed by modal messages in the templates,
+    # and we forbid direct deletion from the adress bar (no referer)
+    if not request.referer:
+        request.session.flash(_(u"You do not have the permission to do this!"),
+                              'error')
+        return HTTPFound(location=request.route_path('home'))
+
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -173,7 +179,6 @@ def user_delete_view(request):
     DBSession.delete(user)
     request.session.flash(_(u"User deleted."), 'warn')
     return HTTPFound(location=request.route_path('tools.user_list'))
-#TODO forbid direct deletion from adress bar even for admin
 
 
 @view_config(route_name='tools.password_edit', permission='admin',
