@@ -39,11 +39,11 @@ def add_localizer(event):
         return localizer.translate(MessageFactory(string))
 
     def gettext_translate(string):
-        """ Translate string with FormEncode."""
+        """ Translate untranlated strings with FormEncode."""
         # Try default translation first
         translation = localizer.old_translate(i18n.TranslationString(string))
         if translation == string:
-            # translation failed then try FormEncode
+            # translation failed then use FormEncode
             translation = formencode_api._stdtrans(string)
         return translation
 
