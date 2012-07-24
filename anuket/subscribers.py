@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid.events import BeforeRender, NewRequest
 from pyramid.httpexceptions import HTTPForbidden
-from pyramid.i18n import get_localizer
+from pyramid import i18n
 from pyramid.security import forget
+from formencode import api as formencode_api
 
 from anuket.lib.i18n import MessageFactory
 
@@ -31,15 +32,31 @@ def add_renderer_globals(event):
 def add_localizer(event):
     """ Localization event subscriber.
 
-    Automaticaly translate strings in the templates."""
+    Automaticaly translate strings in the templates.
+    """
     def auto_translate(string):
         """ Use the message factory to translate strings."""
         return localizer.translate(MessageFactory(string))
 
+    def gettext_translate(string):
+        """ Translate string with FormEncode."""
+        # Try default translation first
+        translation = localizer.old_translate(i18n.TranslationString(string))
+        if translation == string:
+            # translation failed then try FormEncode
+            translation = formencode_api._stdtrans(string)
+        return translation
+
     request = event.request
-    localizer = get_localizer(request)
+    localizer = i18n.get_localizer(request)
     request.localizer = localizer
     request.translate = auto_translate
+
+    if not hasattr(localizer, "old_translate"):
+        localizer.old_translate = localizer.translate
+    locale_name = i18n.get_locale_name(request)
+    formencode_api.set_stdtranslation(languages=[locale_name])
+    localizer.translate = gettext_translate
 
 
 def add_csrf_validation(event):
