@@ -46,7 +46,7 @@ def get_grouplist():
 def get_user_stats():
     """ Get basic database statistics.
 
-    Return users and group counts from the database.
+    Return users and groups counts from the database.
     """
     usercount = DBSession.query(AuthUser.user_id).count()
     groupcount = DBSession.query(AuthGroup.group_id).count()
@@ -165,7 +165,7 @@ def user_delete_view(request):
     warning flash message and then redirect to the user list.
     """
     # The confirm delete must be managed by modal messages in the templates,
-    # and we forbid direct deletion from the adress bar (no referer)
+    # and we forbid direct deletion from the address bar (no referer)
     if not request.referer:
         request.session.flash(_(u"You do not have the permission to do this!"),
                               'error')
@@ -176,6 +176,16 @@ def user_delete_view(request):
     if not user:
         request.session.flash(_(u"This user did not exist!"), 'error')
         return HTTPFound(location=request.route_path('tools.user_list'))
+
+    #forbid the deletion if it's the only admin user
+    if user.group.groupname == 'admins':
+        adminscount = DBSession.query(AuthUser.user_id).join(AuthGroup).\
+                                filter(AuthGroup.groupname == 'admins').count()
+        if adminscount == 1:
+            request.session.flash(_(u"Deletion of the only admin forbidden!"),
+                                  'error')
+            return HTTPFound(location=request.route_path('tools.user_list'))
+
     DBSession.delete(user)
     request.session.flash(_(u"User deleted."), 'warn')
     return HTTPFound(location=request.route_path('tools.user_list'))
@@ -217,7 +227,7 @@ def password_edit_view(request):
 #                grouplist=grouplist)
 
 
-# Formencode schemas
+# FormEncode schemas
 class UserForm(Schema):
     """ Form validation schema for users."""
     filter_extra_fields = True
