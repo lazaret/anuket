@@ -34,6 +34,14 @@ def root_view(request):
 
     Render the home page, the login page and 404 not found page.
     """
+    #check the default admin password if any admin is connected
+    #TODO move in a security and sanity checks tool/library
+    from pyramid.security import has_permission
+    if has_permission('admin', request.context, request):
+        if AuthUser.check_password(username='admin', password='admin'):
+            request.session.flash(_("Change the default admin password !"),
+                                  'error')
+
     return dict()
 
 
