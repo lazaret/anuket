@@ -12,7 +12,7 @@
         </ul>
         <ul class="nav pull-right">
         %if request.auth_user:
-          ## Tools ara available only for admins
+          ## Tools are available only for admins
           % if has_permission('admin', request.context, request):
             <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
           %endif
