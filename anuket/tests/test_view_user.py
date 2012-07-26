@@ -11,8 +11,6 @@ class ViewUserTests(AnuketTestCase):
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.user')
-        # register the `root` routes (for no refer tests)
-        self.config.include('anuket.views.root')
 
     def tearDown(self):
         super(ViewUserTests, self).tearDown()
@@ -208,6 +206,7 @@ class ViewUserTests(AnuketTestCase):
         """ test the response of the `user_delete` view wile trying to
         directly delete an user (with no referer).
         """
+        self.config.include('anuket.views.root') # register the `root` routes
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
         request = testing.DummyRequest()
@@ -480,6 +479,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         usercheck = AuthUser.get_by_id(1)
         self.assertTrue(usercheck, user)
 
+#TODO delete an user from link with confirm modal
 #    def test_17_user_delete_for_admin(self):
 #        """ Test the deletion of a dummy user by an admin user."""
 #        self.dummy_user_fixture()
@@ -497,12 +497,13 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
 #        self.assertFalse('email@email.com' in redirect.body)
 
 
-#TODO delete an user from link with confirm modal
 #TODO try to delete the only admin
+#    def test_18_only_admin_delete_is_forbiden(self):
+#        """ Test the deletion of the only admin user by itself."""
+#        response = self.connect_admin_user_fixture()
 
 
-
-    def test_18_password_edit_page_for_admin(self):
+    def test_19_password_edit_page_for_admin(self):
         """ Test the edit password form with admin credentials."""
         password = self.password_fixture()
         response = self.connect_admin_user_fixture()
@@ -520,7 +521,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/tools/user')
         self.assertTrue('Password updated successfully.' in redirect.body)
 
-    def test_19_password_edit_page_is_forbiden_for_non_admin(self):
+    def test_20_password_edit_page_is_forbiden_for_non_admin(self):
         """ Test than edit password form is forbiden for non admin users."""
         response = self.connect_dummy_user_fixture()
 
@@ -531,7 +532,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('You do not have the permission to do this!'
                         in redirect.body)
 
-    def test_20_password_edit_page_is_forbiden_for_anonymous(self):
+    def test_21_password_edit_page_is_forbiden_for_anonymous(self):
         """ Test than edit password form is forbiden for non logged users."""
         response = self.testapp.get('/tools/user/1/password', status=302)
         redirect = response.follow()
