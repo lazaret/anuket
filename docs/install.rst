@@ -1,0 +1,4 @@
+Licenses
+********
+
+.. include:: ../INSTALL.txt

@@ -1,8 +1,12 @@
 Changelog
 =========
 
-0.4 released 2012
+0.5 released 2012
 -----------------
+
+
+0.4 released 2012-04-29
+-----------------------
 
 * Change the auth_user request property to an AuthUser object
 * Extend the tests suite

@@ -19,14 +19,17 @@ Choices done for you by Anuket:
 * Pyramid_: Core web framework
 * URLDispatch: Resources location mecanism
 * SQLAlchemy_: SQL toolkit and ORM
-* Formencode_: Form validator
+* FormEncode_: Form validator
 * Pyramid_simpleform_: Form generator
 * Mako_: Templating engine
 * `Twitter Bootstrap`_: Default templates
 
-The project will also probably integrate:
+The project also integrate:
 
-* Alembic_: SQLAlchemy migration toolkit
+* Alembic_: Database migration tool for SQLAlchemy
+* Babel_: Internationalization and Localization tools
+* Cracklib_: Password checking library
+* Cryptacular_: Password hashing framework
 
 
 Usage
@@ -44,14 +47,12 @@ like this, Anuket may not be suited for you.
 
 Warning
 =======
-The developement is still at a very early stage and other choices have to be
+The developement is still at an early stage and other choices have to be
 made before the 1.0 version. In particulary take care of the facts than:
 
 * The database schema is subject to change
-* Colander may be choised over Formencode for forms validation
-* Pyramid_simpleform may be replaced by another form generator
-* A password checker have to be choised. Probably ctypescracklib or Pwtools
-* Alembic database versioning mecanism will probably be integrated
+* WTForms may be choised over FormEncode and Pyramid_simpleform
+* We may add a 'plugin' mecanism to allow optional features
 
 
 Alternatives
@@ -68,8 +69,9 @@ Narative documentation
 .. toctree::
    :maxdepth: 1
 
-   flash_messages.rst
+   install.rst
    testing.rst
+   flash_messages.rst
    authors.rst
    licenses.rst
    changes.rst
@@ -96,6 +98,9 @@ Index and Glossary
 .. _Lazaret laboratory: http://lazaret.unice.fr/
 
 .. _Alembic: http://pypi.python.org/pypi/alembic
+.. _Babel: http://babel.edgewall.org/
+.. _Cracklib: http://pypi.python.org/pypi/cracklib
+.. _Cryptacular: http://pypi.python.org/pypi/cryptacular
 .. _Formencode: http://www.formencode.org/
 .. _Mako: http://www.makotemplates.org/
 .. _Pyramid: http://pylonsproject.org/
