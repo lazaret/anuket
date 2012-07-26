@@ -8,8 +8,14 @@ from datetime import date
 from sqlalchemy import engine_from_config
 from pyramid.paster import get_appsettings
 
-from anuket.lib.util import verify_directory
 
+def verify_directory(dir):
+    """ Create and/or verify a filesystem directory."""
+    if not os.path.exists(dir):
+        try:
+            os.makedirs(dir, 0775)
+        except:
+            raise
 
 def dump_sqlite(connect_args):
     """ Dump a SQLite database."""
@@ -71,3 +77,4 @@ def main():
 
 #TODO: this is a very simple script we need to :
 #Add other dadatases support (MySQL and Postgres)
+#Use the brand_name option instad of 'anuket' for the database backup name
