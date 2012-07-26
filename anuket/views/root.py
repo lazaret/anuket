@@ -38,7 +38,7 @@ def root_view(request):
     #TODO move in a security and sanity checks tool/library
     from pyramid.security import has_permission
     if has_permission('admin', request.context, request):
-        if AuthUser.check_password(username='admin', password='admin'):
+        if AuthUser.check_password(username=u'admin', password=u'admin'):
             request.session.flash(_("Change the default admin password !"),
                                   'error')
 

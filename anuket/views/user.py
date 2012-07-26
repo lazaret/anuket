@@ -179,9 +179,9 @@ def user_delete_view(request):
         return HTTPFound(location=request.route_path('tools.user_list'))
 
     #forbid the deletion if it's the only admin user
-    if user.group.groupname == 'admins':
+    if user.group.groupname == u'admins':
         adminscount = DBSession.query(AuthUser.user_id).join(AuthGroup).\
-                                filter(AuthGroup.groupname == 'admins').count()
+                                filter(AuthGroup.groupname == u'admins').count()
         if adminscount == 1:
             request.session.flash(_(u"Deletion of the only admin forbidden!"),
                                   'error')
