@@ -34,21 +34,6 @@ def includeme(config):
     config.add_route('tools.password_edit', '/tools/user/{user_id}/password')
 
 
-def _get_user(request):
-    """  Retrive the user object.
-
-    Retrive the SQLAlchemy user object. Return an error and redirect to the
-    user list, if the user did not exist.
-    """
-    user_id = request.matchdict['user_id']
-    user = AuthUser.get_by_id(user_id)
-    if not user:
-        request.session.flash(_(u"This user did not exist!"), 'error')
-        return HTTPFound(location=request.route_path('tools.user_list'))
-    else :
-        return user
-
-
 def get_grouplist():
     """ Generate a list of groups from the database."""
     # For use in group select forms.
@@ -133,7 +118,11 @@ def user_show_view(request):
     the user did not exist then add an error flash message and redirect to the
     user list. If the user exist then return his datas.
     """
-    user = _get_user(request)
+    user_id = request.matchdict['user_id']
+    user = AuthUser.get_by_id(user_id)
+    if not user:
+        request.session.flash(_(u"This user did not exist!"), 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(user=user)
 
 
@@ -151,7 +140,11 @@ def user_edit_view(request):
     form with validation errors. Return also a list of groups to use in the
     group select form.
     """
-    user = _get_user(request)
+    user_id = request.matchdict['user_id']
+    user = AuthUser.get_by_id(user_id)
+    if not user:
+        request.session.flash(_(u"This user did not exist!"), 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
     grouplist = get_grouplist()
     form = Form(request, schema=UserEditForm, obj=user)
     if 'form_submitted' in request.params and form.validate():
@@ -172,16 +165,20 @@ def user_delete_view(request):
     user list. If the user exist then delete the user in the database, add a
     warning flash message and then redirect to the user list.
     """
-    # The confirm delete must be managed by modal messages in the templates.
-    # We forbid direct deletion from the address bar (no referer)
+    # The confirm delete must be managed by modal messages in the templates,
+    # and we forbid direct deletion from the address bar (no referer)
     if not request.referer:
         request.session.flash(_(u"You do not have the permission to do this!"),
                               'error')
         return HTTPFound(location=request.route_path('home'))
 
-    user = _get_user(request)
+    user_id = request.matchdict['user_id']
+    user = AuthUser.get_by_id(user_id)
+    if not user:
+        request.session.flash(_(u"This user did not exist!"), 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
 
-    #forbid the user deletion if it's the only admin user
+    #forbid the deletion if it's the only admin user
     if user.group.groupname == 'admins':
         adminscount = DBSession.query(AuthUser.user_id).join(AuthGroup).\
                                 filter(AuthGroup.groupname == 'admins').count()
@@ -208,7 +205,11 @@ def password_edit_view(request):
     success flash message. If the form is not valid, then display again the
     form with validation errors.
     """
-    user = _get_user(request)
+    user_id = request.matchdict['user_id']
+    user = AuthUser.get_by_id(user_id)
+    if not user:
+        request.session.flash(_(u"This user did not exist!"), 'error')
+        return HTTPFound(location=request.route_path('tools.user_list'))
     form = Form(request, schema=UserPasswordForm, obj=user)
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
