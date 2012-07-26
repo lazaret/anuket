@@ -57,6 +57,35 @@ class AnuketTestCase(TestCase):
             self.DBSession.rollback()
             raise AssertionError
 
+    def admin_group_fixture(self):
+        """ Create an admin group test fixture in the database."""
+        try:
+            from anuket.models import AuthGroup
+            group = AuthGroup()
+            group.groupname = u'admins'
+            self.DBSession.add(group)
+            self.DBSession.flush()
+            return group
+        except:  # pragma: no cover
+            self.DBSession.rollback()
+            raise AssertionError
+
+    def admin_user_fixture(self):
+        """ Create an admin auth user test fixture in the database."""
+        try:
+            from anuket.models import AuthUser
+            group = self.admin_group_fixture()
+            user = AuthUser()
+            user.username = u'admin'
+            user.password = u'admin'
+            user.group = group
+            self.DBSession.add(user)
+            self.DBSession.flush()
+            return user
+        except:  # pragma: no cover
+            self.DBSession.rollback()
+            raise AssertionError
+
     def password_fixture(self):
         """ Random valid password generator fixture."""
         from random import choice
@@ -91,42 +120,13 @@ class AnuketFunctionalTestCase(AnuketTestCase):
         super(AnuketFunctionalTestCase, self).tearDown()
         del self.testapp
 
-    def _admin_group_fixture(self):
-        """ Create an admin group test fixture in the database."""
-        try:
-            from anuket.models import AuthGroup
-            group = AuthGroup()
-            group.groupname = u'admins'
-            self.DBSession.add(group)
-            self.DBSession.flush()
-            return group
-        except:  # pragma: no cover
-            self.DBSession.rollback()
-            raise AssertionError
-
-    def _admin_user_fixture(self):
-        """ Create an admin auth user test fixture in the database."""
-        try:
-            from anuket.models import AuthUser
-            group = self._admin_group_fixture()
-            user = AuthUser()
-            user.username = u'admin'
-            user.password = u'admin'
-            user.group = group
-            self.DBSession.add(user)
-            self.DBSession.flush()
-            return user
-        except:  # pragma: no cover
-            self.DBSession.rollback()
-            raise AssertionError
-
     def connect_admin_user_fixture(self):
         """ Connect the test admin user with the login form.
 
         This create an admin user in the database, and then connect him with
         the login form. This set up an userid cookie inside the testing browser
         available for further tests."""
-        self._admin_user_fixture()
+        self.admin_user_fixture()
         response = self.testapp.get('/login', status=200)
         csrf_token = response.form.fields['_csrf'][0].value
         params = {

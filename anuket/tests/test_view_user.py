@@ -11,6 +11,8 @@ class ViewUserTests(AnuketTestCase):
         self.config = testing.setUp()
         # register the `tools` routes
         self.config.include('anuket.views.user')
+        # register the `root` routes (for no refer tests)
+        self.config.include('anuket.views.root')
 
     def tearDown(self):
         super(ViewUserTests, self).tearDown()
@@ -202,11 +204,35 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-#    def test_15_delete_without_referrer_is_forbiden(self):
-#        #TODO
-#        pass
+    def test_15_delete_without_referrer_is_forbiden(self):
+        """ test the response of the `user_delete` view wile trying to
+        directly delete an user (with no referer).
+        """
+        self.dummy_user_fixture()
+        from anuket.views.user import user_delete_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        request.referer = None
+        response = user_delete_view(request)
+        self.assertEqual(response.location, '/')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"You do not have the permission to do this!")
 
-    def test_16_password_edit(self):
+    def test_16_only_admin_user_delete_is_forbiden(self):
+        """ Test the response of the `user_delete` view wile trying to
+        delete the only admin user.
+        """
+        self.admin_user_fixture()
+        from anuket.views.user import user_delete_view
+        request = testing.DummyRequest()
+        request.matchdict = {'user_id': 1}
+        request.referer = '/tools/user'
+        response = user_delete_view(request)
+        self.assertEqual(response.location, '/tools/user')
+        self.assertEqual(request.session.pop_flash('error')[0],
+                         u"Deletion of the only admin forbidden!")
+
+    def test_17_password_edit(self):
         """ Test the response of the `password_edit` view."""
         self.dummy_user_fixture()
         password = self.password_fixture()
@@ -223,7 +249,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"Password updated successfully.")
 
-    def test_17_not_validate_password_edit(self):
+    def test_18_not_validate_password_edit(self):
         """ Test the response of the `password_edit` view not validated."""
         self.dummy_user_fixture()
         from anuket.views.user import password_edit_view
@@ -235,7 +261,7 @@ class ViewUserTests(AnuketTestCase):
         from pyramid_simpleform.renderers import FormRenderer
         self.assertIsInstance(response['renderer'], FormRenderer)
 
-    def test_18_not_exist_password_edit(self):
+    def test_19_not_exist_password_edit(self):
         """ Test the response of the `password_edit` view with a non
         existent `user_id`.
         """
