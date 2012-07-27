@@ -3,28 +3,23 @@ import os
 import argparse
 from datetime import date
 
-from alembic.config import Config
-from alembic import command
+from alembic.command import upgrade
 from pyramid.paster import get_appsettings
 
-from anuket.scripts.initializedb import set_alembic_settings
+from anuket.lib.alembic_utils import get_alembic_settings
 
-
-def upgrade_db(config_uri):
-    """ Upgrade the database schema with alembic."""
-    alembic_cfg = set_alembic_settings(config_uri)
-    # perform upgrade
-    command.upgrade(alembic_cfg, 'head')
 
 def check_existing_dump(backup_directory):
     """ Check for an existing database dump for today. Return True if there is
-    one.
+    already one.
     """
     # see also backupdb script
     today = date.today().isoformat()
     filename = 'anuket-'+today+'.sql.bz2'
     path = os.path.join(backup_directory, filename)
     return os.path.isfile(path)
+#TODO: use the brand_name option instad of 'anuket' for the backup name
+
 
 def main():
     """ Upgrade the database using the configuration from the ini file passed
@@ -47,7 +42,9 @@ def main():
     # look if there an up to date database backup file
     today_backup = check_existing_dump(backup_directory)
     if today_backup or args.force:
-        upgrade_db(args.config_file)
+        alembic_cfg = get_alembic_settings(args.config_file)
+        # perform upgrade with alembic
+        upgrade(alembic_cfg, 'head')
     else:
         parser.error("There is no up to date backup for the database. " \
                      "Please use the backup script before upgrading!")

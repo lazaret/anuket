@@ -72,9 +72,10 @@ def main():
 #        pass
     else:
         return "Sorry unsuported database engine!"
-    bzip(sql_dump, backup_directory, args.overwrite)
+    if sql_dump:
+        bzip(sql_dump, backup_directory, args.overwrite)
 
 
 #TODO: this is a very simple script we need to :
 #Add other dadatases support (MySQL and Postgres)
-#Use the brand_name option instad of 'anuket' for the database backup name
+#Use the brand_name option instad of 'anuket' for the backup name
