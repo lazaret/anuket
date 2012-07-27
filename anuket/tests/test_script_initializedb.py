@@ -6,11 +6,11 @@ from anuket.tests import AnuketTestCase
 
 
 here = os.path.dirname(__file__)
-filename = os.path.join(here, '../../', 'test.ini')
+config_uri = os.path.join(here, '../../', 'test.ini')
 
 
 class ScriptInitializedbTests(AnuketTestCase):
-    """Tests for the `initializedb` script."""
+    """ Tests for the `initializedb` script."""
 
     def setUp(self):
         super(ScriptInitializedbTests, self).setUp()
@@ -23,7 +23,7 @@ class ScriptInitializedbTests(AnuketTestCase):
     def test_01_default_datas(self):
         """ Test than the initializedb script create the default values."""
         from anuket.scripts.initializedb import initialize_db
-        initialize_db(filename)
+        initialize_db(config_uri)
         from anuket.models import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
         self.assertEqual(user.username, u'admin')
