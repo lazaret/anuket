@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 """ Utilities to use with Alembic."""
-#import os
-#import sys
-
 from pyramid.paster import get_appsettings
 from alembic.config import Config
 from alembic.script import ScriptDirectory
