@@ -1,5 +1,5 @@
 Anuket
-********
+******
 :Author: LDPL - Laboratoire Départemental de Préhistoire du Lazaret
 :Version: 0.5b, released 2012-XX-XX
 :PyPI:
@@ -71,6 +71,7 @@ Narative documentation
 
    install.rst
    testing.rst
+   console_scripts.rst
    flash_messages.rst
    authors.rst
    licenses.rst
