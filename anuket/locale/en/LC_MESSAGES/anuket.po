@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wepwawet 0.1a\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-03-29 15:34+0200\n"
+"POT-Creation-Date: 2012-07-29 08:55+0200\n"
 "PO-Revision-Date: 2012-02-22 20:35+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -65,19 +65,19 @@ msgstr ""
 msgid "User management"
 msgstr ""
 
-#: anuket/templates/tools/user/password_edit.mako:15
+#: anuket/templates/tools/user/password_edit.mako:16
 #: anuket/templates/tools/user/user_edit.mako:16
 msgid "Update"
 msgstr ""
 
-#: anuket/templates/tools/user/password_edit.mako:18
+#: anuket/templates/tools/user/password_edit.mako:19
 #: anuket/templates/tools/user/user_add.mako:20
 #: anuket/templates/tools/user/user_edit.mako:19
 #: anuket/templates/widgets/confirm_delete.mako:22
 msgid "Cancel"
 msgstr ""
 
-#: anuket/templates/tools/user/password_edit.mako:28
+#: anuket/templates/tools/user/password_edit.mako:29
 msgid "Edit password"
 msgstr ""
 
@@ -205,48 +205,56 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: anuket/views/root.py:58
+#: anuket/views/root.py:42
+msgid "Change the default admin password !"
+msgstr ""
+
+#: anuket/views/root.py:57 anuket/views/user.py:171
 msgid "You do not have the permission to do this!"
 msgstr ""
 
-#: anuket/views/root.py:62
+#: anuket/views/root.py:61
 msgid "You are not connected, please log in."
 msgstr ""
 
-#: anuket/views/root.py:90
+#: anuket/views/root.py:83
 msgid "You have successfuly connected."
 msgstr ""
 
-#: anuket/views/root.py:95
+#: anuket/views/root.py:88
 msgid "Please check your login credentials!"
 msgstr ""
 
-#: anuket/views/root.py:115
+#: anuket/views/root.py:101
 msgid "You have been disconnected."
 msgstr ""
 
-#: anuket/views/user.py:61
+#: anuket/views/user.py:80
 msgid "There is no results!"
 msgstr ""
 
-#: anuket/views/user.py:80
+#: anuket/views/user.py:106
 msgid "User added successfully."
 msgstr ""
 
-#: anuket/views/user.py:93 anuket/views/user.py:105 anuket/views/user.py:124
-#: anuket/views/user.py:138
+#: anuket/views/user.py:124 anuket/views/user.py:146 anuket/views/user.py:178
+#: anuket/views/user.py:211
 msgid "This user did not exist!"
 msgstr ""
 
-#: anuket/views/user.py:112
+#: anuket/views/user.py:153
 msgid "User updated successfully."
 msgstr ""
 
-#: anuket/views/user.py:127
+#: anuket/views/user.py:186
+msgid "Deletion of the only admin forbidden!"
+msgstr ""
+
+#: anuket/views/user.py:191
 msgid "User deleted."
 msgstr ""
 
-#: anuket/views/user.py:144
+#: anuket/views/user.py:217
 msgid "Password updated successfully."
 msgstr ""
 
