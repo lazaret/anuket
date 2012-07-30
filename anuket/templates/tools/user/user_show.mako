@@ -8,7 +8,7 @@
   <div class="span6 offset1">
     <div class="form-horizontal">
       <fieldset>
-        <legend>${_(u"User informations")}</legend>
+        <legend></legend>
         <div class="control-group">
           <label for="username" class="control-label">${_(u"Username")}</label>
           <div class="controls">
@@ -63,5 +63,5 @@ ${confirm_delete()}
 
 ## Page title
 <%def name="page_title()">
-${user.username} ${_(u"User")}
+${_(u"User informations")}
 </%def>

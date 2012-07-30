@@ -2,7 +2,7 @@
 ##
 <%def name="user_form_fields()">
 <fieldset>
-  <legend>${_(u"User informations")}</legend>
+  <legend></legend>
   <div class="${'control-group error' if renderer.errors_for('username') else 'control-group'}">
     <label for="username" class="control-label">${_(u"Username")}</label>
     <div class="controls">

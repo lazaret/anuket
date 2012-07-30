@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: anuket 0.5\n"
 "Report-Msgid-Bugs-To: opensource@lazaret.unice.fr\n"
-"POT-Creation-Date: 2012-07-30 11:30+0200\n"
-"PO-Revision-Date: 2012-07-30 11:30+0200\n"
+"POT-Creation-Date: 2012-07-30 14:40+0200\n"
+"PO-Revision-Date: 2012-07-30 14:40+0200\n"
 "Last-Translator: Bertrand LECERVOISIER <opensource@lazaret.unice.fr>\n"
 "Language-Team: en <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -97,11 +97,6 @@ msgstr ""
 msgid "Edit user"
 msgstr ""
 
-#: anuket/templates/tools/user/user_form_fields.mako:5
-#: anuket/templates/tools/user/user_show.mako:11
-msgid "User informations"
-msgstr ""
-
 #: anuket/templates/tools/user/user_form_fields.mako:20
 #: anuket/templates/tools/user/user_search.mako:22
 #: anuket/templates/tools/user/user_show.mako:19
@@ -186,7 +181,7 @@ msgid "Advanced user search"
 msgstr ""
 
 #: anuket/templates/tools/user/user_show.mako:66
-msgid "User"
+msgid "User informations"
 msgstr ""
 
 #: anuket/templates/widgets/confirm_delete.mako:7
