@@ -51,11 +51,10 @@ def main():
     # check if there is already a versioned database
     revision = get_alembic_revision(args.config_file)
     if revision:
-        parser.error("This database is versioned." \
+        parser.error("This database is versioned."
                      "Please use the upgrade script instead!")
     # initialize the db
     initialize_db(args.config_file)
     # stamp the database with the most recent schema revision
     alembic_cfg = get_alembic_settings(args.config_file)
     stamp(alembic_cfg, 'head')
-

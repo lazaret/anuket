@@ -17,6 +17,7 @@ def verify_directory(dir):
         except:
             raise
 
+
 def dump_sqlite(connect_args):
     """ Dump a SQLite database."""
     con = sqlite3.connect(connect_args['database'])
@@ -24,10 +25,11 @@ def dump_sqlite(connect_args):
     con.close()
     return sql_dump
 
+
 def bzip(sql_dump, backup_directory, overwrite=False):
     """ Compress the SQL dump with bzip2."""
     today = date.today().isoformat()
-    filename = 'anuket-'+today+'.sql.bz2'
+    filename = 'anuket-' + today + '.sql.bz2'
     path = os.path.join(backup_directory, filename)
     # check if the file already exist
     isfile = os.path.isfile(path)
@@ -38,6 +40,7 @@ def bzip(sql_dump, backup_directory, overwrite=False):
         bz.close()
     else:
         print "Theyre is already a database backup with the same name!"
+
 
 def main():
     """Dump the database for backup purpose.

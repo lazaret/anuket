@@ -15,10 +15,10 @@ def check_existing_dump(backup_directory):
     """
     # see also backupdb script
     today = date.today().isoformat()
-    filename = 'anuket-'+today+'.sql.bz2'
+    filename = 'anuket-' + today + '.sql.bz2'
     path = os.path.join(backup_directory, filename)
     return os.path.isfile(path)
-#TODO: use the brand_name option instad of 'anuket' for the backup name
+    #TODO: use the brand_name option instad of 'anuket' for the backup name
 
 
 def main():
@@ -46,5 +46,5 @@ def main():
         # perform upgrade with alembic
         upgrade(alembic_cfg, 'head')
     else:
-        parser.error("There is no up to date backup for the database. " \
+        parser.error("There is no up to date backup for the database."
                      "Please use the backup script before upgrading!")
