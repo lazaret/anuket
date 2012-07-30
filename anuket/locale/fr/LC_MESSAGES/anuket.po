@@ -1,15 +1,15 @@
-# French translations for Wepwawet.
-# Copyright (C) 2012 ORGANIZATION
-# This file is distributed under the same license as the Wepwawet project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# French translations for anuket.
+# Copyright (C) 2012 LDPL
+# This file is distributed under the same license as the anuket project.
+# Bertrand LECERVOISIER <opensource@lazaret.unice.fr>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Wepwawet 0.5\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-07-29 08:55+0200\n"
-"PO-Revision-Date: 2012-02-22 20:35+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: anuket 0.5\n"
+"Report-Msgid-Bugs-To: opensource@lazaret.unice.fr\n"
+"POT-Creation-Date: 2012-07-30 11:30+0200\n"
+"PO-Revision-Date: 2012-07-30 11:30+0200\n"
+"Last-Translator: Bertrand LECERVOISIER <opensource@lazaret.unice.fr>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Generated-By: Babel 0.9.6\n"
 
 #: anuket/templates/404.mako:6
-msgid "The page you're looking for isn't here."
-msgstr ""
+msgid "The page you requested was not found."
+msgstr "La page que vous avez demandé n'a pas été trouvé."
 
 #: anuket/templates/404.mako:11
 msgid "Page not found!"
@@ -83,11 +83,11 @@ msgstr "Modifier le mot de passe"
 
 #: anuket/templates/tools/user/password_form_fields.mako:20
 msgid "Confirm password"
-msgstr ""
+msgstr "Confirmez le mot de passe"
 
 #: anuket/templates/tools/user/user_add.mako:17
 msgid "Submit"
-msgstr ""
+msgstr "Envoyer"
 
 #: anuket/templates/tools/user/user_add.mako:30
 msgid "Add user"
@@ -100,7 +100,7 @@ msgstr "Modifier un utilisateur"
 #: anuket/templates/tools/user/user_form_fields.mako:5
 #: anuket/templates/tools/user/user_show.mako:11
 msgid "User informations"
-msgstr ""
+msgstr "Informations utilisateur"
 
 #: anuket/templates/tools/user/user_form_fields.mako:20
 #: anuket/templates/tools/user/user_search.mako:22
@@ -157,7 +157,7 @@ msgstr "Ajouter un utilisateur"
 #: anuket/templates/tools/user/user_list.mako:89
 #: anuket/templates/tools/user/user_search.mako:57
 msgid "Search"
-msgstr ""
+msgstr "Chercher"
 
 #: anuket/templates/tools/user/user_list.mako:97
 msgid "Statistics"
@@ -174,24 +174,24 @@ msgstr "Groupes"
 #: anuket/templates/tools/user/user_search.mako:28
 #: anuket/templates/tools/user/user_search.mako:44
 msgid "OR"
-msgstr ""
+msgstr "OU"
 
 #: anuket/templates/tools/user/user_search.mako:29
 #: anuket/templates/tools/user/user_search.mako:45
 msgid "AND"
-msgstr ""
+msgstr "ET"
 
 #: anuket/templates/tools/user/user_search.mako:72
 msgid "Advanced user search"
-msgstr ""
+msgstr "Recherche avancée des utilisateurs"
 
 #: anuket/templates/tools/user/user_show.mako:66
-msgid "user"
-msgstr ""
+msgid "User"
+msgstr "Utilisateur"
 
 #: anuket/templates/widgets/confirm_delete.mako:7
 msgid "Confirm deletion"
-msgstr ""
+msgstr "Confirmez la supression"
 
 #: anuket/templates/widgets/confirm_delete.mako:15
 msgid "Are you sure?"
@@ -206,24 +206,24 @@ msgid "Logout"
 msgstr "Déconnexion"
 
 #: anuket/views/root.py:42
-msgid "Change the default admin password !"
-msgstr ""
+msgid "Change the default password!"
+msgstr "Modifiez le mot de passe par défaut !"
 
 #: anuket/views/root.py:57 anuket/views/user.py:171
-msgid "You do not have the permission to do this!"
-msgstr ""
+msgid "Insufficient permissions!"
+msgstr "Permissions insufisantes !"
 
 #: anuket/views/root.py:61
-msgid "You are not connected, please log in."
-msgstr ""
+msgid "You are not connected."
+msgstr "Vous n'êtes pas connecté."
 
 #: anuket/views/root.py:83
-msgid "You have successfuly connected."
-msgstr ""
+msgid "Successful login."
+msgstr "Connection réussie."
 
 #: anuket/views/root.py:88
-msgid "Please check your login credentials!"
-msgstr ""
+msgid "Check your login credentials!"
+msgstr "Vérifiez vos informations de connexion !"
 
 #: anuket/views/root.py:101
 msgid "You have been disconnected."
@@ -231,11 +231,11 @@ msgstr "Vous avez été déconnecté."
 
 #: anuket/views/user.py:80
 msgid "There is no results!"
-msgstr ""
+msgstr "Aucun résultats !"
 
 #: anuket/views/user.py:106
-msgid "User added successfully."
-msgstr ""
+msgid "User added."
+msgstr "Utilisateur ajouté."
 
 #: anuket/views/user.py:124 anuket/views/user.py:146 anuket/views/user.py:178
 #: anuket/views/user.py:211
@@ -243,18 +243,18 @@ msgid "This user did not exist!"
 msgstr "Cet utilisateur n'existe pas !"
 
 #: anuket/views/user.py:153
-msgid "User updated successfully."
-msgstr ""
+msgid "User updated."
+msgstr "Utilisateur mis à jour."
 
 #: anuket/views/user.py:186
 msgid "Deletion of the only admin forbidden!"
-msgstr ""
+msgstr "Supression du seul administrateur interdite !"
 
 #: anuket/views/user.py:191
 msgid "User deleted."
 msgstr "Utilisateur supprimé."
 
 #: anuket/views/user.py:217
-msgid "Password updated successfully."
-msgstr "Mot de passe mis à jour avec succès."
+msgid "Password updated."
+msgstr "Mot de passe mis à jour."
 
