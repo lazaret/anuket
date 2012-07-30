@@ -103,7 +103,7 @@ def user_add_view(request):
     if 'form_submitted' in request.params and form.validate():
         user = form.bind(AuthUser())
         DBSession.add(user)
-        request.session.flash(_(u"User added successfully."), 'success')
+        request.session.flash(_(u"User added."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form),
                 grouplist=grouplist)
@@ -150,7 +150,7 @@ def user_edit_view(request):
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
         DBSession.add(user)
-        request.session.flash(_(u"User updated successfully."), 'success')
+        request.session.flash(_(u"User updated."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form),
                 grouplist=grouplist)
@@ -168,7 +168,7 @@ def user_delete_view(request):
     # The confirm delete must be managed by modal messages in the templates,
     # and we forbid direct deletion from the address bar (no referer)
     if not request.referer:
-        request.session.flash(_(u"You do not have the permission to do this!"),
+        request.session.flash(_(u"Insufficient permissions!"),
                               'error')
         return HTTPFound(location=request.route_path('home'))
 
@@ -214,7 +214,7 @@ def password_edit_view(request):
     if 'form_submitted' in request.params and form.validate():
         form.bind(user)
         DBSession.add(user)
-        request.session.flash(_(u"Password updated successfully."), 'success')
+        request.session.flash(_(u"Password updated."), 'success')
         return HTTPFound(location=request.route_path('tools.user_list'))
     return dict(renderer=FormRenderer(form))
 

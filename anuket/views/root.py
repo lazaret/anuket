@@ -39,7 +39,7 @@ def root_view(request):
     from pyramid.security import has_permission
     if has_permission('admin', request.context, request):
         if AuthUser.check_password(username=u'admin', password=u'admin'):
-            request.session.flash(_("Change the default admin password !"),
+            request.session.flash(_("Change the default password!"),
                                   'error')
 
     return dict()
@@ -54,11 +54,11 @@ def forbiden_view(request):
     A corresponding flash message is also added to the error message queue.
     """
     if request.auth_user:
-        request.session.flash(_(u"You do not have the permission to do this!"),
+        request.session.flash(_(u"Insufficient permissions!"),
                               'error')
         return HTTPFound(location=request.route_path('home'))
     else:
-        request.session.flash(_(u"You are not connected, please log in."),
+        request.session.flash(_(u"You are not connected."),
                               'error')
         return HTTPFound(location=request.route_path('login'))
 
@@ -80,12 +80,12 @@ def login_view(request):
         if AuthUser.check_password(username, password):
             auth_user = AuthUser.get_by_username(username)
             headers = remember(request, auth_user.user_id)
-            request.session.flash(_(u"You have successfuly connected."),
+            request.session.flash(_(u"Successful login."),
                                   'success')
             return HTTPFound(location=request.route_path('home'),
                              headers=headers)
         else:
-            request.session.flash(_(u"Please check your login credentials!"),
+            request.session.flash(_(u"Check your login credentials!"),
                                   'error')
     return dict(renderer=FormRenderer(form))
 

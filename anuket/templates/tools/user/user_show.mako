@@ -63,5 +63,5 @@ ${confirm_delete()}
 
 ## Page title
 <%def name="page_title()">
-${user.username} ${_(u"user")}
+${user.username} ${_(u"User")}
 </%def>

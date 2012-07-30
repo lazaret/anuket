@@ -3,7 +3,7 @@
 <%inherit file="anuket:templates/base.mako" />
 
 
-<h3>${_(u"The page you're looking for isn't here.")}</h3>
+<h3>${_(u"The page you requested was not found.")}</h3>
 
 
 ## Page title
