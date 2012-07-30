@@ -40,8 +40,14 @@ class AlembicUtilsTests(AnuketTestCase):
 
 
 #    def test_02_get_alembic_revision(self):
-#        """
-#        """
+#        """ Test the `get_alembic_revision` utility."""
 #        from anuket.lib.alembic_utils import get_alembic_revision
-#        get_alembic_revision(config_uri)
-#        #TODO: add real tests
+#        revision = get_alembic_revision(config_uri)
+#        self.assertEqual(revision, None)
+#
+#        from alembic.command import stamp
+#        from anuket.lib.alembic_utils import get_alembic_settings
+#        alembic_cfg = get_alembic_settings(config_uri)
+#        stamp(alembic_cfg, 'head')
+#        revision = get_alembic_revision(config_uri)
+#        self.assertEqual(revision, 'revid')

@@ -39,7 +39,7 @@ class ViewRootTests(AnuketTestCase):
         response = forbiden_view(request)
         self.assertEqual(response.location, '/login')
         self.assertEqual(request.session.pop_flash('error')[0],
-                         u'You are not connected, please log in.')
+                         u'You are not connected.')
 
     def test_04_forbiden_view_logged(self):
         """ Test the response of the `forbiden_view` for logged users."""
@@ -48,7 +48,7 @@ class ViewRootTests(AnuketTestCase):
         response = forbiden_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('error')[0],
-                         u'You do not have the permission to do this!')
+                         u'Insufficient permissions!')
 
     def test_05_login_view_non_logged(self):
         """ Test the response of the `login_view` for non-logged users."""
@@ -73,7 +73,7 @@ class ViewRootTests(AnuketTestCase):
         response = login_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('success')[0],
-                         u"You have successfuly connected.")
+                         u"Successful login.")
 
     def test_07_login_view_wrong_credentials(self):
         """ Test the response of the `login_view` with wrong credentials."""
@@ -88,7 +88,7 @@ class ViewRootTests(AnuketTestCase):
         response = login_view(request)
         self.assertIsNotNone(response['renderer'])
         self.assertEqual(request.session.pop_flash('error')[0],
-                        u"Please check your login credentials!")
+                        u"Check your login credentials!")
 
     def test_08_logout_view(self):
         """ Test the response of the `logout_view`."""
@@ -134,7 +134,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You have successfuly connected.' in redirect.body)
+        self.assertTrue('Successful login.' in redirect.body)
 
     def test_06_login_page_wrong_credentials(self):
         """ Test login with wrong credentials."""
@@ -147,7 +147,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
             'password': u'wrong_pass',
             'submit': True}
         response = self.testapp.post('/login', params, status=200)
-        self.assertTrue('Please check your login credentials!'
+        self.assertTrue('Check your login credentials!'
                         in response.body)
 
     def test_07_login_without_csrf_token(self):
@@ -159,8 +159,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
 
     def test_08_logout(self):
         """ Test the logout response."""

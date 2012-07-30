@@ -48,8 +48,7 @@ class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_03_tools_page_is_forbiden_for_anonymous(self):
         """ Test than the tools page is forbiden for non logged users."""
@@ -57,5 +56,4 @@ class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)

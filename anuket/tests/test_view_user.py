@@ -95,7 +95,7 @@ class ViewUserTests(AnuketTestCase):
         response = user_add_view(request)
         self.assertEqual(response.location, '/tools/user')
         self.assertEqual(request.session.pop_flash('success')[0],
-                         u"User added successfully.")
+                         u"User added.")
 
     def test_07_not_validate_user_add(self):
         """ Test the response of the `user_add` view not validated."""
@@ -124,7 +124,7 @@ class ViewUserTests(AnuketTestCase):
         response = user_edit_view(request)
         self.assertEqual(response.location, '/tools/user')
         self.assertEqual(request.session.pop_flash('success')[0],
-                         u"User updated successfully.")
+                         u"User updated.")
 
     def test_09_not_validate_user_edit(self):
         """ Test the response of the `user_edit` view not validated."""
@@ -215,7 +215,7 @@ class ViewUserTests(AnuketTestCase):
         response = user_delete_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('error')[0],
-                         u"You do not have the permission to do this!")
+                         u"Insufficient permissions!")
 
     def test_16_only_admin_user_delete_is_forbiden(self):
         """ Test the response of the `user_delete` view wile trying to
@@ -246,7 +246,7 @@ class ViewUserTests(AnuketTestCase):
         response = password_edit_view(request)
         self.assertEqual(response.location, '/tools/user')
         self.assertEqual(request.session.pop_flash('success')[0],
-                         u"Password updated successfully.")
+                         u"Password updated.")
 
     def test_18_not_validate_password_edit(self):
         """ Test the response of the `password_edit` view not validated."""
@@ -293,8 +293,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_03_user_list_page_is_forbiden_for_anonymous(self):
         """ Test than the user list page is forbiden for non logged users."""
@@ -302,8 +301,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
 
     def test_04_user_add_page_for_admin(self):
         """ Test the add user form with admin credentials."""
@@ -326,7 +324,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         submit = form.submit('form_submitted')
         redirect = submit.follow()
         self.assertEqual(redirect.request.path, '/tools/user')
-        self.assertTrue('User added successfully.' in redirect.body)
+        self.assertTrue('User added.' in redirect.body)
         self.assertTrue('email@email.com' in redirect.body)
 
     def test_05_user_add_page_is_forbiden_for_non_admin(self):
@@ -337,8 +335,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_06_user_add_page_is_forbiden_for_anonymous(self):
         """ Test than the add user form is forbiden for non logged users."""
@@ -346,8 +343,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
 
     def test_07_user_show_page_for_admin(self):
         """ Test the show user page with admin credentials."""
@@ -356,7 +352,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         response = self.testapp.get('/tools/user/1/show', status=200)
         self.assertEqual(response.request.path, '/tools/user/1/show')
         # the set up user is admin himself
-        self.assertTrue('<title>admin user' in response.body.replace('\n', ''))
+        self.assertTrue('admin' in response.body.replace('\n', ''))
 
     def test_08_user_show_page_is_forbiden_for_non_admin(self):
         """ Test than the show user page is forbiden for non admin users."""
@@ -366,8 +362,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_09_user_show_page_is_forbiden_for_anonymous(self):
         """ Test than the show user page is forbiden for non logged users."""
@@ -375,8 +370,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
 
     def test_10_user_edit_page_for_admin(self):
         """ Test the edit user form with admin credentials."""
@@ -396,7 +390,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         submit = form.submit('form_submitted')
         redirect = submit.follow()
         self.assertEqual(redirect.request.path, '/tools/user')
-        self.assertTrue('User updated successfully.' in redirect.body)
+        self.assertTrue('User updated.' in redirect.body)
         self.assertTrue('email@email.com' in redirect.body)
 
     def test_11_user_edit_page_for_admin(self):
@@ -418,7 +412,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         submit = form.submit('form_submitted')
         redirect = submit.follow()
         self.assertEqual(redirect.request.path, '/tools/user')
-        self.assertTrue('User updated successfully.' in redirect.body)
+        self.assertTrue('User updated.' in redirect.body)
         self.assertTrue('newemail@email.com' in redirect.body)
 
     def test_12_user_edit_page_is_forbiden_for_non_admin(self):
@@ -429,8 +423,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_13_user_edit_page_is_forbiden_for_anonymous(self):
         """ Test than the edit user form is forbiden for non logged users."""
@@ -438,8 +431,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
 
     def test_14_direct_user_delete_is_forbiden_for_admin(self):
         """ Test than direct delete is forbiden for admin users."""
@@ -451,8 +443,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_15_direct_user_delete_is_forbiden_for_non_admin(self):
         """ Test than direct delete is forbiden for non admin users."""
@@ -462,8 +453,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_16_direct_user_delete_is_forbiden_for_anonymous(self):
         """ Test than direct delete is forbiden for non logged users."""
@@ -472,7 +462,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
+        self.assertTrue('You are not connected.'
                         in redirect.body)
         # check than the user is effectively still in the database
         from anuket.models import AuthUser
@@ -519,7 +509,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         submit = form.submit('form_submitted')
         redirect = submit.follow()
         self.assertEqual(redirect.request.path, '/tools/user')
-        self.assertTrue('Password updated successfully.' in redirect.body)
+        self.assertTrue('Password updated.' in redirect.body)
 
     def test_20_password_edit_page_is_forbiden_for_non_admin(self):
         """ Test than edit password form is forbiden for non admin users."""
@@ -529,8 +519,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/')
-        self.assertTrue('You do not have the permission to do this!'
-                        in redirect.body)
+        self.assertTrue('Insufficient permissions!' in redirect.body)
 
     def test_21_password_edit_page_is_forbiden_for_anonymous(self):
         """ Test than edit password form is forbiden for non logged users."""
@@ -538,5 +527,4 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         redirect = response.follow()
         self.assertEqual(redirect.status, '200 OK')
         self.assertEqual(redirect.request.path, '/login')
-        self.assertTrue('You are not connected, please log in.'
-                        in redirect.body)
+        self.assertTrue('You are not connected.' in redirect.body)
