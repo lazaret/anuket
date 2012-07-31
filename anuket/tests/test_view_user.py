@@ -206,7 +206,7 @@ class ViewUserTests(AnuketTestCase):
         """ test the response of the `user_delete` view wile trying to
         directly delete an user (with no referer).
         """
-        self.config.include('anuket.views.root') # register the `root` routes
+        self.config.include('anuket.views.root')  # register the `root` routes
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
         request = testing.DummyRequest()

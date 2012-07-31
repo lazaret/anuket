@@ -4,22 +4,35 @@ Todo
 0.5
 ---
 
-* Add a logs display tool
-* Add security checks in tool (like default paswords alerts)
-* Add database export tool
-* Add database import / migration check
-* Add a database migration tool and base migration scripts -> alembic
-* Add data versioning in the database
+* Use beaker for sessions
+* Add a line in docs about alembic migration and SQLlite
 
 0.6
 ---
 
-* Add tests and doc
-* Add a line in docs about alembic migration and SQLlite
+* Improve the SecurePassword validator
+* Decide if we use WTForms instead of pyramid_simpleform
 
-0.7 and after
--------------
+0.7
+---
 
-* Add a paster template with an example child application
-* Add an image library based on PIL. Maybe as a Tween ?
+* Use form template widgets
+* Add a form for users to change their datas
+* Add a came_from mecanism
+* Add a paster template and an example child application
+
+Future
+------
+
+* Add data versioning in the database
+* Add a 'plugin' mecanism
+* Add security and sanity check tools
+* Add a logs display tool
+* Add database tools in the admin part
+* Add an options table for the application
+* Add an image manipulation library. Maybe PIL as a Tween ?
+
+After version 1.0
+-----------------
+
 * Add Python3 support
