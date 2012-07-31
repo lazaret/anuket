@@ -37,7 +37,7 @@ def bzip(sql_dump, backup_directory, overwrite=False):
         bz.write(sql_dump)
         bz.close()
     else:
-        print "Theyre is already a database backup with the same name!"
+        print "There is already a database backup with the same name!"
 
 def main():
     """Dump the database for backup purpose.

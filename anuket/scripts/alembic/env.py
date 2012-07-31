@@ -34,7 +34,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option('sqlalchemy.url')
     context.configure(url=url)
 
     with context.begin_transaction():
@@ -47,8 +47,15 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+
+    if config.config_file_name:
+        from pyramid.paster import get_appsettings
+        settings = get_appsettings(config.config_file_name)
+    else:
+        settings = config.get_section(config.config_ini_section)
+
     engine = engine_from_config(
-                config.get_section(config.config_ini_section),
+                settings,
                 prefix='sqlalchemy.',
                 poolclass=pool.NullPool)
 
