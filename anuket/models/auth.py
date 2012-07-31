@@ -12,7 +12,8 @@ class AuthUser(Base):
     """ AuthUser table and model definition.
 
     Define the database table for the authenticated users and methods for
-    querring the auth_user table or check the validity of the password."""
+    querring the auth_user table or check the validity of the password.
+    """
     __tablename__ = 'auth_user'
 
     user_id = Column(Integer, autoincrement=True, primary_key=True)
