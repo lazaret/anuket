@@ -9,6 +9,7 @@ Base = declarative_base()
 
 # SQLAlchemy models imports
 from anuket.models.auth import AuthUser, AuthGroup
+from anuket.models.migration import Migration
 
 # Root factory (ACLS)
 from anuket.models.rootfactory import RootFactory
