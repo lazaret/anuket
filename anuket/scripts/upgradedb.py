@@ -45,5 +45,5 @@ def main():
         # perform upgrade with alembic
         upgrade(alembic_cfg, 'head')
     else:
-        parser.error("There is no up to date backup for the database."
+        parser.error("There is no up to date backup for the database. "
                      "Please use the backup script before upgrading!")
