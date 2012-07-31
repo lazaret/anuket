@@ -13,11 +13,7 @@ def get_alembic_settings(config_uri):
     # get setting from the pyramid config file
     settings = get_appsettings(config_uri)
     # set alembic settings
-    alembic_cfg = Config()
-    alembic_cfg.set_section_option(
-        'alembic',
-        'script_location',
-        settings['alembic.script_location'])
+    alembic_cfg = Config(config_uri)
     alembic_cfg.set_section_option(
         'alembic',
         'sqlalchemy.url',
@@ -27,14 +23,9 @@ def get_alembic_settings(config_uri):
 
 def get_alembic_revision(config_uri):
     """ Check the existence of an alembic revision in the database. If the
-    database is versioned, then return the revision.
+    database is versioned, then return the current head revision.
     """
-    # get setting from the pyramid config file
-    settings = get_appsettings(config_uri)
-    alembic_cfg = Config()
-    alembic_cfg.set_main_option(
-        'script_location',
-        settings['alembic.script_location'])
+    alembic_cfg = Config(config_uri)
     script = ScriptDirectory.from_config(alembic_cfg)
     head_revision = script.get_current_head()
     if head_revision:

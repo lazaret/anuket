@@ -9,16 +9,18 @@ from pyramid.paster import get_appsettings
 from anuket.lib.alembic_utils import get_alembic_settings
 
 
-def check_existing_dump(backup_directory):
+def check_existing_dump(config_uri=None):
     """ Check for an existing database dump for today. Return True if there is
     already one.
     """
-    # see also backupdb script
+    # get the setting from the config file
+    settings = get_appsettings(config_uri)
+    backup_directory = settings['anuket.backup_directory']
+    brand_name = settings['anuket.backup_directory']
     today = date.today().isoformat()
-    filename = 'anuket-' + today + '.sql.bz2'
+    filename = '{0}-{1}.sql.bz2'.format(brand_name, today)
     path = os.path.join(backup_directory, filename)
     return os.path.isfile(path)
-    #TODO: use the brand_name option instad of 'anuket' for the backup name
 
 
 def main():
@@ -36,11 +38,8 @@ def main():
         help='force the upgrade even if there is no available database backup')
     args = parser.parse_args()
 
-    # get the setting from the config file
-    settings = get_appsettings(args.config_file)
-    backup_directory = settings['anuket.backup_directory']
     # look if there an up to date database backup file
-    today_backup = check_existing_dump(backup_directory)
+    today_backup = check_existing_dump(args.config_file)
     if today_backup or args.force:
         alembic_cfg = get_alembic_settings(args.config_file)
         # perform upgrade with alembic

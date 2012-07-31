@@ -26,10 +26,10 @@ def dump_sqlite(connect_args):
     return sql_dump
 
 
-def bzip(sql_dump, backup_directory, overwrite=False):
+def bzip(sql_dump, backup_directory, brand_name, overwrite=False):
     """ Compress the SQL dump with bzip2."""
     today = date.today().isoformat()
-    filename = 'anuket-' + today + '.sql.bz2'
+    filename = '{0}-{1}.sql.bz2'.format(brand_name, today)
     path = os.path.join(backup_directory, filename)
     # check if the file already exist
     isfile = os.path.isfile(path)
@@ -60,6 +60,7 @@ def main():
 
     # get the setting from the config file
     settings = get_appsettings(args.config_file)
+    brand_name = settings['anuket.backup_directory']
     # verify and/or create the backup directory
     backup_directory = settings['anuket.backup_directory']
     verify_directory(backup_directory)
@@ -76,9 +77,8 @@ def main():
     else:
         return "Sorry unsuported database engine!"
     if sql_dump:
-        bzip(sql_dump, backup_directory, args.overwrite)
+        bzip(sql_dump, backup_directory, brand_name, args.overwrite)
 
 
 #TODO: this is a very simple script we need to :
 #Add other dadatases support (MySQL and Postgres)
-#Use the brand_name option instad of 'anuket' for the backup name

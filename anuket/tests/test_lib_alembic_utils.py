@@ -24,30 +24,21 @@ class AlembicUtilsTests(AnuketTestCase):
 
     def test_01_get_alembic_settings(self):
         """ Test the `get_ alembic_settings` utility."""
+        from alembic.config import Config
+        from pyramid.paster import get_appsettings
         from anuket.lib.alembic_utils import get_alembic_settings
         alembic_cfg = get_alembic_settings(config_uri)
-        from alembic.config import Config
+        # test the config object
         self.assertIsInstance(alembic_cfg, Config)
+        # test the script_location option
         script_location = alembic_cfg.get_section_option(
             'alembic',
             'script_location')
         self.assertEqual(script_location, 'anuket:scripts/alembic')
+        # test the sqlalchemy.url option
         sqlalchemy_url = alembic_cfg.get_section_option(
             'alembic',
             'sqlalchemy.url')
-#        self.assertEqual(sqlalchemy_url, 'sqlite:///'+testdb_uri)
-#TODO: the above test
+        pyramid_sqlalchemy_url = get_appsettings(config_uri)['sqlalchemy.url']
+        self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
-
-#    def test_02_get_alembic_revision(self):
-#        """ Test the `get_alembic_revision` utility."""
-#        from anuket.lib.alembic_utils import get_alembic_revision
-#        revision = get_alembic_revision(config_uri)
-#        self.assertEqual(revision, None)
-#
-#        from alembic.command import stamp
-#        from anuket.lib.alembic_utils import get_alembic_settings
-#        alembic_cfg = get_alembic_settings(config_uri)
-#        stamp(alembic_cfg, 'head')
-#        revision = get_alembic_revision(config_uri)
-#        self.assertEqual(revision, 'revid')

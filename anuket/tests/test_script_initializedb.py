@@ -7,6 +7,7 @@ from anuket.tests import AnuketTestCase
 
 here = os.path.dirname(__file__)
 config_uri = os.path.join(here, '../../', 'test.ini')
+initializedb_script = os.path.join(here, '../scripts/', 'initializedb.py')
 
 
 class ScriptInitializedbTests(AnuketTestCase):
@@ -21,7 +22,7 @@ class ScriptInitializedbTests(AnuketTestCase):
         Base.metadata.drop_all()
 
     def test_01_default_datas(self):
-        """ Test than the initializedb script create the default values."""
+        """ Test than the `initialize_db` function create default values."""
         from anuket.scripts.initializedb import initialize_db
         initialize_db(config_uri)
         from anuket.models import AuthUser

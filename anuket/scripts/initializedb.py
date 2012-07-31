@@ -12,7 +12,7 @@ from anuket.lib.alembic_utils import get_alembic_settings
 from anuket.models import DBSession, Base, AuthUser, AuthGroup
 
 
-def initialize_db(config_uri):
+def initialize_db(config_uri=None):
     """ Initialize the database schema and add default values."""
     setup_logging(config_uri)
     settings = get_appsettings(config_uri)
