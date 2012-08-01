@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: anuket 0.5\n"
 "Report-Msgid-Bugs-To: opensource@lazaret.unice.fr\n"
 "POT-Creation-Date: 2012-07-30 14:40+0200\n"
-"PO-Revision-Date: 2012-07-30 14:40+0200\n"
+"PO-Revision-Date: 2012-08-01 15:57+0200\n"
 "Last-Translator: Bertrand LECERVOISIER <opensource@lazaret.unice.fr>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -48,7 +48,7 @@ msgstr "Mot de passe"
 #: anuket/templates/login.mako:23 anuket/templates/login.mako:32
 #: anuket/templates/widgets/top_navbar.mako:27
 msgid "Login"
-msgstr "Connection"
+msgstr "Connexion"
 
 #: anuket/templates/tools/base.mako:11 anuket/templates/tools/index.mako:29
 #: anuket/templates/tools/user/base.mako:11
@@ -214,7 +214,7 @@ msgstr "Vous n'êtes pas connecté."
 
 #: anuket/views/root.py:83
 msgid "Successful login."
-msgstr "Connection réussie."
+msgstr "Connexion réussie."
 
 #: anuket/views/root.py:88
 msgid "Check your login credentials!"
