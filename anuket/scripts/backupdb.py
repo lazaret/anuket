@@ -10,7 +10,7 @@ from pyramid.paster import get_appsettings
 
 
 def verify_directory(dir):
-    """ Create and/or verify a filesystem directory."""
+    """ Create and/or verify the existence of a filesystem directory."""
     if not os.path.exists(dir):
         try:
             os.makedirs(dir, 0775)
@@ -18,12 +18,20 @@ def verify_directory(dir):
             raise
 
 
+#def dump_mysql():
+#    """ Dump a MySQL database."""
+#    pass
+
 def dump_sqlite(connect_args):
     """ Dump a SQLite database."""
     con = sqlite3.connect(connect_args['database'])
     sql_dump = os.linesep.join(con.iterdump())
     con.close()
     return sql_dump
+
+#def dump_postgresql():
+#    """ Dump a PostgreSQL database."""
+#    pass
 
 
 def bzip(sql_dump, backup_directory, brand_name, overwrite=False):

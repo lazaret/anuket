@@ -13,9 +13,9 @@ class Migration(object):
     Reflect the default version table used by Alembic. This table is used
     by for tracking database migrations.
     """
-#    def __init__(self, version_num):
-#        self.version_num = version_num
-    pass
+    def __init__(self, version_num):
+        self.version_num = version_num
+
 
 # the primary_key is defined only at mapper level to avoid
 # modifing the original alembic version_table

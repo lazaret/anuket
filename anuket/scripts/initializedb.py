@@ -18,9 +18,19 @@ def initialize_db(config_uri=None):
     settings = get_appsettings(config_uri)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
-    # create the tables
+    # check if there is already a versioned database
+    revision = get_alembic_revision(config_uri)
+    if revision:
+        message = "ERROR: This database is versioned. " \
+                        "Please use the upgrade script instead!"
+        return message
+    # create the tables (except alembic_version)
     Base.metadata.create_all(engine)
-    # add default values
+    # stamp the database with the most recent revision
+    # (and create alembic_version table)
+    alembic_cfg = get_alembic_settings(config_uri)
+    stamp(alembic_cfg, 'head')
+    # add default user & group values
     with transaction.manager:
         admins_group = AuthGroup(
             groupname=u'admins')
@@ -32,8 +42,11 @@ def initialize_db(config_uri=None):
             DBSession.add(admins_group)
             DBSession.add(admin_user)
             DBSession.flush()
+            message = "Database initialization done."
         except IntegrityError:
             DBSession.rollback()
+            message = "An IntegrityError have occured"
+    return message
 
 
 def main():
@@ -48,13 +61,8 @@ def main():
     parser.add_argument('config_file',
         help='the application config file')
     args = parser.parse_args()
-    # check if there is already a versioned database
-    revision = get_alembic_revision(args.config_file)
-    if revision:
-        parser.error("This database is versioned. "
-                     "Please use the upgrade script instead!")
-    # initialize the db
-    initialize_db(args.config_file)
-    # stamp the database with the most recent schema revision
-    alembic_cfg = get_alembic_settings(args.config_file)
-    stamp(alembic_cfg, 'head')
+    message = initialize_db(args.config_file)
+    if message:
+        print message
+
+#TODO: use logging for messages ?
