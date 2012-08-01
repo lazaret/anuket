@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid.config import Configurator
 from pyramid.security import unauthenticated_userid
-from pyramid.session import UnencryptedCookieSessionFactoryConfig
-##from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid_beaker import session_factory_from_settings
 
 from sqlalchemy import engine_from_config
 
@@ -50,7 +49,7 @@ def main(global_config, **settings):
     root_factory = RootFactory
     config.set_root_factory(root_factory)
     # configure session
-    session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
+    session_factory = session_factory_from_settings(settings)
     config.set_session_factory(session_factory)
     # configure auth & auth
     config.include(add_authorization)
