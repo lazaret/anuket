@@ -8,7 +8,6 @@ from pyramid.view import notfound_view_config
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
-from anuket.lib.i18n import MessageFactory as _
 from anuket.models import AuthUser
 
 
@@ -36,6 +35,7 @@ def root_view(request):
     """
     #check the default admin password if any admin is connected
     #TODO move in a security and sanity checks tool/library
+    _ = request.translate
     from pyramid.security import has_permission
     if has_permission('admin', request.context, request):
         if AuthUser.check_password(username=u'admin', password=u'admin'):
@@ -53,6 +53,7 @@ def forbiden_view(request):
     page. Non-autenthicaded users are redirected to the login page.
     A corresponding flash message is also added to the error message queue.
     """
+    _ = request.translate
     if request.auth_user:
         request.session.flash(_(u"Insufficient permissions!"),
                               'error')
@@ -73,6 +74,7 @@ def login_view(request):
     flash message and display again the login form if the credentials are
     wrong.
     """
+    _ = request.translate
     form = Form(request, schema=LoginForm)
     if 'form_submitted' in request.params and form.validate():
         username = request.params['username']
@@ -97,6 +99,7 @@ def logout_view(request):
     Clear the credentials of the connected user if any. Then, redirect to the
     home page and add a info flash message.
     """
+    _ = request.translate
     headers = forget(request)
     request.session.flash(_(u"You have been disconnected."), 'info')
     return HTTPFound(location=request.route_path('home'), headers=headers)

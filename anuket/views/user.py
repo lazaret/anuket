@@ -9,7 +9,6 @@ from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 from webhelpers import paginate
 
-from anuket.lib.i18n import MessageFactory as _
 from anuket.lib.validators import FirstNameString, LastNameString
 from anuket.lib.validators import SecurePassword, UniqueAuthUsername
 from anuket.lib.validators import UniqueAuthEmail, UsernamePlainText
@@ -63,6 +62,7 @@ def user_list_view(request):
     ordered by username, first name or last name. Add an error flash message
     if the list is empty. Return also basic users statistics.
     """
+    _ = request.translate
     stats = get_user_stats()
     sortable_columns = ['username', 'first_name', 'last_name']
     column = request.params.get('sort')
@@ -98,6 +98,7 @@ def user_add_view(request):
     validation errors. Return also a list of groups to use in the group select
     form.
     """
+    _ = request.translate
     grouplist = get_grouplist()
     form = Form(request, schema=UserForm)
     if 'form_submitted' in request.params and form.validate():
@@ -118,6 +119,7 @@ def user_show_view(request):
     the user did not exist then add an error flash message and redirect to the
     user list. If the user exist then return his datas.
     """
+    _ = request.translate
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -140,6 +142,7 @@ def user_edit_view(request):
     form with validation errors. Return also a list of groups to use in the
     group select form.
     """
+    _ = request.translate
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
@@ -167,6 +170,7 @@ def user_delete_view(request):
     """
     # The confirm delete must be managed by modal messages in the templates,
     # and we forbid direct deletion from the address bar (no referer)
+    _ = request.translate
     if not request.referer:
         request.session.flash(_(u"Insufficient permissions!"),
                               'error')
@@ -206,6 +210,7 @@ def password_edit_view(request):
     success flash message. If the form is not valid, then display again the
     form with validation errors.
     """
+    _ = request.translate
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
     if not user:
