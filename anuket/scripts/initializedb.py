@@ -68,6 +68,4 @@ def main():  # pragma: no cover
     else:
         message = initialize_db(args.config_file)
         if message:
-            print message
-
-#TODO: use logging instead of messages
+            print(message)
