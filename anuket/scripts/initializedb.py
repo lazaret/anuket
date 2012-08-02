@@ -26,18 +26,14 @@ def initialize_db(config_uri=None):
         return message
     # create the tables (except alembic_version)
     Base.metadata.create_all(engine)
-    # stamp the database with the most recent revision
-    # (and create alembic_version table)
-    alembic_cfg = get_alembic_settings(config_uri)
-    stamp(alembic_cfg, 'head')
     # add default user & group values
     with transaction.manager:
-        admins_group = AuthGroup(
-            groupname=u'admins')
-        admin_user = AuthUser(
-            username=u'admin',
-            password=u'admin',
-            group=admins_group)
+        admins_group = AuthGroup()
+        admins_group.groupname = u'admins'
+        admin_user = AuthUser()
+        admin_user.username = u'admin'
+        admin_user.password = u'admin'
+        admin_user.group = admins_group
         try:
             DBSession.add(admins_group)
             DBSession.add(admin_user)
@@ -45,7 +41,11 @@ def initialize_db(config_uri=None):
             message = "Database initialization done."
         except IntegrityError:
             DBSession.rollback()
-            message = "An IntegrityError have occured"
+            message = "ERROR: An IntegrityError have occured"
+    # stamp the database with the most recent revision
+    # (and create alembic_version table)
+    alembic_cfg = get_alembic_settings(config_uri)
+    stamp(alembic_cfg, 'head')
     return message
 
 
