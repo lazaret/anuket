@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid import testing
 
-from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
+from anuket.tests import AnuketTestCase
+from anuket.tests import AnuketFunctionalTestCase
+from anuket.tests import AnuketDummyRequest
 
 
 class ViewToolsTests(AnuketTestCase):
@@ -18,13 +20,13 @@ class ViewToolsTests(AnuketTestCase):
 
     def test_01_routes(self):
         """ Test the route of the `tools` view."""
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         self.assertEqual(request.route_path('tools.index'), '/tools')
 
     def test_02_tools_view(self):
         """ Test the response of the `tools_index_view`."""
         from anuket.views.tools import tools_index_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         response = tools_index_view(request)
         self.assertEqual(response, {})
 

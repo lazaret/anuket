@@ -3,6 +3,7 @@ import os
 from unittest import TestCase
 
 from paste.deploy.loadwsgi import appconfig
+from pyramid.testing import DummyRequest
 from sqlalchemy import engine_from_config
 
 from anuket.models import DBSession, Base
@@ -10,6 +11,19 @@ from anuket.models import DBSession, Base
 
 here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
+
+
+class AnuketDummyRequest(DummyRequest):
+    """ Extend the Pyramid testing DummyRequest.
+
+    Add a fake `request.tranlate` object atribute.
+    """
+
+    def _fake_translation(self, string):
+        """ Fake translation who return the original string."""
+        return string
+
+    translate = _fake_translation
 
 
 class AnuketTestCase(TestCase):
@@ -24,6 +38,7 @@ class AnuketTestCase(TestCase):
 
     def tearDown(self):
         self.DBSession.remove()
+
 
     def dummy_group_fixture(self):
         """ Create a dummy auth group test fixture in the database."""

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid import testing
 
-from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
+from anuket.tests import AnuketTestCase
+from anuket.tests import AnuketFunctionalTestCase
+from anuket.tests import AnuketDummyRequest
 
 
 class ViewUserTests(AnuketTestCase):
@@ -16,9 +18,10 @@ class ViewUserTests(AnuketTestCase):
         super(ViewUserTests, self).tearDown()
         testing.tearDown()
 
+
     def test_01_routes(self):
         """ Test the route of the `user` view."""
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         self.assertEqual(request.route_path('tools.user_list'), '/tools/user')
         self.assertEqual(request.route_path('tools.user_add'),
                          '/tools/user/add')
@@ -35,7 +38,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_list` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_list_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         response = user_list_view(request)
         from webhelpers.paginate import Page
         self.assertIsInstance(response['users'], Page)
@@ -44,7 +47,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_list` view with a search."""
         self.dummy_user_fixture()
         from anuket.views.user import user_list_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'
         request.params['search'] = u'user'
         response = user_list_view(request)
@@ -57,7 +60,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.dummy_user_fixture()
         from anuket.views.user import user_list_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'
         request.params['search'] = u'donotfoundme'
         response = user_list_view(request)
@@ -70,7 +73,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_list` view with a column sort."""
         self.dummy_user_fixture()
         from anuket.views.user import user_list_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'
         request.params['sort'] = 'username'
         response = user_list_view(request)
@@ -82,7 +85,7 @@ class ViewUserTests(AnuketTestCase):
         self.dummy_group_fixture()
         password = self.password_fixture()
         from anuket.views.user import user_add_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'username'
@@ -100,7 +103,7 @@ class ViewUserTests(AnuketTestCase):
     def test_07_not_validate_user_add(self):
         """ Test the response of the `user_add` view not validated."""
         from anuket.views.user import user_add_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         response = user_add_view(request)
@@ -111,7 +114,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_edit` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -130,7 +133,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_edit` view not validated."""
         self.dummy_user_fixture()
         from anuket.views.user import user_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -144,7 +147,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.dummy_user_fixture()
         from anuket.views.user import user_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 0}
         response = user_edit_view(request)
         self.assertEqual(response.location, '/tools/user')
@@ -155,7 +158,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_show` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_show_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         response = user_show_view(request)
         from anuket.models import AuthUser
@@ -169,7 +172,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.dummy_user_fixture()
         from anuket.views.user import user_show_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 0}
         response = user_show_view(request)
         self.assertEqual(response.location, '/tools/user')
@@ -180,7 +183,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `user_delete` view."""
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.referer = '/tools/user'
         response = user_delete_view(request)
@@ -194,7 +197,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 0}
         request.referer = '/tools/user'
         response = user_delete_view(request)
@@ -209,7 +212,7 @@ class ViewUserTests(AnuketTestCase):
         self.config.include('anuket.views.root')  # register the `root` routes
         self.dummy_user_fixture()
         from anuket.views.user import user_delete_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.referer = None
         response = user_delete_view(request)
@@ -223,7 +226,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.admin_user_fixture()
         from anuket.views.user import user_delete_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.referer = '/tools/user'
         response = user_delete_view(request)
@@ -236,7 +239,7 @@ class ViewUserTests(AnuketTestCase):
         self.dummy_user_fixture()
         password = self.password_fixture()
         from anuket.views.user import password_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -252,7 +255,7 @@ class ViewUserTests(AnuketTestCase):
         """ Test the response of the `password_edit` view not validated."""
         self.dummy_user_fixture()
         from anuket.views.user import password_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
@@ -266,7 +269,7 @@ class ViewUserTests(AnuketTestCase):
         """
         self.dummy_user_fixture()
         from anuket.views.user import password_edit_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.matchdict = {'user_id': 0}
         response = password_edit_view(request)
         self.assertEqual(response.location, '/tools/user')

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid import testing
 
-from anuket.tests import AnuketTestCase, AnuketFunctionalTestCase
+from anuket.tests import AnuketTestCase
+from anuket.tests import AnuketFunctionalTestCase
+from anuket.tests import AnuketDummyRequest
 
 
 class ViewRootTests(AnuketTestCase):
@@ -19,7 +21,7 @@ class ViewRootTests(AnuketTestCase):
 
     def test_01_routes(self):
         """ Test the routes of the `root` views."""
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         self.assertEqual(request.route_path('home'), '/')
         self.assertEqual(request.route_path('about'), '/about')
         self.assertEqual(request.route_path('login'), '/login')
@@ -28,14 +30,14 @@ class ViewRootTests(AnuketTestCase):
     def test_02_root_view(self):
         """ Test the response of the `root_view`."""
         from anuket.views.root import root_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         response = root_view(request)
         self.assertEqual(response, {})
 
     def test_03_forbiden_view_non_logged(self):
         """ Test the response of the `forbiden_view` for non-logged users."""
         from anuket.views.root import forbiden_view
-        request = testing.DummyRequest(auth_user=None)
+        request = AnuketDummyRequest(auth_user=None)
         response = forbiden_view(request)
         self.assertEqual(response.location, '/login')
         self.assertEqual(request.session.pop_flash('error')[0],
@@ -44,7 +46,7 @@ class ViewRootTests(AnuketTestCase):
     def test_04_forbiden_view_logged(self):
         """ Test the response of the `forbiden_view` for logged users."""
         from anuket.views.root import forbiden_view
-        request = testing.DummyRequest(auth_user='test_user')
+        request = AnuketDummyRequest(auth_user='test_user')
         response = forbiden_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('error')[0],
@@ -53,7 +55,7 @@ class ViewRootTests(AnuketTestCase):
     def test_05_login_view_non_logged(self):
         """ Test the response of the `login_view` for non-logged users."""
         from anuket.views.root import login_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         response = login_view(request)
         self.assertIsNotNone(response['renderer'])
         # no flash message yet for non-logged users
@@ -65,7 +67,7 @@ class ViewRootTests(AnuketTestCase):
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
         self.dummy_user_fixture()
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'username'
@@ -80,7 +82,7 @@ class ViewRootTests(AnuketTestCase):
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
         self.dummy_user_fixture()
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         request.method = 'POST'  # required for form.validate()
         request.params['form_submitted'] = u''
         request.params['username'] = u'wrong_user'
@@ -93,7 +95,7 @@ class ViewRootTests(AnuketTestCase):
     def test_08_logout_view(self):
         """ Test the response of the `logout_view`."""
         from anuket.views.root import logout_view
-        request = testing.DummyRequest()
+        request = AnuketDummyRequest()
         response = logout_view(request)
         self.assertEqual(response.location, '/')
         self.assertEqual(request.session.pop_flash('info')[0],
