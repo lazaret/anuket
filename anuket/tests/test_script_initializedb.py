@@ -24,7 +24,7 @@ class ScriptInitializedbTests(AnuketTestCase):
         version_table.drop(self.engine)
 
 
-    def test_01_database_initilization(self):
+    def test_01_initialize_db(self):
         """ Test than the `initialize_db` function create the database and add
         the default values.
         """
@@ -38,7 +38,7 @@ class ScriptInitializedbTests(AnuketTestCase):
         self.assertEqual(message, "Database initialization done.")
 
 
-    def test_02_database_with_revision_must_fail(self):
+    def test_02_initialize_db_with_revision_must_fail(self):
         """ Test than the `initialize_db` fail if the database is versioned."""
         import transaction
         from anuket.models import Migration
@@ -55,7 +55,7 @@ class ScriptInitializedbTests(AnuketTestCase):
                         "Please use the upgrade script instead!")
 
 
-    def test_03_database_integrity_error(self):
+    def test_03_initialize_db_integrity_error(self):
         """ Test than the `initialize_db` fail if an IntegrityError occur
         when there is already an 'admins' group in the database."""
         import transaction
@@ -70,3 +70,4 @@ class ScriptInitializedbTests(AnuketTestCase):
         from anuket.scripts.initializedb import initialize_db
         message = initialize_db(config_uri)
         self.assertEqual(message, "ERROR: An IntegrityError have occured")
+
