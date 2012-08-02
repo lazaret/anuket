@@ -30,10 +30,10 @@ class AnuketTestCase(TestCase):
     """ TestCase class for integration tests."""
     def setUp(self):
         self.settings = settings
-        engine = engine_from_config(self.settings, prefix='sqlalchemy.')
-        DBSession.configure(bind=engine)
-        Base.metadata.bind = engine
-        Base.metadata.create_all(engine)
+        self.engine = engine_from_config(self.settings, prefix='sqlalchemy.')
+        DBSession.configure(bind=self.engine)
+        Base.metadata.bind = self.engine
+        Base.metadata.create_all(self.engine)
         self.DBSession = DBSession
 
     def tearDown(self):
