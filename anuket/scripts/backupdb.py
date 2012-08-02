@@ -61,6 +61,7 @@ def main():
         usage='%(prog)s config_file.ini',
         epilog='example: %(prog)s developement.ini')
     parser.add_argument('config_file',
+        nargs='?',
         help='the application config file')
     parser.add_argument('-o', '--overwrite', action='store_true',
         help='overwrite existing backups files if set')

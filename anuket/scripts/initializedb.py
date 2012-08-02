@@ -49,7 +49,7 @@ def initialize_db(config_uri=None):
     return message
 
 
-def main():
+def main():  # pragma: no cover
     """ Create the database using the configuration from the ini file passed
     as a positional argument.
     """
@@ -63,11 +63,11 @@ def main():
         help='the application config file')
     args = parser.parse_args()
     if not args.config_file:
-        # display the help message if no arguments is provided
+        # display the help message if no config_file is provided
         parser.print_help()
     else:
         message = initialize_db(args.config_file)
         if message:
             print message
 
-#TODO: use logging for messages
+#TODO: use logging instead of messages
