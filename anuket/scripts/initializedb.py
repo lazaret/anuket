@@ -59,10 +59,15 @@ def main():
         usage='%(prog)s config_file.ini',
         epilog='example: %(prog)s developement.ini')
     parser.add_argument('config_file',
+        nargs='?',
         help='the application config file')
     args = parser.parse_args()
-    message = initialize_db(args.config_file)
-    if message:
-        print message
+    if not args.config_file:
+        # display the help message if no arguments is provided
+        parser.print_help()
+    else:
+        message = initialize_db(args.config_file)
+        if message:
+            print message
 
-#TODO: use logging for messages ?
+#TODO: use logging for messages
