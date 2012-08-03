@@ -24,7 +24,7 @@ class InitializeDBCommand(object):
     """
     description = 'Initialize the database'
     usage = '%(prog)s config_uri'
-    epilog = 'example: %(prog)s developement.ini'
+    epilog = 'example: %(prog)s development.ini'
 
     parser = argparse.ArgumentParser(
         description=description,
