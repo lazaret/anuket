@@ -22,13 +22,22 @@ def check_existing_dump(config_uri=None):
     path = os.path.join(backup_directory, filename)
     return os.path.isfile(path)
 
-def upgrade_db(config_uri=None):
-    """ Upgrade the database to the head revision with alembic."""
-    alembic_cfg = get_alembic_settings(args.config_file)
-    upgrade(alembic_cfg, 'head')
-    #TODO: move this in lib.alembic_utils ?
 
-def main():
+def upgrade_db(config_uri=None, force=None):
+    """ Upgrade the database to the head revision with alembic."""
+    today_backup = check_existing_dump(config_uri)
+    if today_backup or args.force:
+        # upgrade the database
+        alembic_cfg = get_alembic_settings(config_uri)
+        upgrade(alembic_cfg, 'head')
+    else:
+        message = "There is no up to date backup for the database. " \
+                  "Please use the backup script before upgrading!"
+        log.error(message)
+        return message
+
+
+def main():  # pragma: no cover
     """ Upgrade the database using the configuration from the ini file passed
     as a positional argument.
     """
@@ -44,11 +53,8 @@ def main():
         help='force the upgrade even if there is no available database backup')
     args = parser.parse_args()
 
-    # look if there an up to date database backup file
-    today_backup = check_existing_dump(args.config_file)
-    if today_backup or args.force:
-        # upgrade the database
-        upgrade_db(args.config_file)
+    if not args.config_file:
+        # display the help message if no config_file is provided
+        parser.print_help()
     else:
-        parser.error("There is no up to date backup for the database. "
-                     "Please use the backup script before upgrading!")
+        upgrade_db(args.config_file, args.force)

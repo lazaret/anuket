@@ -2,11 +2,15 @@
 import os
 import argparse
 import bz2
+import logging
 import sqlite3
 from datetime import date
 
 from sqlalchemy import engine_from_config
-from pyramid.paster import get_appsettings
+from pyramid.paster import get_appsettings, setup_logging
+
+
+log = logging.getLogger(__name__)
 
 
 def verify_directory(dir):
@@ -35,7 +39,7 @@ def dump_sqlite(connect_args):
 
 
 def bzip(sql_dump, backup_directory, brand_name, overwrite=False):
-    """ Compress the SQL dump with bzip2."""
+    """ Compress the SQL dump with bzip2 and save the file."""
     today = date.today().isoformat()
     filename = '{0}-{1}.sql.bz2'.format(brand_name, today)
     path = os.path.join(backup_directory, filename)
@@ -46,11 +50,42 @@ def bzip(sql_dump, backup_directory, brand_name, overwrite=False):
         bz = bz2.BZ2File(path, 'w')
         bz.write(sql_dump)
         bz.close()
+        log.info("Database dump done")
     else:
-        print "There is already a database backup with the same name!"
+        message = "There is already a database backup with the same name!"
+        log.error(message)
+        return message
 
 
-def main():
+def backup_db(config_uri=None, overwrite=False):
+    setup_logging(config_uri)
+    # get the setting from the config file
+    settings = get_appsettings(config_uri)
+    brand_name = settings['anuket.brand_name']
+    backup_directory = settings['anuket.backup_directory']
+    # verify and/or create the backup directory
+    log.info("Checking the backup directory")
+    verify_directory(backup_directory)
+    # get db engine from settings
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    connect_args = engine.url.translate_connect_args()
+    if engine.dialect.name == 'sqlite':
+        log.info("Dump the SQLite database")
+        sql_dump = dump_sqlite(connect_args)
+#    if engine.dialect.name == 'mysql':
+#        pass
+#    if engine.dialect.name == 'postgresql':
+#        pass
+    else:
+        message = "Unsuported database engine!"
+        log.error(message)
+        print message
+    if sql_dump:
+        log.info("Compress and save the database dump")
+        bzip(sql_dump, backup_directory, brand_name, overwrite)
+
+
+def main():  # pragma: no cover
     """Dump the database for backup purpose.
 
     Supported database: SQLite.
@@ -67,26 +102,11 @@ def main():
         help='overwrite existing backups files if set')
     args = parser.parse_args()
 
-    # get the setting from the config file
-    settings = get_appsettings(args.config_file)
-    brand_name = settings['anuket.backup_directory']
-    # verify and/or create the backup directory
-    backup_directory = settings['anuket.backup_directory']
-    verify_directory(backup_directory)
-    # get db engine from settings
-    engine = engine_from_config(settings, 'sqlalchemy.')
-    connect_args = engine.url.translate_connect_args()
-    # dump the database based on the engine
-    if engine.dialect.name == 'sqlite':
-        sql_dump = dump_sqlite(connect_args)
-#    if engine.dialect.name == 'mysql':
-#        pass
-#    if engine.dialect.name == 'postgresql':
-#        pass
+    if not args.config_file:
+        # display the help message if no config_file is provided
+        parser.print_help()
     else:
-        return "Sorry unsuported database engine!"
-    if sql_dump:
-        bzip(sql_dump, backup_directory, brand_name, args.overwrite)
+        backup_db(args.config_file, args.overwrite)
 
 
 #TODO: this is a very simple script we need to :
