@@ -1,113 +1,116 @@
 # -*- coding: utf-8 -*-
-import os
 import argparse
 import bz2
-import logging
+import os
 import sqlite3
+import sys
 from datetime import date
 
 from sqlalchemy import engine_from_config
-from pyramid.paster import get_appsettings, setup_logging
+from pyramid.paster import get_appsettings
 
 
-log = logging.getLogger(__name__)
+def main(argv=sys.argv, quiet=False):
+    command = BackupDBCommand(argv, quiet)
+    return command.run()
 
 
-def verify_directory(dir):
-    """ Create and/or verify the existence of a filesystem directory."""
-    if not os.path.exists(dir):
-        try:
-            os.makedirs(dir, 0775)
-        except:
-            raise
-
-
-#def dump_mysql():
-#    """ Dump a MySQL database."""
-#    pass
-
-def dump_sqlite(connect_args):
-    """ Dump a SQLite database."""
-    con = sqlite3.connect(connect_args['database'])
-    sql_dump = os.linesep.join(con.iterdump())
-    con.close()
-    return sql_dump
-
-#def dump_postgresql():
-#    """ Dump a PostgreSQL database."""
-#    pass
-
-
-def bzip(sql_dump, backup_directory, brand_name, overwrite=False):
-    """ Compress the SQL dump with bzip2 and save the file."""
-    today = date.today().isoformat()
-    filename = '{0}-{1}.sql.bz2'.format(brand_name, today)
-    path = os.path.join(backup_directory, filename)
-    # check if the file already exist
-    isfile = os.path.isfile(path)
-    if not isfile or overwrite:
-        # create the zipped dump
-        bz = bz2.BZ2File(path, 'w')
-        bz.write(sql_dump)
-        bz.close()
-        log.info("Database dump done")
-    else:
-        message = "There is already a database backup with the same name!"
-        log.error(message)
-        return message
-
-
-def backup_db(config_uri=None, overwrite=False):
-    setup_logging(config_uri)
-    # get the setting from the config file
-    settings = get_appsettings(config_uri)
-    brand_name = settings['anuket.brand_name']
-    backup_directory = settings['anuket.backup_directory']
-    # verify and/or create the backup directory
-    log.info("Checking the backup directory")
-    verify_directory(backup_directory)
-    # get db engine from settings
-    engine = engine_from_config(settings, 'sqlalchemy.')
-    connect_args = engine.url.translate_connect_args()
-    if engine.dialect.name == 'sqlite':
-        log.info("Dump the SQLite database")
-        sql_dump = dump_sqlite(connect_args)
-#    if engine.dialect.name == 'mysql':
-#        pass
-#    if engine.dialect.name == 'postgresql':
-#        pass
-    else:
-        message = "Unsuported database engine!"
-        log.error(message)
-        print(message)
-    if sql_dump:
-        log.info("Compress and save the database dump")
-        bzip(sql_dump, backup_directory, brand_name, overwrite)
-
-
-def main():  # pragma: no cover
+class BackupDBCommand(object):
     """Dump the database for backup purpose.
 
     Supported database: SQLite.
     """
-    # get option from command line
+    description = 'Dump the database'
+    usage = '%(prog)s config_uri'
+    epilog = 'example: %(prog)s development.ini'
+
     parser = argparse.ArgumentParser(
-        description='Dump the database',
-        usage='%(prog)s config_file.ini',
-        epilog='example: %(prog)s developement.ini')
-    parser.add_argument('config_file',
+        description=description,
+        usage=usage,
+        epilog=epilog)
+    parser.add_argument('config_uri',
         nargs='?',
         help='the application config file')
     parser.add_argument('-o', '--overwrite', action='store_true',
-        help='overwrite existing backups files if set')
-    args = parser.parse_args()
+        help='overwrite existing backups files')
 
-    if not args.config_file:
-        # display the help message if no config_file is provided
-        parser.print_help()
-    else:
-        backup_db(args.config_file, args.overwrite)
+    def __init__(self, argv, quiet=False):
+        self.args = self.parser.parse_args(argv[1:])
+        self.quiet = quiet
+
+    def out(self, msg): # pragma: no cover
+        if not self.quiet:
+            print(msg)
+
+    def run(self, quiet=False):
+        if not self.args.config_uri:
+            self.parser.print_help()
+            return 2
+        else:
+            self.backup_db()
 
 
-#TODO: this is a very simple script we need to :
-#Add other dadatases support (MySQL and Postgres)
+    def backup_db(self):
+        config_uri = self.args.config_uri
+        overwrite = self.args.overwrite
+        settings = get_appsettings(config_uri)
+        name = settings['anuket.brand_name']
+        directory = settings['anuket.backup_directory']
+        today = date.today().isoformat()
+        filename = '{0}-{1}.sql.bz2'.format(name, today)
+        path = os.path.join(directory, filename)
+
+        # check if the backup file already exist
+        isfile = os.path.isfile(path)
+        if isfile and not overwrite:
+            self.out("There is already a database backup with the same name!")
+            return 1
+
+        # get db engine from settings and create a dump
+        engine = engine_from_config(settings, 'sqlalchemy.')
+        connect_args = engine.url.translate_connect_args()
+        if engine.dialect.name == 'sqlite':
+            sql_dump = self.dump_sqlite(connect_args)
+#        if engine.dialect.name == 'mysql':
+#            pass
+#       if engine.dialect.name == 'postgresql':
+#            pass
+        else:
+            self.out("Unsuported database engine!")
+            return 1
+
+        if sql_dump:
+            # verify and/or create the backup directory
+            self.verify_directory(directory)
+            # bzip and save the file
+            bz = bz2.BZ2File(path, 'w')
+            bz.write(sql_dump)
+            bz.close()
+            return 0
+
+
+    def verify_directory(self, dir=None):
+        """ Create and/or verify the existence of a filesystem directory."""
+        if not os.path.exists(dir):
+            try:
+                os.makedirs(dir, 0775)
+            except:
+                raise
+
+#    def dump_mysql(self, connect_args=None):
+#        """ Dump a MySQL database."""
+#        #TODO: MySQL support
+
+#    def dump_postgresql(self, connect_args=None):
+#        """ Dump a PostgreSQL database."""
+#        #TODO: PostgreSQL support
+
+    def dump_sqlite(self, connect_args=None):
+        """ Dump a SQLite database."""
+        con = sqlite3.connect(connect_args['database'])
+        sql_dump = os.linesep.join(con.iterdump())
+        con.close()
+        return sql_dump
+
+
+#TODO: add options for name and directory
