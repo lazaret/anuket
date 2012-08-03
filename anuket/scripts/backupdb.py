@@ -79,7 +79,7 @@ def backup_db(config_uri=None, overwrite=False):
     else:
         message = "Unsuported database engine!"
         log.error(message)
-        print message
+        print(message)
     if sql_dump:
         log.info("Compress and save the database dump")
         bzip(sql_dump, backup_directory, brand_name, overwrite)
