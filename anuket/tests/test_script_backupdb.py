@@ -8,8 +8,8 @@ here = os.path.dirname(__file__)
 config_uri = os.path.join(here, '../../', 'test.ini')
 
 
-class testBackupDBCommand(TestCase):
-    """ Tests for the `updatedb` script."""
+class TestBackupDBCommand(TestCase):
+    """ Tests for the `backupdb` script."""
 
     dummy_file_path = None
 #
