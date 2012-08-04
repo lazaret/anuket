@@ -37,16 +37,12 @@ class UpgradeDBCommand(object):
         self.args = self.parser.parse_args(argv[1:])
         self.quiet = quiet
 
-    def out(self, msg): # pragma: no cover
-        if not self.quiet:
-            print(msg)
-
     def run(self, quiet=False):
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
         else:
-            self.upgrade_db()
+            return self.upgrade_db()
 
 
     def upgrade_db(self):
@@ -63,15 +59,15 @@ class UpgradeDBCommand(object):
         # check if there is a database backup
         isfile = os.path.isfile(path)
         if not isfile and not force:
-            self.out("There is no up to date backup for the database. "
-                    "Please use the backup script before upgrading!")
+            print("There is no up to date backup for the database. "
+                  "Please use the backup script before upgrading!")
             return 1
 
         # upgrade the database
         alembic_cfg = get_alembic_settings(config_uri)
         upgrade(alembic_cfg, 'head')
 
-        self.out("Database upgrade done.")
+        print("Database upgrade done.")
         return 0
 
 #TODO: add an already up-to-date database check/message

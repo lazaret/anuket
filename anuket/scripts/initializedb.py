@@ -38,9 +38,6 @@ class InitializeDBCommand(object):
         self.args = self.parser.parse_args(argv[1:])
         self.quiet = quiet
 
-    def out(self, msg): # pragma: no cover
-        if not self.quiet:
-            print(msg)
 
     def run(self, quiet=False):
         if not self.args.config_uri:
@@ -60,8 +57,8 @@ class InitializeDBCommand(object):
         # check if there is already a versioned database
         revision = get_alembic_revision(config_uri)
         if revision:
-            self.out("This database is versioned. "
-                     "Use the upgrade script instead!")
+            print("This database is versioned. "
+                  "Use the upgrade script instead!")
             return 1
 
         # create the tables (except alembic_version)
@@ -81,8 +78,8 @@ class InitializeDBCommand(object):
                 DBSession.flush()
             except IntegrityError:
                 DBSession.rollback()
-                self.out("There is already a database. "
-                         "Use the upgrade script instead!")
+                print("There is already a database. "
+                      "Use the upgrade script instead!")
                 return 1
 
         # stamp the database with the most recent revision
@@ -90,5 +87,5 @@ class InitializeDBCommand(object):
         alembic_cfg = get_alembic_settings(config_uri)
         stamp(alembic_cfg, 'head')
 
-        self.out("Database initialization done.")
+        print("Database initialization done.")
         return 0

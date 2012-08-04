@@ -38,9 +38,6 @@ class BackupDBCommand(object):
         self.args = self.parser.parse_args(argv[1:])
         self.quiet = quiet
 
-    def out(self, msg): # pragma: no cover
-        if not self.quiet:
-            print(msg)
 
     def run(self, quiet=False):
         if not self.args.config_uri:
@@ -63,7 +60,7 @@ class BackupDBCommand(object):
         # check if the backup file already exist
         isfile = os.path.isfile(path)
         if isfile and not overwrite:
-            self.out("There is already a database backup with the same name!")
+            print("There is already a database backup with the same name!")
             return 1
 
         # get db engine from settings and create a dump
@@ -76,7 +73,7 @@ class BackupDBCommand(object):
 #       if engine.dialect.name == 'postgresql':
 #            pass
         else:
-            self.out("Unsuported database engine!")
+            print("Unsuported database engine!")
             return 1
 
         if sql_dump:
