@@ -35,7 +35,6 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database backup done.")
 
-
 #    def test_backup_no_args(self):
 #        command = self._makeOne()
 #        result = command.backup_db()
@@ -83,8 +82,5 @@ class TestBackupDBmain(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue()[0:6], "usage:")
 
 
-#TODO: test the verify_directory method
 #TODO: test the sqlite dump method
 #TODO: test an unsuported database engine
-#TODO: test run
-

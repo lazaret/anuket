@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import shutil
 import sys
 from unittest import TestCase
 from StringIO import StringIO
@@ -182,38 +183,39 @@ class AnuketScriptTestCase(AnuketTestCase):
         self.output = StringIO()
         self.saved_stdout = sys.stdout
         sys.stdout = self.output
-
-        self.dummy_file_path = None
+        self.file_fixture_path = None
 
     def tearDown(self):
         super(AnuketScriptTestCase, self).tearDown()
         self.output.close()
         sys.stdout = self.saved_stdout
-        # delete the fixture file if any
-        if self.dummy_file_path:
+        # delete the directory and file fixtures if any
+        directory = self.settings['anuket.backup_directory']
+        if os.path.exists(directory):
             try:
-                os.remove(self.dummy_file_path)
-            except OSError:  # pragma: no cover
+                shutil.rmtree(directory)
+            except:  # pragma: no cover
                 raise
-        #TODO, better do this as the file may stay after failed tests
 
     def backup_directory_fixture(self):
         """ Create a directory where SQL dump files would be saved."""
-        #TODO: add directory creation to the fixture
-        pass
+        directory = self.settings['anuket.backup_directory']
+        if not os.path.exists(directory):
+            try:
+                os.makedirs(directory, 0775)
+            except OSError:  # pragma: no cover
+                raise
 
     def backup_file_fixture(self):
         """ Create an empty SQL dump file."""
         self.backup_directory_fixture()
 
         from datetime import date
-        #from pyramid.paster import get_appsettings
-        #settings = get_appsettings(config_uri)
         name = self.settings['anuket.brand_name']
         directory = self.settings['anuket.backup_directory']
         today = date.today().isoformat()
         filename = '{0}-{1}.sql.bz2'.format(name, today)
-        self.dummy_file_path = os.path.join(directory, filename)
-        backup_file = open(self.dummy_file_path, 'w')
+        self.file_fixture_path = os.path.join(directory, filename)
+        backup_file = open(self.file_fixture_path, 'w')
         backup_file.close()
 
