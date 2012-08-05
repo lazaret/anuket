@@ -44,7 +44,7 @@ class BackupDBCommand(object):
             self.parser.print_help()
             return 2
         else:
-            self.backup_db()
+            return self.backup_db()
 
 
     def backup_db(self):
@@ -83,6 +83,7 @@ class BackupDBCommand(object):
             bz = bz2.BZ2File(path, 'w')
             bz.write(sql_dump)
             bz.close()
+            print("Database backup done.")
             return 0
 
 
