@@ -76,23 +76,19 @@ class BackupDBCommand(object):
             return 1
 
         if sql_dump:
-            # verify and/or create the backup directory
-            self.verify_directory(directory)
+            # verify and/or create the backup directory if necessary
+            if not os.path.exists(directory):
+                try:
+                    os.makedirs(directory, 0775)
+                except OSError:
+                    print("Could not create the backup directory.")
+                    return 1
             # bzip and save the file
             bz = bz2.BZ2File(path, 'w')
             bz.write(sql_dump)
             bz.close()
             print("Database backup done.")
             return 0
-
-
-    def verify_directory(self, dir=None):
-        """ Create and/or verify the existence of a filesystem directory."""
-        if not os.path.exists(dir):
-            try:
-                os.makedirs(dir, 0775)
-            except:
-                raise
 
 #    def dump_mysql(self, connect_args=None):
 #        """ Dump a MySQL database."""
@@ -110,4 +106,4 @@ class BackupDBCommand(object):
         return sql_dump
 
 
-#TODO: add options for name and directory
+#TODO: add command line options for name and directory
