@@ -13,8 +13,8 @@ from anuket.lib.alembic_utils import get_alembic_settings
 from anuket.models import DBSession, Base, AuthUser, AuthGroup
 
 
-def main(argv=sys.argv, quiet=False):
-    command = InitializeDBCommand(argv, quiet)
+def main(argv=sys.argv):
+    command = InitializeDBCommand(argv)
     return command.run()
 
 
@@ -34,17 +34,16 @@ class InitializeDBCommand(object):
         nargs='?',
         help='the application config file')
 
-    def __init__(self, argv, quiet=False):
+    def __init__(self, argv):
         self.args = self.parser.parse_args(argv[1:])
-        self.quiet = quiet
 
 
-    def run(self, quiet=False):
+    def run(self):
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
         else:
-            self.initialize_db()
+            return self.initialize_db()
 
 
     def initialize_db(self):

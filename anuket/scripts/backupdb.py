@@ -10,8 +10,8 @@ from sqlalchemy import engine_from_config
 from pyramid.paster import get_appsettings
 
 
-def main(argv=sys.argv, quiet=False):
-    command = BackupDBCommand(argv, quiet)
+def main(argv=sys.argv):
+    command = BackupDBCommand(argv)
     return command.run()
 
 
@@ -34,12 +34,11 @@ class BackupDBCommand(object):
     parser.add_argument('-o', '--overwrite', action='store_true',
         help='overwrite existing backups files')
 
-    def __init__(self, argv, quiet=False):
+    def __init__(self, argv):
         self.args = self.parser.parse_args(argv[1:])
-        self.quiet = quiet
 
 
-    def run(self, quiet=False):
+    def run(self):
         if not self.args.config_uri:
             self.parser.print_help()
             return 2

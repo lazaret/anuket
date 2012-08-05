@@ -10,8 +10,8 @@ from pyramid.paster import get_appsettings
 from anuket.lib.alembic_utils import get_alembic_settings
 
 
-def main(argv=sys.argv, quiet=False):
-    command = UpgradeDBCommand(argv, quiet)
+def main(argv=sys.argv):
+    command = UpgradeDBCommand(argv)
     return command.run()
 
 
@@ -33,11 +33,10 @@ class UpgradeDBCommand(object):
     parser.add_argument('-f', '--force', action='store_true',
         help='force the upgrade even if there is no available database backup')
 
-    def __init__(self, argv, quiet=False):
+    def __init__(self, argv):
         self.args = self.parser.parse_args(argv[1:])
-        self.quiet = quiet
 
-    def run(self, quiet=False):
+    def run(self):
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
