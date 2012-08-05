@@ -2,29 +2,15 @@
 import os
 
 from unittest import TestCase
+from anuket.tests import AnuketScriptTestCase
 
 
 here = os.path.dirname(__file__)
 config_uri = os.path.join(here, '../../', 'test.ini')
 
 
-class TestBackupDBCommand(TestCase):
-    """ Tests for the `backupdb` script."""
-
-    dummy_file_path = None
-#
-#    def setUp(self):
-#        pass
-#
-    def tearDown(self):
-        # delete the fixture file if any
-        if self.dummy_file_path:
-            try:
-                os.remove(self.dummy_file_path)
-            except OSError:
-                pass
-        #TODO, better do this as the file may stay after failed tests
-
+class TestBackupDBCommand(AnuketScriptTestCase):
+    """ Tests for the `backup_db` and `run` methods."""
 
     def _getTargetClass(self):
         from anuket.scripts.backupdb import BackupDBCommand
@@ -34,74 +20,72 @@ class TestBackupDBCommand(TestCase):
         cmd = self._getTargetClass()([])
         return cmd
 
-    def _create_file_fixture(self):
-        from datetime import date
-        from pyramid.paster import get_appsettings
-        settings = get_appsettings(config_uri)
-        name = settings['anuket.brand_name']
-        directory = settings['anuket.backup_directory']
-        today = date.today().isoformat()
-        filename = '{0}-{1}.sql.bz2'.format(name, today)
-        self.dummy_file_path = os.path.join(directory, filename)
-        dummy_file = open(self.dummy_file_path, 'w')
-        dummy_file.close()
-
-
-#    def test_nothing(self):
-#        command = self._makeOne()
-#
-#        result = command.run(quiet=True)
-#        self.assertEqual(result, 2)
-#
-#
 
     def test_run_no_args(self):
         # no args must error code 2 (and display an help message)
         command = self._makeOne()
         result = command.run()
         self.assertEqual(result, 2)
-#        #TODO hide the help message
+        self.assertEqual(self.output.getvalue()[0:6], "usage:")
 
-#    def test_run_config_uri(self):
-#        command = self._makeOne()
-#        command.args.config_uri = config_uri
-#        result = command.run()
-#        self.assertEqual(result, 0)
+    def test_run_config_uri(self):
+        command = self._makeOne()
+        command.args.config_uri = config_uri
+        result = command.run()
+        self.assertEqual(result, 0)
+        self.assertEqual(self.output.getvalue().rstrip("\n"),
+                         "Database backup done.")
 
 
 #    def test_backup_no_args(self):
 #        command = self._makeOne()
 #        result = command.backup_db()
 #        self.assertEqual(result, 0)
-#TODO: take care of the case in the script ?
+#TODO: take care of the case in the scripts
 
-#    def test_backup_config_uri(self):
-#        command = self._makeOne()
-#        command.args.config_uri = config_uri
-#        result = command.backup_db()
-#        self.assertEqual(result, 0)
+    def test_backup_config_uri(self):
+        command = self._makeOne()
+        command.args.config_uri = config_uri
+        result = command.backup_db()
+        self.assertEqual(result, 0)
+        self.assertEqual(self.output.getvalue().rstrip("\n"),
+                         "Database backup done.")
 
     def test_backup_file_exist(self):
         # test than back exit if there is already a file
-        self._create_file_fixture()
+        self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.backup_db()
         self.assertEqual(result, 1)
+        self.assertEqual(self.output.getvalue().rstrip("\n"),
+            "There is already a database backup with the same name!")
 
     def test_backup_overwrite(self):
         # test the overwrite option if the re is already a file
-        self._create_file_fixture()
+        self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
         command.args.overwrite = True
         result = command.backup_db()
         self.assertEqual(result, 0)
+        self.assertEqual(self.output.getvalue().rstrip("\n"),
+                         "Database backup done.")
 
-#TODO: hide / check output messages
+
+class TestBackupDBmain(AnuketScriptTestCase):
+    def _callFUT(self, argv):
+        from anuket.scripts.backupdb import main
+        return main(argv)
+
+    def test_main(self):
+        result = self._callFUT([])
+        self.assertEqual(result, 2)
+        self.assertEqual(self.output.getvalue()[0:6], "usage:")
+
+
 #TODO: test the verify_directory method
 #TODO: test the sqlite dump method
 #TODO: test an unsuported database engine
 #TODO: test run
-#TODO: test main
 

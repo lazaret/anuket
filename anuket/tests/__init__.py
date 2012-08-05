@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 from unittest import TestCase
+from StringIO import StringIO
 
 from paste.deploy.loadwsgi import appconfig
 from pyramid.testing import DummyRequest
@@ -170,3 +172,48 @@ class AnuketFunctionalTestCase(AnuketTestCase):
             'submit': True}
         response = self.testapp.post('/login', params)
         return response
+
+
+class AnuketScriptTestCase(AnuketTestCase):
+    """ TestCase class for testing Anuket scripts. """
+
+    def setUp(self):
+        super(AnuketScriptTestCase, self).setUp()
+        self.output = StringIO()
+        self.saved_stdout = sys.stdout
+        sys.stdout = self.output
+
+        self.dummy_file_path = None
+
+    def tearDown(self):
+        super(AnuketScriptTestCase, self).tearDown()
+        self.output.close()
+        sys.stdout = self.saved_stdout
+        # delete the fixture file if any
+        if self.dummy_file_path:
+            try:
+                os.remove(self.dummy_file_path)
+            except OSError:  # pragma: no cover
+                raise
+        #TODO, better do this as the file may stay after failed tests
+
+    def backup_directory_fixture(self):
+        """ Create a directory where SQL dump files would be saved."""
+        #TODO: add directory creation to the fixture
+        pass
+
+    def backup_file_fixture(self):
+        """ Create an empty SQL dump file."""
+        self.backup_directory_fixture()
+
+        from datetime import date
+        #from pyramid.paster import get_appsettings
+        #settings = get_appsettings(config_uri)
+        name = self.settings['anuket.brand_name']
+        directory = self.settings['anuket.backup_directory']
+        today = date.today().isoformat()
+        filename = '{0}-{1}.sql.bz2'.format(name, today)
+        self.dummy_file_path = os.path.join(directory, filename)
+        backup_file = open(self.dummy_file_path, 'w')
+        backup_file.close()
+
