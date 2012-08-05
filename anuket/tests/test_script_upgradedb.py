@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-from unittest import TestCase
 from anuket.tests import AnuketScriptTestCase
 
 
