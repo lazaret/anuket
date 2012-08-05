@@ -42,3 +42,4 @@ class AlembicUtilsTests(AnuketTestCase):
         pyramid_sqlalchemy_url = get_appsettings(config_uri)['sqlalchemy.url']
         self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
+#TODO add a test for alembic revision
