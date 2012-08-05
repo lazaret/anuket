@@ -80,7 +80,7 @@ class BackupDBCommand(object):
             if not os.path.exists(directory):
                 try:
                     os.makedirs(directory, 0775)
-                except OSError:
+                except OSError:  # pragma: no cover
                     print("Could not create the backup directory.")
                     return 1
             # bzip and save the file
