@@ -28,78 +28,36 @@ Anuket need the following Python packages to work :
 You can install Python and the packages prerequistes with your OS package
 manager, from PyPI or directly from source.
 
-If you have decided to use PyPI, the prerequists would be installed
-automaticaly when you install Anuket.
+Note: If you just want to play with Anuket and quicky see what he offer then we
+advice you to read the Anuket tutorial bundled in the documentation.
 
 
-Install with testing purpose
-============================
-
-If you just want to play with Anuket and quicky see whats he offer then follow
-this steeps.
-
-
-Prepare an isolated environment
--------------------------------
-
-To avoid messing with your working Python applications, it is recommended to
-test Anuket in an isolated environment.
-
-    $ pip install virtualenv
-    $ virtualenv anuketenv
-    $ cd anuketenv
-    $ source /bin/activate
-
-Note: When you will have finish to play, you can get rid of Anuket by just
-deleting the /anuketenv directory.
-
-
-Install from PyPI
------------------
+Install Anuket from PyPI
+========================
 
 You can simply install Anuket from PyPI by using pip or easy_install:
 
-    (anuketenv)$ pip install anuket
+    $ pip install anuket
 
 or
 
-    (anuketenv)$ easy_install anuket
+    $ easy_install anuket
 
-This will install Anuket and all the necessary dependencies.
-
+This will install Anuket and all the necessary Python packages dependencies.
 
 Alternaly, if you fell more risky you can install the last development version
-directly from the the Git repository. But, please dont' forget than the
-development version may not work perfectly!
+from the the Git repository. But, please dont' forget than the development
+versions may not work perfectly!
 
 
-    (anuketenv)$ git clone git@github.com:lazaret/anuket.git
-    (anuketenv)$ cd anuket/
-    (anuketenv)$ python setup.py develop
-
-
-Initialize the database
------------------------
-
-Finaly you just need to create the default development database:
-
-    (anuketenv)$ initialize_anuket_db development.ini
-
-Start the testing server:
-
-    (anuketenv)$ pserve development.ini
-
-And connect to the application on http://0.0.0.0:6543 with the default admin
-login and password: admin/admin.
+    $ git clone git@github.com:lazaret/anuket.git
+    $ cd anuket/
+    $ python setup.py develop
 
 
 Creating your application with Anuket
 =====================================
 
-Even if you can test it like explained above, Anuket is not realy intended to
-be used alone. Anuket is a Pyramid based web framework, and it is intended to
-be used by other pyramid aplication by just exenting it.
-
-#TODO
-
-
+Anuket is not intended to be used alone. Anuket is intended to be used by other
+Pyramid based aplication by exenting it. Please read the Anuket and pyramid
+documentation to know how to do this.

@@ -1,5 +1,5 @@
 Console scripts
-****************
+***************
 
 Anuket provide console scripts:
 

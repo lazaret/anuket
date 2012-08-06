@@ -41,8 +41,8 @@ details please read the `Pyramid documentation
 
 The main objective of Anuket, is to be used for database related
 applications. We will use it at the `Lazaret laboratory`_ mostly for filling
-and quering relational databases with web forms. If your application is not
-like this, Anuket may not be suited for you.
+and quering relational databases with web forms. If your application is like
+this, Anuket may be suited for you.
 
 
 Warning
