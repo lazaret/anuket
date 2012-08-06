@@ -205,7 +205,7 @@ class ViewUserTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u"This user did not exist!")
 
-    def test_user_delete_view_without_referrer_is_forbiden(self):
+    def test_user_delete_view_without_referer_is_forbiden(self):
         """ test the response of the `user_delete` view wile trying to
         directly delete an user (with no referer).
         """
@@ -439,7 +439,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
     def test_direct_user_delete_is_forbiden_for_admin(self):
         """ Test than direct delete is forbiden for admin users."""
         # Even, admins are not allowed to delete an entry by hiting the
-        # link in the adresse bar. A referrer is requested.
+        # link in the adresse bar. A referer is requested.
         response = self.connect_admin_user_fixture()
 
         response = self.testapp.get('/tools/user/1/delete', status=302)
@@ -472,29 +472,32 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         usercheck = AuthUser.get_by_id(1)
         self.assertTrue(usercheck, user)
 
-#TODO delete an user from link with confirm modal
-#    def test_17_user_delete_for_admin(self):
-#        """ Test the deletion of a dummy user by an admin user."""
-#        self.dummy_user_fixture()
-#        response = self.connect_admin_user_fixture()
-#
-#        response = self.testapp.get('/tools/user/1/delete', status=302)
-#        redirect = response.follow()
-#        print redirect.request.referer
+    def test_user_delete_with_referer(self):
+        """ Test the delete of an user by an admin user with a referer."""
+        self.dummy_user_fixture()  # id=1
+        response = self.connect_admin_user_fixture()  # id=2
+        response = self.testapp.get(
+            '/tools/user/1/delete',
+            extra_environ={'HTTP_REFERER': '/tools/user'},
+            status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/tools/user')
+        self.assertTrue('User deleted.' in redirect.body)
+        self.assertFalse('email@email.com' in redirect.body)
 
-#        response = self.testapp.get('/tools/user/1/delete', status=302)
-#        redirect = response.follow()
-#        self.assertEqual(redirect.status, '200 OK')
-#        self.assertEqual(redirect.request.path, '/tools/user')
-#        self.assertTrue('User deleted.' in redirect.body)
-#        self.assertFalse('email@email.com' in redirect.body)
-
-
-#TODO try to delete the only admin
-#    def test_18_only_admin_delete_is_forbiden(self):
-#        """ Test the deletion of the only admin user by itself."""
-#        response = self.connect_admin_user_fixture()
-
+    def test_only_admin_delete_with_referer_is_forbiden(self):
+        """ Test than it's forbiden to delete the only admin with referer."""
+        response = self.connect_admin_user_fixture()  # id=1
+        response = self.testapp.get(
+            '/tools/user/1/delete',
+            extra_environ={'HTTP_REFERER': '/tools/user'},
+            status=302)
+        redirect = response.follow()
+        self.assertEqual(redirect.status, '200 OK')
+        self.assertEqual(redirect.request.path, '/tools/user')
+        self.assertTrue('Deletion of the only admin forbidden!'
+                        in redirect.body)
 
     def test_password_edit_page_for_admin(self):
         """ Test the edit password form with admin credentials."""
