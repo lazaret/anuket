@@ -101,7 +101,7 @@ class BackupDBCommand(object):
     def dump_sqlite(self, connect_args=None):
         """ Dump a SQLite database."""
         con = sqlite3.connect(connect_args['database'])
-        sql_dump = os.linesep.join(con.iterdump())
+        sql_dump = '\n'.join(con.iterdump())
         con.close()
         return sql_dump
 
