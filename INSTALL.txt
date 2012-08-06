@@ -1,2 +1,66 @@
 Install
-=======
+*******
+
+Prerequistes
+============
+Anuket need Python 2.7 to work. It is not tested yet for Python 3 but we are
+planing to do so.
+
+Anuket need the following Python packages to work :
+
+* pyramid
+* SQLAlchemy
+* pyramid_beaker
+* pyramid_debugtoolbar
+* pyramid_exclog
+* pyramid_simpleform
+* pyramid_tm
+* alembic
+* Babel
+* formencode
+* cracklib
+* cryptacular
+* Mako
+
+You can install Python and the packages prerequistes with your OS package
+manager, from PyPI or directly from source.
+
+If you have decided to use PyPI, the prerequists would be installed
+automaticaly when you install Anuket.
+
+
+Prepare an isolated environment
+===============================
+
+This steep is optional but higly recommended if your are developing or
+if you just want to quickly test Anuket. If your are not sure, then do it!
+
+    $ pip install virtualenv
+    $ virtualenv test-anuket
+    $ cd test-anuket
+    $ source /bin/activate
+
+
+Install from PyPI
+=================
+
+You can install Anuket from PyPI by using pip or easy_install:
+
+    $ pip install anuket
+
+or
+
+    $ easy_install anuket
+
+
+Install the developement version
+================================
+
+Alternaly, you can install the last development version directly from the Git
+repository. Please dont' forget than development version
+
+
+    $ git clone git@github.com:lazaret/anuket.git
+    $ cd anuket/
+    $ python setup.py develop
+
