@@ -15,7 +15,6 @@ config_uri = os.path.join(here, '../../', 'test.ini')
 
 class AlembicUtilsTests(AnuketTestCase):
     """ Tests for the alembic utilities library."""
-
     def setUp(self):
         super(AlembicUtilsTests, self).setUp()
         Base.metadata.drop_all()
@@ -56,6 +55,7 @@ class AlembicUtilsTests(AnuketTestCase):
         self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
     def test_get_alembic_revision(self):
+
         import transaction
         from anuket.models import Migration
         version_table.create(self.engine)
@@ -70,6 +70,7 @@ class AlembicUtilsTests(AnuketTestCase):
         self.assertEqual(revision[0], u'revid')
 
     def test_get_alembic_revision_empty(self):
+
         from anuket.lib.alembic_utils import get_alembic_revision
         revision = get_alembic_revision(config_uri)
         self.assertIsNone(revision)

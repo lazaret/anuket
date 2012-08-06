@@ -21,7 +21,6 @@ class AnuketDummyRequest(DummyRequest):
 
     Add a fake `request.tranlate` object atribute.
     """
-
     def _fake_translation(self, string):
         """ Fake translation who return the original string."""
         return string
@@ -177,7 +176,6 @@ class AnuketFunctionalTestCase(AnuketTestCase):
 
 class AnuketScriptTestCase(AnuketTestCase):
     """ TestCase class for testing Anuket scripts. """
-
     def setUp(self):
         super(AnuketScriptTestCase, self).setUp()
         self.output = StringIO()
@@ -196,6 +194,7 @@ class AnuketScriptTestCase(AnuketTestCase):
                 shutil.rmtree(directory)
             except:  # pragma: no cover
                 raise
+
 
     def backup_directory_fixture(self):
         """ Create a directory where SQL dump files would be saved."""

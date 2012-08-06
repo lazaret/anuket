@@ -14,7 +14,6 @@ class DummyRequest(testing.DummyRequest):
 
 class I18nTests(AnuketTestCase):
     """ Tests for the i18n library."""
-
     def setUp(self):
         super(I18nTests, self).setUp()
         self.config = testing.setUp()
@@ -22,6 +21,7 @@ class I18nTests(AnuketTestCase):
     def tearDown(self):
         super(I18nTests, self).tearDown()
         testing.tearDown()
+
 
     def test_locale_negotiator(self):
         """ Test the `locale_negociator`."""

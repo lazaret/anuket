@@ -14,7 +14,6 @@ config_uri = os.path.join(here, '../../', 'test.ini')
 
 class TestInitializeDBCommand(AnuketScriptTestCase):
     """ Tests for the `initialize_db` and `run` methods."""
-
     def setUp(self):
         super(TestInitializeDBCommand, self).setUp()
         Base.metadata.drop_all()
@@ -43,6 +42,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
 
 
     def test_run_no_args(self):
+
         # no args must error code 2 (and display an help message)
         command = self._makeOne()
         result = command.run()
@@ -50,6 +50,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue()[0:6], "usage:")
 
     def test_run_config_uri(self):
+
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.run()
@@ -123,6 +124,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
 
 
 class TestInitializeDBmain(AnuketScriptTestCase):
+
     def _callFUT(self, argv):
         from anuket.scripts.initializedb import main
         return main(argv)

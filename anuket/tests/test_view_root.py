@@ -8,7 +8,6 @@ from anuket.tests import AnuketDummyRequest
 
 class ViewRootTests(AnuketTestCase):
     """ Integration tests for the `root` view."""
-
     def setUp(self):
         super(ViewRootTests, self).setUp()
         self.config = testing.setUp()
@@ -19,7 +18,8 @@ class ViewRootTests(AnuketTestCase):
         super(ViewRootTests, self).tearDown()
         testing.tearDown()
 
-    def test_01_routes(self):
+
+    def test_root_routes(self):
         """ Test the routes of the `root` views."""
         request = AnuketDummyRequest()
         self.assertEqual(request.route_path('home'), '/')
@@ -27,14 +27,14 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(request.route_path('login'), '/login')
         self.assertEqual(request.route_path('logout'), '/logout')
 
-    def test_02_root_view(self):
+    def test_root_view(self):
         """ Test the response of the `root_view`."""
         from anuket.views.root import root_view
         request = AnuketDummyRequest()
         response = root_view(request)
         self.assertEqual(response, {})
 
-    def test_03_forbiden_view_non_logged(self):
+    def test_forbiden_view_non_logged(self):
         """ Test the response of the `forbiden_view` for non-logged users."""
         from anuket.views.root import forbiden_view
         request = AnuketDummyRequest(auth_user=None)
@@ -43,7 +43,7 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u'You are not connected.')
 
-    def test_04_forbiden_view_logged(self):
+    def test_forbiden_view_logged(self):
         """ Test the response of the `forbiden_view` for logged users."""
         from anuket.views.root import forbiden_view
         request = AnuketDummyRequest(auth_user='test_user')
@@ -52,7 +52,7 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                          u'Insufficient permissions!')
 
-    def test_05_login_view_non_logged(self):
+    def test_login_view_non_logged(self):
         """ Test the response of the `login_view` for non-logged users."""
         from anuket.views.root import login_view
         request = AnuketDummyRequest()
@@ -62,7 +62,7 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(len(request.session.pop_flash('info')), 0)
         self.assertEqual(len(request.session.pop_flash('error')), 0)
 
-    def test_06_login_view_valid_credentials(self):
+    def test_login_view_valid_credentials(self):
         """ Test the response of the `login_view` with valid credentials."""
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
@@ -77,7 +77,7 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('success')[0],
                          u"Successful login.")
 
-    def test_07_login_view_wrong_credentials(self):
+    def test_login_view_wrong_credentials(self):
         """ Test the response of the `login_view` with wrong credentials."""
         # no crsf_token check because the suscribers are not activated
         from anuket.views.root import login_view
@@ -92,7 +92,7 @@ class ViewRootTests(AnuketTestCase):
         self.assertEqual(request.session.pop_flash('error')[0],
                         u"Check your login credentials!")
 
-    def test_08_logout_view(self):
+    def test_logout_view(self):
         """ Test the response of the `logout_view`."""
         from anuket.views.root import logout_view
         request = AnuketDummyRequest()
@@ -105,17 +105,17 @@ class ViewRootTests(AnuketTestCase):
 class ViewRootFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `root` view."""
 
-    def test_01_home_page(self):
+    def test_home_page(self):
         """ Test the home page response for everybody."""
         response = self.testapp.get('/', status=200)
         self.assertTrue('<title>Home' in response.body.replace('\n', ''))
 
-    def test_02_about_page(self):
+    def test_about_page(self):
         """ Test the about page response for everybody."""
         response = self.testapp.get('/about', status=200)
         self.assertTrue('<title>About' in response.body.replace('\n', ''))
 
-    def test_03_unexisting_page(self):
+    def test_unexisting_page(self):
         """ Test the 404 error page response for everybody."""
         response = self.testapp.get('/Some404Page')
         # the status is 200 because managed by @notfound_view_config
@@ -123,12 +123,12 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('<title>404' in response.body.replace('\n', ''))
         response.mustcontain('404', 'Page not found!')
 
-    def test_04_login_page_non_loged(self):
+    def test_login_page_non_loged(self):
         """ Test the login page response for everybody."""
         response = self.testapp.get('/login', status=200)
         self.assertTrue('<title>Login' in response.body.replace('\n', ''))
 
-    def test_05_login_page_valid_credentials(self):
+    def test_login_page_valid_credentials(self):
         """ Test login with valid user credentials."""
         response = self.connect_dummy_user_fixture()
 
@@ -138,7 +138,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/')
         self.assertTrue('Successful login.' in redirect.body)
 
-    def test_06_login_page_wrong_credentials(self):
+    def test_login_page_wrong_credentials(self):
         """ Test login with wrong credentials."""
         response = self.testapp.get('/login', status=200)
         csrf_token = response.form.fields['_csrf'][0].value
@@ -152,7 +152,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('Check your login credentials!'
                         in response.body)
 
-    def test_07_login_without_csrf_token(self):
+    def test_login_without_csrf_token(self):
         """ Test login without a csrf token."""
         params = {
             'form_submitted': u'',
@@ -163,7 +163,7 @@ class ViewRootFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/login')
         self.assertTrue('You are not connected.' in redirect.body)
 
-    def test_08_logout(self):
+    def test_logout(self):
         """ Test the logout response."""
         response = self.testapp.get('/logout', status=302)
         redirect = response.follow()

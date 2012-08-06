@@ -11,7 +11,6 @@ class DummyEvent(object):
 
 class SubscribersTests(AnuketTestCase):
     """ Test the events subscribers."""
-
     def setUp(self):
         super(SubscribersTests, self).setUp()
         self.config = testing.setUp()
@@ -19,6 +18,7 @@ class SubscribersTests(AnuketTestCase):
     def tearDown(self):
         super(SubscribersTests, self).tearDown()
         testing.tearDown()
+
 
     def test_renderer_globals(self):
         """ Test the `renderer_globals` event subscriber."""

@@ -6,6 +6,7 @@ from anuket.tests import AnuketTestCase
 
 class SecurityTests(AnuketTestCase):
 
+
     def test_groupfinder(self):
         """ Test the `groupfinder` callback."""
         user = self.dummy_user_fixture()

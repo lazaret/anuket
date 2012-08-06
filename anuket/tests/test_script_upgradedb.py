@@ -10,7 +10,6 @@ config_uri = os.path.join(here, '../../', 'test.ini')
 
 class TestUpgradeDBCommand(AnuketScriptTestCase):
     """ Tests for the `upgrade_db` and `run` methods."""
-
     def _getTargetClass(self):
         from anuket.scripts.upgradedb import UpgradeDBCommand
         return UpgradeDBCommand
@@ -21,6 +20,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
 
 
     def test_run_no_args(self):
+
         # no args must error code 2 (and display an help message)
         command = self._makeOne()
         result = command.run()
@@ -28,6 +28,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue()[0:6], "usage:")
 
     def test_run_config_uri(self):
+
         self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
@@ -37,6 +38,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
                          "Database upgrade done.")
 
     def test_upgrade_db_config_uri(self):
+
         self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
@@ -46,6 +48,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
                          "Database upgrade done.")
 
     def test_upgrade_db_no_backup(self):
+
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.upgrade_db()
@@ -55,6 +58,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
                          "Please use the backup script before upgrading!")
 
     def test_upgrade_db_force(self):
+
         self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
@@ -66,6 +70,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
 
 
 class TestUpgradeDBmain(AnuketScriptTestCase):
+
     def _callFUT(self, argv):
         from anuket.scripts.upgradedb import main
         return main(argv)

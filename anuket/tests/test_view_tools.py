@@ -18,12 +18,13 @@ class ViewToolsTests(AnuketTestCase):
         super(ViewToolsTests, self).tearDown()
         testing.tearDown()
 
-    def test_01_routes(self):
+
+    def test_tools_routes(self):
         """ Test the route of the `tools` view."""
         request = AnuketDummyRequest()
         self.assertEqual(request.route_path('tools.index'), '/tools')
 
-    def test_02_tools_view(self):
+    def test_tools_view(self):
         """ Test the response of the `tools_index_view`."""
         from anuket.views.tools import tools_index_view
         request = AnuketDummyRequest()
@@ -34,7 +35,7 @@ class ViewToolsTests(AnuketTestCase):
 class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
     """ Functional tests for the `user` view."""
 
-    def test_01_tools_page_for_admin(self):
+    def test_tools_page_for_admin(self):
         """ Test the tools page with admin credentials."""
         response = self.connect_admin_user_fixture()
 
@@ -42,7 +43,7 @@ class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(response.request.path, '/tools')
         self.assertTrue('<title>Tools' in response.body.replace('\n', ''))
 
-    def test_02_tools_page_is_forbiden_for_non_admin(self):
+    def test_tools_page_is_forbiden_for_non_admin(self):
         """ Test than the tools page is forbiden for non admin users."""
         response = self.connect_dummy_user_fixture()
 
@@ -52,7 +53,7 @@ class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
         self.assertEqual(redirect.request.path, '/')
         self.assertTrue('Insufficient permissions!' in redirect.body)
 
-    def test_03_tools_page_is_forbiden_for_anonymous(self):
+    def test_tools_page_is_forbiden_for_anonymous(self):
         """ Test than the tools page is forbiden for non logged users."""
         response = self.testapp.get('/tools', status=302)
         redirect = response.follow()
