@@ -36,7 +36,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database upgrade done.")
 
-    def test_upgrade_config_uri(self):
+    def test_upgrade_db_config_uri(self):
         self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
@@ -45,7 +45,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database upgrade done.")
 
-    def test_upgrade_no_backup(self):
+    def test_upgrade_db_no_backup(self):
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.upgrade_db()
@@ -54,7 +54,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
                          "There is no up to date backup for the database. "
                          "Please use the backup script before upgrading!")
 
-    def test_upgrade_force(self):
+    def test_upgrade_db_force(self):
         self.backup_file_fixture()
         command = self._makeOne()
         command.args.config_uri = config_uri
