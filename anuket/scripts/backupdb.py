@@ -71,7 +71,7 @@ class BackupDBCommand(object):
 #            pass
 #       if engine.dialect.name == 'postgresql':
 #            pass
-        else:
+        else:  # pragma: no cover
             print("Unsuported database engine!")
             return 1
 
