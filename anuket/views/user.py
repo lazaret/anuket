@@ -175,6 +175,7 @@ def user_delete_view(request):
         request.session.flash(_(u"Insufficient permissions!"),
                               'error')
         return HTTPFound(location=request.route_path('home'))
+        #TODO: only allow referer from /list and /view ?
 
     user_id = request.matchdict['user_id']
     user = AuthUser.get_by_id(user_id)
