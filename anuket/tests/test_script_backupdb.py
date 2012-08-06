@@ -35,13 +35,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database backup done.")
 
-#    def test_backup_no_args(self):
-#        command = self._makeOne()
-#        result = command.backup_db()
-#        self.assertEqual(result, 0)
-#TODO: take care of the case in the scripts
-
-    def test_backup_config_uri(self):
+    def test_backup_db_config_uri(self):
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.backup_db()
@@ -49,7 +43,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database backup done.")
 
-    def test_backup_file_exist(self):
+    def test_backup_db_file_exist(self):
         # test than back exit if there is already a file
         self.backup_file_fixture()
         command = self._makeOne()
@@ -59,7 +53,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue().rstrip("\n"),
             "There is already a database backup with the same name!")
 
-    def test_backup_overwrite(self):
+    def test_backup_db_overwrite(self):
         # test the overwrite option if the re is already a file
         self.backup_file_fixture()
         command = self._makeOne()
@@ -69,6 +63,14 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
                          "Database backup done.")
+
+    def test_dump_sqlite(self):
+        from sqlalchemy import engine_from_config
+        engine = engine_from_config(self.settings, 'sqlalchemy.')
+        connect_args = engine.url.translate_connect_args()
+        command = self._makeOne()
+        result = command.dump_sqlite(connect_args)
+        self.assertIsInstance(result, unicode)
 
 
 class TestBackupDBmain(AnuketScriptTestCase):
@@ -80,7 +82,3 @@ class TestBackupDBmain(AnuketScriptTestCase):
         result = self._callFUT([])
         self.assertEqual(result, 2)
         self.assertEqual(self.output.getvalue()[0:6], "usage:")
-
-
-#TODO: test the sqlite dump method
-#TODO: test an unsuported database engine
