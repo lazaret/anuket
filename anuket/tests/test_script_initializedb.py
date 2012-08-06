@@ -18,6 +18,11 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
     def setUp(self):
         super(TestInitializeDBCommand, self).setUp()
         Base.metadata.drop_all()
+        # drop the alembic_version table
+        try:
+            version_table.drop(self.engine)
+        except OperationalError:  # pragma: no cover
+            pass
 
     def tearDown(self):
         super(TestInitializeDBCommand, self).tearDown()
@@ -83,7 +88,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         version_table.create(self.engine)
         with transaction.manager:
             alembic_version = Migration()
-            alembic_version.version_num = 'revid'
+            alembic_version.version_num = u'revid'
             self.DBSession.add(alembic_version)
         self.DBSession.remove()
 

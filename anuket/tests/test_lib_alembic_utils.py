@@ -2,7 +2,10 @@
 import os
 
 from pyramid import testing
+from sqlalchemy.exc import OperationalError
 
+from anuket.models import Base
+from anuket.models.migration import version_table
 from anuket.tests import AnuketTestCase
 
 
@@ -15,14 +18,24 @@ class AlembicUtilsTests(AnuketTestCase):
 
     def setUp(self):
         super(AlembicUtilsTests, self).setUp()
-        self.config = testing.setUp()
+        Base.metadata.drop_all()
+        # drop the alembic_version table
+        try:
+            version_table.drop(self.engine)
+        except OperationalError:  # pragma: no cover
+            pass
 
     def tearDown(self):
         super(AlembicUtilsTests, self).tearDown()
-        testing.tearDown()
+        Base.metadata.drop_all()
+        # drop the alembic_version table
+        try:
+            version_table.drop(self.engine)
+        except OperationalError:  # pragma: no cover
+            pass
 
 
-    def test_01_get_alembic_settings(self):
+    def test_get_alembic_settings(self):
         """ Test the `get_ alembic_settings` utility."""
         from alembic.config import Config
         from pyramid.paster import get_appsettings
@@ -42,4 +55,22 @@ class AlembicUtilsTests(AnuketTestCase):
         pyramid_sqlalchemy_url = get_appsettings(config_uri)['sqlalchemy.url']
         self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
-#TODO add a test for alembic revision
+    def test_get_alembic_revision(self):
+        import transaction
+        from anuket.models import Migration
+        version_table.create(self.engine)
+        with transaction.manager:
+            alembic_version = Migration()
+            alembic_version.version_num = u'revid'
+            self.DBSession.add(alembic_version)
+        self.DBSession.remove()
+
+        from anuket.lib.alembic_utils import get_alembic_revision
+        revision = get_alembic_revision(config_uri)
+        self.assertEqual(revision[0], u'revid')
+
+    def test_get_alembic_revision_empty(self):
+        from anuket.lib.alembic_utils import get_alembic_revision
+        revision = get_alembic_revision(config_uri)
+        self.assertIsNone(revision)
+
