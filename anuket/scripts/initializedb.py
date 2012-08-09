@@ -83,8 +83,11 @@ class InitializeDBCommand(object):
 
         # stamp the database with the most recent revision
         # (and create alembic_version table)
-        alembic_cfg = get_alembic_settings(config_uri)
-        stamp(alembic_cfg, 'head')
+        try:
+            alembic_cfg = get_alembic_settings(config_uri)
+            stamp(alembic_cfg, 'head')
+        except AttributeError, ImportError:
+            pass
 
         print("Database initialization done.")
         return 0
