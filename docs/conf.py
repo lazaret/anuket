@@ -19,28 +19,6 @@ import sys, os
 #sys.path.insert(0, os.path.abspath('.'))
 
 
-# Mock to avoid import errors on libraries that depend on C modules
-# see http://read-the-docs.readthedocs.org/en/latest/faq.html
-class Mock(object):
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(cls, name):
-        if name in ('__file__', '__path__'):
-            return '/dev/null'
-        elif name[0] == name[0].upper():
-            return type(name, (), {})
-        else:
-            return Mock()
-
-MOCK_MODULES = ['cracklib']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()
-
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -267,3 +245,28 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
+
+
+# Mock to avoid import errors on libraries that depend on C modules
+# see http://read-the-docs.readthedocs.org/en/latest/faq.html
+class Mock(object):
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        return Mock()
+
+    @classmethod
+    def __getattr__(cls, name):
+        if name in ('__file__', '__path__'):
+            return '/dev/null'
+        elif name[0] == name[0].upper():
+            mockType = type(name, (), {})
+            mockType.__module__ = __name__
+            return mockType
+        else:
+            return Mock()
+
+MOCK_MODULES = ['cracklib']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = Mock()
