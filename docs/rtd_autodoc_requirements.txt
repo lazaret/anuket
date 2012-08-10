@@ -1,0 +1,2 @@
+-e git+git@github.com:lazaret/anuket.git@develop#egg=anuket
+pyramid>=1.3.2

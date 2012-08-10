@@ -70,9 +70,10 @@ Narative documentation
    :maxdepth: 1
 
    install.rst
-   testing.rst
+   anuket_tutorial.rst
    console_scripts.rst
    flash_messages.rst
+   testing.rst
    authors.rst
    licenses.rst
    changes.rst
