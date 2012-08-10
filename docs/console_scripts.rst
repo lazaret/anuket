@@ -59,3 +59,6 @@ For example :
 
 This will directly perform the database upgrade, but without checking for a
 database backup.
+
+
+.. _Alembic: http://pypi.python.org/pypi/alembic
