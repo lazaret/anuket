@@ -1,5 +1,5 @@
-Anuket tutorial
-***************
+Tutorial
+********
 
 This tutorial will explain the course to create an 'Hello world' application
 with Anuket.
@@ -114,14 +114,12 @@ First we need to tell to the ``setup.py`` file than ``anuket`` is a prerequiste
 for our application:
 
 .. literalinclude:: tutorial_setup.py
-   :linenos:
    :lines: 9-13
 
 Secondly we have to edit the ``development.ini`` to add the options required
 by Anyket:
 
 .. literalinclude:: tutorial_development.ini
-   :linenos:
    :lines: 1-33
 
 Most notabily we have set with this options:

@@ -1,0 +1,1 @@
+-e git+git@github.com:lazaret/anuket.git@develop#egg=anuket
