@@ -14,7 +14,7 @@ from anuket.views import root, tools, user
 
 
 def get_auth_user(request):
-    """ Get the authenticated user id from the request and eturn an `AuthUser`
+    """ Get the authenticated user id from the request and return an `AuthUser`
     object.
     """
     user_id = unauthenticated_userid(request)
