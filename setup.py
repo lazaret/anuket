@@ -20,10 +20,14 @@ install_requires = [
     'waitress',
     'alembic',
     'Babel',
-    'cracklib',
     'cryptacular',
     'formencode'
     ]
+
+if not 'READTHEDOCS' in os.environ:
+    # hack for ReadTheDocs
+    install_requires.extend(['cracklib'])
+#TODO: replace this by something better and make cracklib an optional require
 
 tests_require = [
     'WebTest',
