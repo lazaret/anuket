@@ -1,1 +1,3 @@
+SQLAlchemy>=0.7.8
 pyramid>=1.3.2
+pyramid-beaker>=0.7
