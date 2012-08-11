@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Pyramid event subscribers."""
 from pyramid.events import BeforeRender, NewRequest
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid import i18n
@@ -9,7 +10,10 @@ from anuket.lib.i18n import MessageFactory
 
 
 def includeme(config):
-    """ Configure the subscribers."""
+    """ Configure the event subscribers.
+
+    :param config: a `pyramid.config.Configurator` object
+    """
     config.add_subscriber(add_renderer_globals, BeforeRender)
     config.add_subscriber(add_localizer, NewRequest)
     config.add_subscriber(add_csrf_validation, NewRequest)
@@ -19,7 +23,10 @@ def add_renderer_globals(event):
     """ Renderers globals event subscriber.
 
     Add globals to the renderer. Add `_`, `localizer` and `brand_name`
-    globals."""
+    globals.
+
+    :param event: a `pyramid.event.BeforeRender` object
+    """
     request = event.get('request')
     # add globals for i18n
     event['_'] = request.translate
@@ -33,13 +40,15 @@ def add_localizer(event):
     """ Localization event subscriber.
 
     Automaticaly translate strings in the templates.
+
+    :param event: a `pyramid.event.NewRequest` object
     """
     def auto_translate(string):
         """ Use the message factory to translate strings."""
         return localizer.translate(MessageFactory(string))
 
     def gettext_translate(string):
-        """ Translate untranlated strings with FormEncode."""
+        """ Translate untranslated strings with FormEncode."""
         # Try default translation first
         translation = localizer.old_translate(i18n.TranslationString(string))
         if translation == string:
@@ -64,6 +73,9 @@ def add_csrf_validation(event):
 
     If the POST forms do not have a CSRF token, or an invalid one then user is
     logged out and the forbident view is called.
+
+    :param event: a `pyramid.event.NewRequest` object
+    :raise HTTPForbidden: if the CSRF token is None or invalid
     """
     if event.request.method == 'POST':
         token = event.request.POST.get('_csrf')
