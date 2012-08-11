@@ -12,7 +12,7 @@ from anuket.lib.i18n import MessageFactory
 def includeme(config):
     """ Configure the event subscribers.
 
-    :param config: a `pyramid.config.Configurator` object
+    :param config: a ``pyramid.config.Configurator`` object
     """
     config.add_subscriber(add_renderer_globals, BeforeRender)
     config.add_subscriber(add_localizer, NewRequest)
@@ -25,7 +25,7 @@ def add_renderer_globals(event):
     Add globals to the renderer. Add `_`, `localizer` and `brand_name`
     globals.
 
-    :param event: a `pyramid.event.BeforeRender` object
+    :param event: a ``pyramid.event.BeforeRender`` object
     """
     request = event.get('request')
     # add globals for i18n
@@ -41,7 +41,7 @@ def add_localizer(event):
 
     Automaticaly translate strings in the templates.
 
-    :param event: a `pyramid.event.NewRequest` object
+    :param event: a ``pyramid.event.NewRequest`` object
     """
     def auto_translate(string):
         """ Use the message factory to translate strings."""
@@ -74,7 +74,7 @@ def add_csrf_validation(event):
     If the POST forms do not have a CSRF token, or an invalid one then user is
     logged out and the forbident view is called.
 
-    :param event: a `pyramid.event.NewRequest` object
+    :param event: a ``pyramid.event.NewRequest`` object
     :raise HTTPForbidden: if the CSRF token is None or invalid
     """
     if event.request.method == 'POST':
