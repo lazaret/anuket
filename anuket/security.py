@@ -11,7 +11,7 @@ def groupfinder(user_id, request):
 
     :param user_id: the id of the authenticated user
     :type user_id: integer
-    :param request: a pyramid.request object
+    :param request: a ``pyramid.request`` object
     :return: the user groupname or None
     """
     auth_user = AuthUser.get_by_id(user_id)

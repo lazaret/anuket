@@ -8,7 +8,8 @@ from pyramid_beaker import session_factory_from_settings
 from sqlalchemy import engine_from_config
 
 from anuket import subscribers
-from anuket.models import DBSession, RootFactory, AuthUser
+from anuket.models import DBSession, RootFactory
+from anuket.models.auth import AuthUser
 from anuket.security import groupfinder
 from anuket.views import root, tools, user
 
@@ -16,6 +17,8 @@ from anuket.views import root, tools, user
 def get_auth_user(request):
     """ Get the authenticated user id from the request and return an `AuthUser`
     object.
+
+    :param request: a ``pyramid.request`` object
     """
     user_id = unauthenticated_userid(request)
     if user_id:
@@ -23,7 +26,10 @@ def get_auth_user(request):
 
 
 def add_authorization(config):
-    """ Configure authorization and authentification."""
+    """ Configure authorization and authentification.
+
+    :param config: a ``pyramid.config.Configurator`` object
+    """
     authorization_policy = ACLAuthorizationPolicy()
     authentication_policy = SessionAuthenticationPolicy(callback=groupfinder)
     config.set_authentication_policy(authentication_policy)
@@ -31,12 +37,20 @@ def add_authorization(config):
 
 
 def add_static_views(config):
-    """ Configure the static view."""
+    """ Configure the static views.
+
+    :param config: a ``pyramid.config.Configurator`` object
+    """
     config.add_static_view('static', 'static', cache_max_age=3600)
 
 
 def main(global_config, **settings):
     """ Configure and returns a Pyramid WSGI application.
+
+    :param global_config: key/values from the [DEFAULT] section of an .ini fine
+    :type global_config: dictionary
+    :param **settings: key/values from the [app:main] section of an .ini fine
+    :return: a ``pyramid.router.Router`` object
     """
     # configure SQLAlchemy
     engine = engine_from_config(settings, 'sqlalchemy.')
