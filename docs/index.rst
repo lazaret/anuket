@@ -72,6 +72,7 @@ Narative documentation
    install.rst
    anuket_tutorial.rst
    console_scripts.rst
+   database_migrations.rst
    flash_messages.rst
    testing.rst
    authors.rst

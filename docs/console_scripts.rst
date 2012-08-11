@@ -50,15 +50,7 @@ are maitained by using Alembic_.
 The script will check first if there is an up-to-date database backup, and if
 it's the case, it will perform the upgrade of the database by using Alembic.
 
-If you prefer, you can also use Alembic directly to maintain your database.
-For example :
-
-.. code-block:: text
-
-    $ alembic -c development.ini -n app:main upgrade head
-
-This will directly perform the database upgrade, but without checking for a
-database backup.
+.. seealso:: :doc:`database_migrations.rst`
 
 
 .. _Alembic: http://pypi.python.org/pypi/alembic
