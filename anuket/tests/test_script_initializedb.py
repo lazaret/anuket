@@ -40,7 +40,6 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         cmd = self._getTargetClass()([])
         return cmd
 
-
     def test_run_no_args(self):
 
         # no args must error code 2 (and display an help message)
@@ -73,7 +72,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         """
         command = self._makeOne()
         command.args.config_uri = config_uri
-        result = command.initialize_db()
+        command.initialize_db()
         from anuket.models import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
         self.assertEqual(user.username, u'admin')

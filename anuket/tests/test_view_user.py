@@ -18,7 +18,6 @@ class ViewUserTests(AnuketTestCase):
         super(ViewUserTests, self).tearDown()
         testing.tearDown()
 
-
     def test_user_routes(self):
         """ Test the route of the `user` view."""
         request = AnuketDummyRequest()

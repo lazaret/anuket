@@ -2,7 +2,6 @@
 """ Alembic utilities to use with database scripts."""
 from pyramid.paster import get_appsettings
 from alembic.config import Config
-from alembic.script import ScriptDirectory
 
 
 def get_alembic_settings(config_uri):

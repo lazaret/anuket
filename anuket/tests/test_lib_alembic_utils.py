@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-from pyramid import testing
 from sqlalchemy.exc import OperationalError
 
 from anuket.models import Base
@@ -32,7 +31,6 @@ class AlembicUtilsTests(AnuketTestCase):
             version_table.drop(self.engine)
         except OperationalError:  # pragma: no cover
             pass
-
 
     def test_get_alembic_settings(self):
         """ Test the `get_ alembic_settings` utility."""
@@ -74,4 +72,3 @@ class AlembicUtilsTests(AnuketTestCase):
         from anuket.lib.alembic_utils import get_alembic_revision
         revision = get_alembic_revision(config_uri)
         self.assertIsNone(revision)
-

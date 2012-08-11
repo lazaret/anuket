@@ -19,7 +19,6 @@ class SubscribersTests(AnuketTestCase):
         super(SubscribersTests, self).tearDown()
         testing.tearDown()
 
-
     def test_renderer_globals(self):
         """ Test the `renderer_globals` event subscriber."""
         from anuket.subscribers import add_renderer_globals

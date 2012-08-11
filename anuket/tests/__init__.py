@@ -41,7 +41,6 @@ class AnuketTestCase(TestCase):
     def tearDown(self):
         self.DBSession.remove()
 
-
     def dummy_group_fixture(self):
         """ Create a dummy auth group test fixture in the database."""
         try:
@@ -195,7 +194,6 @@ class AnuketScriptTestCase(AnuketTestCase):
             except:  # pragma: no cover
                 raise
 
-
     def backup_directory_fixture(self):
         """ Create a directory where SQL dump files would be saved."""
         directory = self.settings['anuket.backup_directory']
@@ -217,4 +215,3 @@ class AnuketScriptTestCase(AnuketTestCase):
         self.file_fixture_path = os.path.join(directory, filename)
         backup_file = open(self.file_fixture_path, 'w')
         backup_file.close()
-

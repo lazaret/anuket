@@ -18,7 +18,6 @@ class ViewRootTests(AnuketTestCase):
         super(ViewRootTests, self).tearDown()
         testing.tearDown()
 
-
     def test_root_routes(self):
         """ Test the routes of the `root` views."""
         request = AnuketDummyRequest()

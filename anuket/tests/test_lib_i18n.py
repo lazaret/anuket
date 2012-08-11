@@ -22,7 +22,6 @@ class I18nTests(AnuketTestCase):
         super(I18nTests, self).tearDown()
         testing.tearDown()
 
-
     def test_locale_negotiator(self):
         """ Test the `locale_negociator`."""
         from anuket.lib.i18n import locale_negotiator
