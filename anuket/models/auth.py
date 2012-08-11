@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Models used for authentification."""
 from datetime import datetime
 from cryptacular.bcrypt import BCRYPTPasswordManager
 from sqlalchemy import Column, ForeignKey, DateTime, Integer, Unicode
@@ -11,8 +12,8 @@ from anuket.models import Base, DBSession
 class AuthUser(Base):
     """ AuthUser table and model definition.
 
-    Define the database table for the authenticated users and methods for
-    querring the auth_user table or check the validity of the password.
+    Define the database `auth_user` table for the authenticated users and the
+    methods for querring the table or check the validity of the password.
     """
     __tablename__ = 'auth_user'
 
@@ -32,20 +33,35 @@ class AuthUser(Base):
 
     @classmethod
     def get_by_id(cls, user_id=None):
-        """ Query the auth_user table by user id."""
+        """ Query the `auth_user` table by `user_id`.
+
+        :param user_id: the user id
+        :type username: integer
+        :return: a ``sqlalchemy.orm.query.Query`` object
+        """
         if user_id:
             return DBSession.query(cls).get(user_id)
 
     @classmethod
     def get_by_username(cls, username=None):
-        """ Query the auth_user table by username."""
+        """ Query the `auth_user` table by username.
+
+        :param username: the user username
+        :type username: unicode
+        :return: a ``sqlalchemy.orm.query.Query`` object
+        """
         if username:
             return DBSession.query(cls).filter(
                        cls.username == username).first()
 
     @classmethod
     def get_by_email(cls, email=None):
-        """ Query the auth_user table by email."""
+        """ Query the auth_user table by email.
+
+        :param username: the user email
+        :type username: unicode
+        :return: a ``sqlalchemy.orm.query.Query`` object
+        """
         if email:
             return DBSession.query(cls).filter(cls.email == email).first()
 
@@ -56,6 +72,13 @@ class AuthUser(Base):
         Check if the submited password for username is the same than the
         encrypted one recorded in the database. Return None if the username
         did not exist.
+
+        :param username: the user username
+        :type username: unicode
+        :param username: the submited password
+        :type username: unicode
+        :return: True if the password is correct. false if incorect
+        :rtype: boolean
         """
         bcrypt = BCRYPTPasswordManager()
         user = cls.get_by_username(username)
@@ -73,6 +96,11 @@ class AuthUser(Base):
 
         Encrypt `raw_password` with bcrypt and set it as the account
         password.
+
+        :param raw_password: the unencrypted user password
+        :type username: unicode
+        :return: the bcrypt encrypted password
+        :rtype: unicode
         """
         bcrypt = BCRYPTPasswordManager()
         self._password = unicode(bcrypt.encode(raw_password, rounds=12))
@@ -81,8 +109,8 @@ class AuthUser(Base):
 class AuthGroup(Base):
     """ AuthGroup table and model definition.
 
-    Define the database table for the users groups, used for ACLs principals
-    and a method to query the auth_group table.
+    Define the database `auth_group` table for the users groups and a method
+    to query the table. This table is used used for ACLs principals.
     """
     __tablename__ = 'auth_group'
 
@@ -94,5 +122,10 @@ class AuthGroup(Base):
 
     @classmethod
     def get_by_id(cls, group_id):
-        """ Query the auth_group table by user id."""
+        """ Query the `auth_group` table by `group_id`.
+
+        :param group_id: the group id
+        :type group_id: integer
+        :return: a ``sqlalchemy.orm.query.Query`` object
+        """
         return DBSession.query(cls).get(group_id)

@@ -11,7 +11,7 @@ class Migration(object):
     """ Migration table and model definition.
 
     Reflect the default version table used by Alembic. This table is used
-    by for tracking database migrations.
+    for tracking database migrations.
     """
     pass
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" FormEncode validators."""
 from formencode import Invalid
 from formencode import validators
 
@@ -7,7 +8,8 @@ from anuket.models import AuthUser
 
 class FirstNameString(validators.String):
     """ Expand the validators.String class tu return a capitalised value
-    with excessives inner whitespaces removed."""
+    with excessives inner whitespaces removed.
+    """
     def _to_python(self, value, state):
         value = " ".join(value.split())
         return value.capitalize()
@@ -15,7 +17,8 @@ class FirstNameString(validators.String):
 
 class LastNameString(validators.String):
     """ Expand the validators.String class tu return a value with excessives
-    inner whitespaces removed."""
+    inner whitespaces removed.
+    """
     # No capitalization here because is better to let the user to take care
     # of language exceptions like 'de Conty', 'de La Fontaine', 'Van de Walle'
     def _to_python(self, value, state):
@@ -24,7 +27,8 @@ class LastNameString(validators.String):
 
 class UsernamePlainText(validators.PlainText):
     """ Expand the validators.PlainText class tu return a lowercased value
-    with all whitespaces removed."""
+    with all whitespaces removed.
+    """
     def _to_python(self, value, state):
         return value.lower().replace(" ", "")
 
