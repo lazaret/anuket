@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Script for upgrading the Anuket database with Alembic."""
 import argparse
 import os
 import sys
@@ -16,7 +17,7 @@ def main(argv=sys.argv):
 
 
 class UpgradeDBCommand(object):
-    """ Upgrade the database using the configuration from the ini file passed
+    """ Upgrade the database using the configuration from the .ini file passed
     as a positional argument.
     """
     description = 'Upgrade the database'
@@ -34,18 +35,26 @@ class UpgradeDBCommand(object):
         help='force the upgrade even if there is no available database backup')
 
     def __init__(self, argv):
+        """ Get arguments from the ``argparse`` parser."""
         self.args = self.parser.parse_args(argv[1:])
 
     def run(self):
+        """ Run the ``upgrade_db`` method or display the parser help message
+        if the `config_uri` argument is missing.
+
+        :return: ``upgrade_db`` method or 2 (missing argument error)
+        """
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
         else:
             return self.upgrade_db()
 
-
     def upgrade_db(self):
-        """ Upgrade the database to the head revision with alembic."""
+        """ Upgrade the database to the head revision with Alembic.
+
+        :return: 0 (OK) or 1 (abnormal termination error)
+        """
         config_uri = self.args.config_uri
         force = self.args.force
         settings = get_appsettings(config_uri)

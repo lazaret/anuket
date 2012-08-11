@@ -23,6 +23,8 @@ def includeme(config):
 
     Configure the list, add, show, edit, delete and change password pages
     routes.
+
+    :param config: a ``pyramid.config.Configurator`` object
     """
     config.add_route('tools.user_list', '/tools/user')
     config.add_route('tools.user_add', '/tools/user/add')
@@ -34,7 +36,11 @@ def includeme(config):
 
 
 def get_grouplist():
-    """ Generate a list of groups from the database."""
+    """ Generate a list of groups from the database.
+
+    :return: a list of pair values (`group_id`, `groupname`)
+    :rtype: list
+    """
     # For use in group select forms.
     groups = DBSession.query(AuthGroup).order_by(AuthGroup.groupname).all()
     grouplist = [(group.group_id, group.groupname) for group in groups]
@@ -45,7 +51,8 @@ def get_grouplist():
 def get_user_stats():
     """ Get basic database statistics.
 
-    Return users and groups counts from the database.
+    :return: users and groups counts from the database
+    :rtype: dictionary
     """
     usercount = DBSession.query(AuthUser.user_id).count()
     groupcount = DBSession.query(AuthGroup.group_id).count()
@@ -61,6 +68,8 @@ def user_list_view(request):
     Return a paged user list from the database. The paged list can be
     ordered by username, first name or last name. Add an error flash message
     if the list is empty. Return also basic users statistics.
+
+    :param request: a ``pyramid.request`` object
     """
     _ = request.translate
     stats = get_user_stats()
@@ -97,6 +106,8 @@ def user_add_view(request):
     message. If the form is not valid, then display again the form with
     validation errors. Return also a list of groups to use in the group select
     form.
+
+    :param request: a ``pyramid.request`` object
     """
     _ = request.translate
     grouplist = get_grouplist()
@@ -118,6 +129,8 @@ def user_show_view(request):
     Seek the database for the user datas based on user_id used in the route. If
     the user did not exist then add an error flash message and redirect to the
     user list. If the user exist then return his datas.
+
+    :param request: a ``pyramid.request`` object
     """
     _ = request.translate
     user_id = request.matchdict['user_id']
@@ -141,6 +154,8 @@ def user_edit_view(request):
     success flash message. If the form is not valid, then display again the
     form with validation errors. Return also a list of groups to use in the
     group select form.
+
+    :param request: a ``pyramid.request`` object
     """
     _ = request.translate
     user_id = request.matchdict['user_id']
@@ -167,6 +182,8 @@ def user_delete_view(request):
     the user did not exist then add an error flash message and redirect to the
     user list. If the user exist then delete the user in the database, add a
     warning flash message and then redirect to the user list.
+
+    :param request: a ``pyramid.request`` object
     """
     # The confirm delete must be managed by modal messages in the templates,
     # and we forbid direct deletion from the address bar (no referer)
@@ -210,6 +227,8 @@ def password_edit_view(request):
     validated then change the user password in the database and add
     success flash message. If the form is not valid, then display again the
     form with validation errors.
+
+    :param request: a ``pyramid.request`` object
     """
     _ = request.translate
     user_id = request.matchdict['user_id']

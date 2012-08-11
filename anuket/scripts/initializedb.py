@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Script to initialize the Anuket database."""
 import argparse
 import sys
 import transaction
@@ -19,7 +20,7 @@ def main(argv=sys.argv):
 
 
 class InitializeDBCommand(object):
-    """ Create the database using the configuration from the ini file passed
+    """ Create the database using the configuration from the .ini file passed
     as a positional argument.
     """
     description = 'Initialize the database'
@@ -35,19 +36,26 @@ class InitializeDBCommand(object):
         help='the application config file')
 
     def __init__(self, argv):
+        """ Get arguments from the ``argparse`` parser."""
         self.args = self.parser.parse_args(argv[1:])
 
-
     def run(self):
+        """ Run the ``initialize_db`` method or display the parser help message
+        if the `config_uri` argument is missing.
+
+        :return: ``initialize_db`` method or 2 (missing argument error)
+        """
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
         else:
             return self.initialize_db()
 
-
     def initialize_db(self):
-        """ Initialize the database schema and add default values."""
+        """ Initialize the database schema and insert default values.
+
+        :return: 0 (OK) or 1 (abnormal termination error)
+        """
         config_uri = self.args.config_uri
         settings = get_appsettings(config_uri)
         engine = engine_from_config(settings, 'sqlalchemy.')
@@ -86,7 +94,8 @@ class InitializeDBCommand(object):
         try:
             alembic_cfg = get_alembic_settings(config_uri)
             stamp(alembic_cfg, 'head')
-        except AttributeError, ImportError:
+        except (AttributeError, ImportError):
+            # alembic is missing or not configured
             pass
 
         print("Database initialization done.")

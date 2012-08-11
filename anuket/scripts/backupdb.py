@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Script to backup the Anuket database."""
 import argparse
 import bz2
 import os
@@ -35,18 +36,26 @@ class BackupDBCommand(object):
         help='overwrite existing backups files')
 
     def __init__(self, argv):
+        """ Get arguments from the ``argparse`` parser."""
         self.args = self.parser.parse_args(argv[1:])
 
-
     def run(self):
+        """ Run the ``backup_db`` method or display the parser help message
+        if the `config_uri` argument is missing.
+
+        :return: ``backup_db`` method or 2 (missing argument error)
+        """
         if not self.args.config_uri:
             self.parser.print_help()
             return 2
         else:
             return self.backup_db()
 
-
     def backup_db(self):
+        """ Dump the database and then compress and save the file.
+
+        :return: 0 (OK) or 1 (abnormal termination error)
+        """
         config_uri = self.args.config_uri
         overwrite = self.args.overwrite
         settings = get_appsettings(config_uri)
