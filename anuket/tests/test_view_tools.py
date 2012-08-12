@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Test for the `tools` views."""
 from pyramid import testing
 
 from anuket.tests import AnuketTestCase
@@ -7,7 +8,7 @@ from anuket.tests import AnuketDummyRequest
 
 
 class ViewToolsTests(AnuketTestCase):
-    """ Integration tests for the `tools` view."""
+    """ Integration tests for the `tools` views."""
     def setUp(self):
         super(ViewToolsTests, self).setUp()
         self.config = testing.setUp()
@@ -19,7 +20,7 @@ class ViewToolsTests(AnuketTestCase):
         testing.tearDown()
 
     def test_tools_routes(self):
-        """ Test the route of the `tools` view."""
+        """ Test the routes of the `tools` view."""
         request = AnuketDummyRequest()
         self.assertEqual(request.route_path('tools.index'), '/tools')
 
@@ -32,7 +33,7 @@ class ViewToolsTests(AnuketTestCase):
 
 
 class ViewToolsFunctionalTests(AnuketFunctionalTestCase):
-    """ Functional tests for the `user` view."""
+    """ Functional tests for the `user` views."""
 
     def test_tools_page_for_admin(self):
         """ Test the tools page with admin credentials."""

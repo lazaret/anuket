@@ -9,7 +9,7 @@ class ValidatorsTests(AnuketTestCase):
     """ Tests for the validators library."""
 
     def test_FirstNameString(self):
-        """ Test the FirstNameString validator."""
+        """ Test the ``FirstNameString`` validator."""
         from anuket.lib.validators import FirstNameString
         firstname = FirstNameString()
         # test than the validator is a formencode validators.String
@@ -20,7 +20,7 @@ class ValidatorsTests(AnuketTestCase):
         self.assertTrue(firstname.to_python("firstname"), "Firstname")
 
     def test_LastNameString(self):
-        """ Test the LastNameString validator."""
+        """ Test the ``LastNameString`` validator."""
         from anuket.lib.validators import LastNameString
         lastname = LastNameString()
         # test than the validator is a formencode validators.String
@@ -29,7 +29,7 @@ class ValidatorsTests(AnuketTestCase):
         self.assertEqual(lastname.to_python("de Fleur"), "de Fleur")
 
     def test_UsernamePlainText(self):
-        """ Test the UsernamePlainText validator."""
+        """ Test the ``UsernamePlainText`` validator."""
         from anuket.lib.validators import UsernamePlainText
         username = UsernamePlainText()
         # test than the validator is a formencode validators.PlainText
@@ -40,7 +40,7 @@ class ValidatorsTests(AnuketTestCase):
         self.assertTrue(username.to_python("UsErNaMe"), "username")
 
     def test_SecurePassword(self):
-        """ Test the SecurePassword validator."""
+        """ Test the ``SecurePassword`` validator."""
         from anuket.lib.validators import SecurePassword
         password = SecurePassword()
         # test than the validator is a formencode validators.String
@@ -55,7 +55,7 @@ class ValidatorsTests(AnuketTestCase):
                          secure_password)
 
     def test_UniqueAuthUsername(self):
-        """ Test the UniqueAuthUsername validator."""
+        """ Test the ``UniqueAuthUsername`` validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthUsername
         username = UniqueAuthUsername()
@@ -74,7 +74,7 @@ class ValidatorsTests(AnuketTestCase):
         self.assertEqual(username.validate_python(values, None), None)
 
     def test_UniqueAuthEmail(self):
-        """ Test the UniqueAuthEmail validator."""
+        """ Test the ``UniqueAuthEmail`` validator."""
         self.dummy_user_fixture()
         from anuket.lib.validators import UniqueAuthEmail
         email = UniqueAuthEmail()

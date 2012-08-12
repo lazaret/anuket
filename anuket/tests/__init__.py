@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Anuket test cases and fixtures."""
 import os
 import shutil
 import sys
@@ -19,7 +20,7 @@ settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
 class AnuketDummyRequest(DummyRequest):
     """ Extend the Pyramid testing DummyRequest.
 
-    Add a fake `request.tranlate` object atribute.
+    Add a fake ``request.tranlate`` object atribute.
     """
     def _fake_translation(self, string):
         """ Fake translation who return the original string."""
@@ -29,7 +30,7 @@ class AnuketDummyRequest(DummyRequest):
 
 
 class AnuketTestCase(TestCase):
-    """ TestCase class for integration tests."""
+    """ ``TestCase`` class for integration tests."""
     def setUp(self):
         self.settings = settings
         self.engine = engine_from_config(self.settings, prefix='sqlalchemy.')
@@ -124,7 +125,7 @@ class AnuketTestCase(TestCase):
 
 
 class AnuketFunctionalTestCase(AnuketTestCase):
-    """ TestCase class for functional tests."""
+    """ ``TestCase`` class for functional tests."""
     def setUp(self):
         super(AnuketFunctionalTestCase, self).setUp()
         from anuket import main
@@ -140,8 +141,9 @@ class AnuketFunctionalTestCase(AnuketTestCase):
         """ Connect the test admin user with the login form.
 
         This create an admin user in the database, and then connect him with
-        the login form. This set up an userid cookie inside the testing browser
-        available for further tests."""
+        the login form. This set up an `userid` cookie inside the testing
+        browser available for further tests.
+        """
         self.admin_user_fixture()
         response = self.testapp.get('/login', status=200)
         csrf_token = response.form.fields['_csrf'][0].value
@@ -158,8 +160,9 @@ class AnuketFunctionalTestCase(AnuketTestCase):
         """ Connect the test dummy user with the login form.
 
         This create a dummy user in the database, and then connect him with
-        the login form. This set up an userid cookie inside the testing browser
-        available for further tests."""
+        the login form. This set up an `userid` cookie inside the testing
+        browser available for further tests.
+        """
         self.dummy_user_fixture()
         response = self.testapp.get('/login', status=200)
         csrf_token = response.form.fields['_csrf'][0].value
@@ -174,7 +177,7 @@ class AnuketFunctionalTestCase(AnuketTestCase):
 
 
 class AnuketScriptTestCase(AnuketTestCase):
-    """ TestCase class for testing Anuket scripts. """
+    """ ``TestCase`` class for testing Anuket scripts. """
     def setUp(self):
         super(AnuketScriptTestCase, self).setUp()
         self.output = StringIO()

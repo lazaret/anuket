@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Tests for the `initializedb` script."""
 import os
 
 from sqlalchemy.exc import OperationalError
@@ -41,7 +42,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         return cmd
 
     def test_run_no_args(self):
-
+        """ Test the `run` method without positional argument."""
         # no args must error code 2 (and display an help message)
         command = self._makeOne()
         result = command.run()
@@ -49,7 +50,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         self.assertEqual(self.output.getvalue()[0:6], "usage:")
 
     def test_run_config_uri(self):
-
+        """ Test the `run` method with a `config_uri` positional argument."""
         command = self._makeOne()
         command.args.config_uri = config_uri
         result = command.run()
@@ -101,8 +102,8 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
                          "Use the upgrade script instead!")
 
     def test_initialize_db_integrity_error(self):
-        """ Test than the `initialize_db` method fail if an IntegrityError
-        occur because there is already an 'admins' group in the database.
+        """ Test than the `initialize_db` method fail if an ``IntegrityError``
+        occur because there is already an `admins` group in the database.
         """
         import transaction
         from anuket.models.auth import AuthGroup
@@ -123,12 +124,15 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
 
 
 class TestInitializeDBmain(AnuketScriptTestCase):
-
+    """ Test for the `main` function of the `initializedb` the script."""
     def _callFUT(self, argv):
         from anuket.scripts.initializedb import main
         return main(argv)
 
     def test_main(self):
+        """ Test than the `main` function return the help message by default.
+        """
+        # same as the `run` method without argument
         result = self._callFUT([])
         self.assertEqual(result, 2)
         self.assertEqual(self.output.getvalue()[0:6], "usage:")

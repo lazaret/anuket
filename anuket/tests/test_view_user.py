@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Test for the `user` views."""
 from pyramid import testing
 
 from anuket.tests import AnuketTestCase
@@ -7,7 +8,7 @@ from anuket.tests import AnuketDummyRequest
 
 
 class ViewUserTests(AnuketTestCase):
-    """ Integration tests for the `user` view."""
+    """ Integration tests for the `user` views."""
     def setUp(self):
         super(ViewUserTests, self).setUp()
         self.config = testing.setUp()
@@ -277,7 +278,7 @@ class ViewUserTests(AnuketTestCase):
 
 
 class ViewUserFunctionalTests(AnuketFunctionalTestCase):
-    """ Functional tests for the `user` view."""
+    """ Functional tests for the `user` views."""
 
     def test_user_list_page_for_admin(self):
         """ Test the user list page with admin credentials."""

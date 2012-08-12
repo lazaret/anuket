@@ -5,7 +5,7 @@ from anuket.tests import AnuketTestCase
 
 
 class DummyRequest(testing.DummyRequest):
-    """ Extend the pyramid testing.DummyRequest class with the WebOb
+    """ Extend the pyramid ``testing.DummyRequest`` class with the ``WebOb``
     `accept_language` attribute."""
 
     from pyramid.request import Request
@@ -23,7 +23,7 @@ class I18nTests(AnuketTestCase):
         testing.tearDown()
 
     def test_locale_negotiator(self):
-        """ Test the `locale_negociator`."""
+        """ Test the `locale_negociator` function."""
         from anuket.lib.i18n import locale_negotiator
 
         request = DummyRequest()

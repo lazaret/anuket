@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Test for the `root` views."""
 from pyramid import testing
 
 from anuket.tests import AnuketTestCase
@@ -7,7 +8,7 @@ from anuket.tests import AnuketDummyRequest
 
 
 class ViewRootTests(AnuketTestCase):
-    """ Integration tests for the `root` view."""
+    """ Integration tests for the `root` views."""
     def setUp(self):
         super(ViewRootTests, self).setUp()
         self.config = testing.setUp()

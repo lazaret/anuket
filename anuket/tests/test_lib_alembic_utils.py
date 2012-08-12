@@ -33,7 +33,7 @@ class AlembicUtilsTests(AnuketTestCase):
             pass
 
     def test_get_alembic_settings(self):
-        """ Test the `get_ alembic_settings` utility."""
+        """ Test the `get_alembic_settings` function."""
         from alembic.config import Config
         from pyramid.paster import get_appsettings
         from anuket.lib.alembic_utils import get_alembic_settings
@@ -53,7 +53,7 @@ class AlembicUtilsTests(AnuketTestCase):
         self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
     def test_get_alembic_revision(self):
-
+        """ Test the `get_alembic_revision` function with a revision."""
         import transaction
         from anuket.models.migration import Migration
         version_table.create(self.engine)
@@ -68,7 +68,7 @@ class AlembicUtilsTests(AnuketTestCase):
         self.assertEqual(revision[0], u'revid')
 
     def test_get_alembic_revision_empty(self):
-
+        """ Test the `get_alembic_settings` function with an empty revision."""
         from anuket.lib.alembic_utils import get_alembic_revision
         revision = get_alembic_revision(config_uri)
         self.assertIsNone(revision)
