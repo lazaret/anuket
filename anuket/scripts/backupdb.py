@@ -11,7 +11,10 @@ from sqlalchemy import engine_from_config
 from pyramid.paster import get_appsettings
 
 
-def main(argv=sys.argv):
+def main(argv=None):
+    """ Main entry point for the `backupdb` script."""
+    if argv is None:
+        argv = sys.argv
     command = BackupDBCommand(argv)
     return command.run()
 

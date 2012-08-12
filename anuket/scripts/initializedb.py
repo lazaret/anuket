@@ -15,7 +15,10 @@ from anuket.models import DBSession, Base
 from anuket.models.auth import AuthUser, AuthGroup
 
 
-def main(argv=sys.argv):
+def main(argv=None):
+    """ Main entry point for the `initilizedb` script."""
+    if argv is None:
+        argv = sys.argv
     command = InitializeDBCommand(argv)
     return command.run()
 
