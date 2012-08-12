@@ -9,6 +9,11 @@ API Documentation
 
 .. automodule:: anuket.models
 
+:mod:`anuket.models.auth` -- Auth model
+---------------------------------------
+
+.. automodule:: anuket.models.auth
+
     .. autoclass:: AuthGroup
 
         .. automethod:: get_by_id
@@ -20,7 +25,17 @@ API Documentation
         .. automethod:: get_by_email
         .. automethod:: check_password
 
+:mod:`anuket.models.migration` -- Migration model
+-------------------------------------------------
+
+.. automodule:: anuket.models.migration
+
     .. autoclass:: Migration
+
+:mod:`anuket.models.rootfactory` -- RootFactory model
+-----------------------------------------------------
+
+.. automodule:: anuket.models.rootfactory
 
     .. autoclass:: RootFactory
 
@@ -51,7 +66,7 @@ API Documentation
 
 
 :mod:`anuket.views.user` -- User views
----------------------------------------
+--------------------------------------
 
 .. automodule:: anuket.views.user
 
@@ -68,6 +83,9 @@ API Documentation
 
 .. automodule:: anuket.scripts
 
+:mod:`anuket.scripts.initializedb` -- Database initialization
+-------------------------------------------------------------
+
 .. automodule:: anuket.scripts.initializedb
 
     .. autoclass:: InitializeDBCommand
@@ -75,12 +93,18 @@ API Documentation
         .. automethod:: run
         .. automethod:: initialize_db
 
+:mod:`anuket.scripts.backupdb` -- Database backup
+-------------------------------------------------
+
 .. automodule:: anuket.scripts.backupdb
 
     .. autoclass:: BackupDBCommand
 
         .. automethod:: run
         .. automethod:: backup_db
+
+:mod:`anuket.scripts.upgradedb` -- Database upgrade
+---------------------------------------------------
 
 .. automodule:: anuket.scripts.upgradedb
 
