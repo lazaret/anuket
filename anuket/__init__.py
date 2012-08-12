@@ -8,8 +8,9 @@ from pyramid_beaker import session_factory_from_settings
 from sqlalchemy import engine_from_config
 
 from anuket import subscribers
-from anuket.models import DBSession, RootFactory
+from anuket.models import DBSession
 from anuket.models.auth import AuthUser
+from anuket.models.rootfactory import RootFactory
 from anuket.security import groupfinder
 from anuket.views import root, tools, user
 

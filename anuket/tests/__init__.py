@@ -44,7 +44,7 @@ class AnuketTestCase(TestCase):
     def dummy_group_fixture(self):
         """ Create a dummy auth group test fixture in the database."""
         try:
-            from anuket.models import AuthGroup
+            from anuket.models.auth import AuthGroup
             group = AuthGroup()
             group.groupname = u'groupname'
             self.DBSession.add(group)
@@ -57,7 +57,7 @@ class AnuketTestCase(TestCase):
     def dummy_user_fixture(self):
         """ Create a dummy auth user test fixture in the database."""
         try:
-            from anuket.models import AuthUser
+            from anuket.models.auth import AuthUser
             group = self.dummy_group_fixture()
             user = AuthUser()
             user.username = u'username'
@@ -76,7 +76,7 @@ class AnuketTestCase(TestCase):
     def admin_group_fixture(self):
         """ Create an admin group test fixture in the database."""
         try:
-            from anuket.models import AuthGroup
+            from anuket.models.auth import AuthGroup
             group = AuthGroup()
             group.groupname = u'admins'
             self.DBSession.add(group)
@@ -89,7 +89,7 @@ class AnuketTestCase(TestCase):
     def admin_user_fixture(self):
         """ Create an admin auth user test fixture in the database."""
         try:
-            from anuket.models import AuthUser
+            from anuket.models.auth import AuthUser
             group = self.admin_group_fixture()
             user = AuthUser()
             user.username = u'admin'

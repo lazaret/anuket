@@ -5,11 +5,11 @@ from anuket.tests import AnuketTestCase
 
 
 class ModelRootFactoryTests(AnuketTestCase):
-    """ Tests for the `RootFactory` model class."""
+    """ Tests for the ``RootFactory`` model class."""
 
     def test_RootFactory_ACLs(self):
         """ Test ACLs of the route factory."""
-        from anuket.models import RootFactory
+        from anuket.models.rootfactory import RootFactory
         view_acl = (Allow, Authenticated, 'view')
         admin_acl = (Allow, 'group:admins', ALL_PERMISSIONS)
         self.assertIn(view_acl, RootFactory.__acl__)

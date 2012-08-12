@@ -11,7 +11,8 @@ from pyramid.paster import get_appsettings
 
 from anuket.lib.alembic_utils import get_alembic_revision
 from anuket.lib.alembic_utils import get_alembic_settings
-from anuket.models import DBSession, Base, AuthUser, AuthGroup
+from anuket.models import DBSession, Base
+from anuket.models.auth import AuthUser, AuthGroup
 
 
 def main(argv=sys.argv):

@@ -73,7 +73,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         command = self._makeOne()
         command.args.config_uri = config_uri
         command.initialize_db()
-        from anuket.models import AuthUser
+        from anuket.models.auth import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
         self.assertEqual(user.username, u'admin')
         self.assertTrue(AuthUser.check_password(u'admin', u'admin'))
@@ -84,7 +84,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         already versioned.
         """
         import transaction
-        from anuket.models import Migration
+        from anuket.models.migration import Migration
         version_table.create(self.engine)
         with transaction.manager:
             alembic_version = Migration()
@@ -105,7 +105,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         occur because there is already an 'admins' group in the database.
         """
         import transaction
-        from anuket.models import AuthGroup
+        from anuket.models.auth import AuthGroup
         Base.metadata.create_all()
         with transaction.manager:
             admins_group = AuthGroup()

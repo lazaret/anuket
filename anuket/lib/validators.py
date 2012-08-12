@@ -3,7 +3,7 @@
 from formencode import Invalid
 from formencode import validators
 
-from anuket.models import AuthUser
+from anuket.models.auth import AuthUser
 
 
 class FirstNameString(validators.String):

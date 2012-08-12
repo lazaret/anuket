@@ -12,7 +12,8 @@ from webhelpers import paginate
 from anuket.lib.validators import FirstNameString, LastNameString
 from anuket.lib.validators import SecurePassword, UniqueAuthUsername
 from anuket.lib.validators import UniqueAuthEmail, UsernamePlainText
-from anuket.models import DBSession, AuthUser, AuthGroup
+from anuket.models import DBSession
+from anuket.models.auth import AuthUser, AuthGroup
 
 
 log = logging.getLogger(__name__)

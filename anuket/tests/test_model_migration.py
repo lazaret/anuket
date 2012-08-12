@@ -4,8 +4,8 @@ import transaction
 from sqlalchemy.exc import OperationalError
 
 from anuket.tests import AnuketTestCase
-from anuket.models import Base, Migration
-from anuket.models.migration import version_table
+from anuket.models import Base
+from anuket.models.migration import Migration, version_table
 
 
 class ModelMigrationTests(AnuketTestCase):

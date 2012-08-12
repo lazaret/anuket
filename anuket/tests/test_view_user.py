@@ -160,7 +160,7 @@ class ViewUserTests(AnuketTestCase):
         request = AnuketDummyRequest()
         request.matchdict = {'user_id': 1}
         response = user_show_view(request)
-        from anuket.models import AuthUser
+        from anuket.models.auth import AuthUser
         user = AuthUser.get_by_id(1)
         self.assertIsInstance(response['user'], AuthUser)
         self.assertEqual(response['user'], user)
@@ -467,7 +467,7 @@ class ViewUserFunctionalTests(AnuketFunctionalTestCase):
         self.assertTrue('You are not connected.'
                         in redirect.body)
         # check than the user is effectively still in the database
-        from anuket.models import AuthUser
+        from anuket.models.auth import AuthUser
         usercheck = AuthUser.get_by_id(1)
         self.assertTrue(usercheck, user)
 

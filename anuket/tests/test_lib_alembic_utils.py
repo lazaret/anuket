@@ -55,7 +55,7 @@ class AlembicUtilsTests(AnuketTestCase):
     def test_get_alembic_revision(self):
 
         import transaction
-        from anuket.models import Migration
+        from anuket.models.migration import Migration
         version_table.create(self.engine)
         with transaction.manager:
             alembic_version = Migration()
