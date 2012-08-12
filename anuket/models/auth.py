@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" Models used for authentification."""
+""" ``SQLAlchemy`` model definition for authentification."""
 from datetime import datetime
 from cryptacular.bcrypt import BCRYPTPasswordManager
 from sqlalchemy import Column, ForeignKey, DateTime, Integer, Unicode

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" tests for the form validation library."""
 from formencode import Invalid
 from formencode import validators
 
@@ -6,7 +7,7 @@ from anuket.tests import AnuketTestCase
 
 
 class ValidatorsTests(AnuketTestCase):
-    """ Tests for the validators library."""
+    """ Tests the validators library."""
 
     def test_FirstNameString(self):
         """ Test the ``FirstNameString`` validator."""

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" ``Pyramid`` `root factory` model."""
 from pyramid.security import Allow, Authenticated, ALL_PERMISSIONS
 
 

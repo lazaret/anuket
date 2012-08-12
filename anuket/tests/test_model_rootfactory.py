@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+""" Tests for the `root factory`."""
 from pyramid.security import Allow, Authenticated, ALL_PERMISSIONS
 
 from anuket.tests import AnuketTestCase
 
 
 class ModelRootFactoryTests(AnuketTestCase):
-    """ Tests for the ``RootFactory`` model class."""
+    """ Tests the ``RootFactory`` model class."""
 
     def test_RootFactory_ACLs(self):
         """ Test ACLs of the route factory."""

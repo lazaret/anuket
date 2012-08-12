@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Tests for the database migration model."""
 import transaction
 
 from sqlalchemy.exc import OperationalError

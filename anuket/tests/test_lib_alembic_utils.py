@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Tests for the alembic utilities library."""
 import os
 
 from sqlalchemy.exc import OperationalError
@@ -13,7 +14,7 @@ config_uri = os.path.join(here, '../../', 'test.ini')
 
 
 class AlembicUtilsTests(AnuketTestCase):
-    """ Tests for the alembic utilities library."""
+    """ Test the alembic utilities library."""
     def setUp(self):
         super(AlembicUtilsTests, self).setUp()
         Base.metadata.drop_all()

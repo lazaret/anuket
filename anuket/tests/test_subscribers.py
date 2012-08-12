@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Tests for the event subscribers."""
 from pyramid import testing
 
 from anuket.tests import AnuketTestCase

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Anuket is an opiniated Python web framework based on Pyramid."""
 from pyramid.config import Configurator
 from pyramid.security import unauthenticated_userid
 from pyramid.authentication import SessionAuthenticationPolicy

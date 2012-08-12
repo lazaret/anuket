@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" ``SQLAlchemy`` model definition for database migration with ``Alembic``."""
 from sqlalchemy import Table, MetaData, Column, String
 from sqlalchemy.orm import mapper
 
