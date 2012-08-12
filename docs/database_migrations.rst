@@ -24,7 +24,7 @@ backup before performing the update.
 
 
 .. warning:: SQLite have limitaions with the ALTER statement and so Alembic do
-not support well tables and columns alteration of SQLite databases.
+    not support well tables and columns alteration of SQLite databases.
 
 
 .. _Alembic: http://pypi.python.org/pypi/alembic

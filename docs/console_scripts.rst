@@ -50,7 +50,7 @@ are maitained by using Alembic_.
 The script will check first if there is an up-to-date database backup, and if
 it's the case, it will perform the upgrade of the database by using Alembic.
 
-.. seealso:: :doc:`database_migrations.rst`
+.. seealso:: :doc:`database_migrations`
 
 
 .. _Alembic: http://pypi.python.org/pypi/alembic
