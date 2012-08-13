@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """ Anuket is an opiniated Python web framework based on Pyramid."""
 from pyramid.config import Configurator
-from pyramid.security import unauthenticated_userid
 from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid_beaker import session_factory_from_settings
@@ -12,19 +11,8 @@ from anuket import subscribers
 from anuket.models import DBSession
 from anuket.models.auth import AuthUser
 from anuket.models.rootfactory import RootFactory
-from anuket.security import groupfinder
+from anuket.security import groupfinder, get_auth_user
 from anuket.views import root, tools, user
-
-
-def get_auth_user(request):
-    """ Get the authenticated user id from the request and return an `AuthUser`
-    object.
-
-    :param request: a ``pyramid.request`` object
-    """
-    user_id = unauthenticated_userid(request)
-    if user_id:
-        return AuthUser.get_by_id(user_id)
 
 
 def add_authorization(config):

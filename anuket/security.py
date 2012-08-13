@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Authentification related utilities."""
+from pyramid.security import unauthenticated_userid
+
 from anuket.models.auth import AuthUser
 
 
@@ -20,4 +22,12 @@ def groupfinder(user_id, request):
         return [('group:%s' % auth_group)]
 
 
-#TODO move get_auth_user here ?
+def get_auth_user(request):
+    """ Get the authenticated user id from the request and return an `AuthUser`
+    object.
+
+    :param request: a ``pyramid.request`` object
+    """
+    user_id = unauthenticated_userid(request)
+    if user_id:
+        return AuthUser.get_by_id(user_id)
