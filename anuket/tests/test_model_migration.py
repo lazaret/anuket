@@ -35,9 +35,11 @@ class ModelMigrationTests(AnuketTestCase):
         except OperationalError:  # pragma: no cover
             pass
 
-#    def test_Migration_columns(self):
-#        """ Test the ``Migration`` model class columns and types."""
-#        migration = self.DBSession.query(Migration).filter_by().first()
-#        #self.assertIsInstance(migration.version_num, str)
-#        #the above tests strangely fail because version_num seem to be
-#        #unicode despite of the model definition
+    def test_Migration_columns(self):
+        """ Test the ``Migration`` model class columns and types."""
+        migration = self.DBSession.query(Migration).filter_by().first()
+        if self.engine.dialect.name == 'sqlite':  # pragma: no cover
+            # pysqlite driver always convert the strings collumns to unicode
+            self.assertIsInstance(migration.version_num, unicode)
+        else:  # pragma: no cover
+            self.assertIsInstance(migration.version_num, str)

@@ -17,7 +17,7 @@ from anuket.models.auth import AuthUser, AuthGroup
 
 def main(argv=None):
     """ Main entry point for the `initilizedb` script."""
-    if argv is None:
+    if argv is None:  # pragma: no cover
         argv = sys.argv
     command = InitializeDBCommand(argv)
     return command.run()
@@ -98,7 +98,7 @@ class InitializeDBCommand(object):
         try:
             alembic_cfg = get_alembic_settings(config_uri)
             stamp(alembic_cfg, 'head')
-        except (AttributeError, ImportError):
+        except (AttributeError, ImportError):  # pragma: no cover
             # alembic is missing or not configured
             pass
 

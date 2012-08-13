@@ -13,7 +13,7 @@ from anuket.lib.alembic_utils import get_alembic_settings
 
 def main(argv=None):
     """ Main entry point for the `upgradedb` script."""
-    if argv is None:
+    if argv is None:  # pragma: no cover
         argv = sys.argv
     command = UpgradeDBCommand(argv)
     return command.run()

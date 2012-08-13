@@ -13,7 +13,7 @@ from pyramid.paster import get_appsettings
 
 def main(argv=None):
     """ Main entry point for the `backupdb` script."""
-    if argv is None:
+    if argv is None:  # pragma: no cover
         argv = sys.argv
     command = BackupDBCommand(argv)
     return command.run()
