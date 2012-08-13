@@ -104,11 +104,9 @@ class BackupDBCommand(object):
 
 #    def dump_mysql(self, connect_args=None):
 #        """ Dump a MySQL database."""
-#        #TODO: MySQL support
 
 #    def dump_postgresql(self, connect_args=None):
 #        """ Dump a PostgreSQL database."""
-#        #TODO: PostgreSQL support
 
     def dump_sqlite(self, connect_args=None):
         """ Dump a SQLite database."""
@@ -116,6 +114,3 @@ class BackupDBCommand(object):
         sql_dump = '\n'.join(con.iterdump())
         con.close()
         return sql_dump
-
-
-#TODO: add command line options for name and directory

@@ -9,7 +9,6 @@ from sqlalchemy import engine_from_config
 
 from anuket import subscribers
 from anuket.models import DBSession
-from anuket.models.auth import AuthUser
 from anuket.models.rootfactory import RootFactory
 from anuket.security import groupfinder, get_auth_user
 from anuket.views import root, tools, user

@@ -47,5 +47,3 @@ class SecurityTests(AnuketTestCase):
 
         auth_user = get_auth_user(request)
         self.assertEqual(auth_user, user)
-
-

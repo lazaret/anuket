@@ -80,5 +80,3 @@ class UpgradeDBCommand(object):
 
         print("Database upgrade done.")
         return 0
-
-#TODO: add an already up-to-date database check/message
