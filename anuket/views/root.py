@@ -45,7 +45,6 @@ def root_view(request):
         if AuthUser.check_password(username=u'admin', password=u'admin'):
             request.session.flash(_("Change the default password!"),
                                   'error')
-    #TODO move in a security and sanity checks tool/library
     return dict()
 
 

@@ -46,7 +46,6 @@ def get_grouplist():
     groups = DBSession.query(AuthGroup).order_by(AuthGroup.groupname).all()
     grouplist = [(group.group_id, group.groupname) for group in groups]
     return grouplist
-    #TODO: maybe move this in the model, libs or private method
 
 
 def get_user_stats():
@@ -58,7 +57,6 @@ def get_user_stats():
     usercount = DBSession.query(AuthUser.user_id).count()
     groupcount = DBSession.query(AuthGroup.group_id).count()
     return dict(usercount=usercount, groupcount=groupcount)
-    #TODO: maybe move this in the model, libs or private method
 
 
 @view_config(route_name='tools.user_list', permission='admin',
