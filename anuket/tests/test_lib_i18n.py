@@ -3,14 +3,7 @@
 from pyramid import testing
 
 from anuket.tests import AnuketTestCase
-
-
-class DummyRequest(testing.DummyRequest):
-    """ Extend the pyramid ``testing.DummyRequest`` class with the ``WebOb``
-    `accept_language` attribute."""
-
-    from pyramid.request import Request
-    accept_language = Request.accept_language
+from anuket.tests import AnuketDummyRequest
 
 
 class I18nTests(AnuketTestCase):
@@ -27,10 +20,8 @@ class I18nTests(AnuketTestCase):
         """ Test the `locale_negociator` function."""
         from anuket.lib.i18n import locale_negotiator
 
-        request = DummyRequest()
+        request = AnuketDummyRequest()
         request.registry.settings.update(self.settings)
         locale = locale_negotiator(request)
         # test the default locale
         self.assertEqual(locale, 'en')
-
-#TODO merge with the AnuketDummyRequest

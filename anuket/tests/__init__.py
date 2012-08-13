@@ -7,6 +7,7 @@ from unittest import TestCase
 from StringIO import StringIO
 
 from paste.deploy.loadwsgi import appconfig
+from pyramid.request import Request
 from pyramid.testing import DummyRequest
 from sqlalchemy import engine_from_config
 
@@ -20,13 +21,15 @@ settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
 class AnuketDummyRequest(DummyRequest):
     """ Extend the ``pyramid.testing.DummyRequest`` class.
 
-    Add a fake ``request.tranlate`` object atribute.
+    * Add a fake ``request.tranlate`` object atribute.
+    * Add the ``WebOb`` `accept_language` attribute.
     """
     def _fake_translation(self, string):
         """ Fake translation who return the original string."""
         return string
 
     translate = _fake_translation
+    accept_language = Request.accept_language
 
 
 class AnuketTestCase(TestCase):
