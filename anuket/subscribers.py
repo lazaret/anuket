@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ Pyramid event subscribers."""
+import logging
 from pyramid.events import BeforeRender, NewRequest
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid import i18n
@@ -7,6 +8,9 @@ from pyramid.security import forget
 from formencode import api as formencode_api
 
 from anuket.lib.i18n import MessageFactory
+
+
+log = logging.getLogger(__name__)
 
 
 def includeme(config):
@@ -83,4 +87,3 @@ def add_csrf_validation(event):
             headers = forget(event.request)  # force a log out
             raise HTTPForbidden('CSRF token is missing or invalid',
                                 headers=headers)
-            #TODO add CSRF errors to a log
