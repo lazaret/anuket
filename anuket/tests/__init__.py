@@ -18,7 +18,7 @@ settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
 
 
 class AnuketDummyRequest(DummyRequest):
-    """ Extend the Pyramid testing DummyRequest.
+    """ Extend the ``pyramid.testing.DummyRequest`` class.
 
     Add a fake ``request.tranlate`` object atribute.
     """

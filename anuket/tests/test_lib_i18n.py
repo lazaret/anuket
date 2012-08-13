@@ -32,3 +32,5 @@ class I18nTests(AnuketTestCase):
         locale = locale_negotiator(request)
         # test the default locale
         self.assertEqual(locale, 'en')
+
+#TODO merge with the AnuketDummyRequest
