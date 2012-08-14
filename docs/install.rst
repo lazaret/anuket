@@ -1,4 +1,4 @@
-Licenses
-********
+Install
+*******
 
 .. include:: ../INSTALL.txt
