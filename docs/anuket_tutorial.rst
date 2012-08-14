@@ -114,13 +114,17 @@ First we need to tell to the ``setup.py`` file than ``anuket`` is a prerequiste
 for our application:
 
 .. literalinclude:: tutorial_setup.py
+   :language: python
    :lines: 9-13
+   :linenos:
 
 Secondly we have to edit the ``development.ini`` to add the options required
 by Anyket:
 
 .. literalinclude:: tutorial_development.ini
-   :lines: 1-33
+   :language: ini
+   :lines: 1-35
+   :linenos:
 
 Most notabily we have set with this options:
 
@@ -134,6 +138,8 @@ For this will have to edit the ``__init__.py`` file inside the
 ``anuketexample`` directory.
 
 .. literalinclude:: tutorial__init__.py
+   :language: python
+   :linenos:
 
 In this file we have configured the database, the authentification, the
 session, the routes, the view and even the translation mecanism. And as you can
@@ -176,11 +182,64 @@ admin/admin.
 Add the `hello_world` view
 --------------------------
 
-We have a starter application. We now need to add features to extend the
-application. We will then add a wonderfull "Hello World" feature. For this we
-will add an `hello_world` view.
+Our starter application is ready. We now need to add features by extending the
+application. For this we will add a wonderfull *Hello World* feature.
+For this will have to edit the ``views.py`` file inside the ``anuketexample``
+directory.
 
-TODO
+
+.. literalinclude:: tutorial_views.py
+   :language: python
+   :linenos:
+
+This will create:
+
+* The `include` function, with register the routes of the views when you lauch
+the application with the `config.scan()` call.
+* `Hello World` view available at http://0.0.0.0:6543/hello
+* `Hello admin` view available at http://0.0.0.0:6543/hello/admin
+
+
+Add the `hello.mako` template
+-----------------------------
+
+Our two views need a template to be rendered:
+
+.. literalinclude:: tutorial_template.mako
+   :language: python
+   :linenos:
+
+We use here a Mako template with inherit from the default templates of Anuket.
+The template itsef just display the `hello` variable with is returned by the
+views.
+
+
+Connect to the views
+--------------------
+
+Now the application can serve the Anuket views and our two new views:
+
+. code-block:: text
+
+    (tutorial)$ pserve develpment.ini
+
+You can for example the connect with your browser to:
+
+===============================  =============  ===========
+Adress                           View name      Application
+===============================  =============  ===========
+http://0.0.0.0:6543/             `home`         anuket
+http://0.0.0.0:6543/hello        `hello`        anuket-example
+http://0.0.0.0:6543/login        `login`        anuket
+http://0.0.0.0:6543/hello/admin  `hello_admin`  anuket-example
+
+Note than the `hello_admin` requiere an user with admin permission. If you try
+to access to it without login first the application will redirect you to the
+`login` view.
+
+
+.. seealso:: `Creating your first Pyramid application`_
+
 
 Further reading
 ===============
@@ -194,3 +253,5 @@ to read the `Pyramid documentation
 .. _pip: http://www.pip-installer.org/
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
 .. _virtualenv: http://www.virtualenv.org/
+
+.. _Creating your first Pyramid application: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/firstapp.html

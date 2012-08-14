@@ -12,7 +12,7 @@ requires = [
     ]
 
 setup(name='anuket-example',
-      version='0.1b',
+      version='0.1',
       description='Anuket example application',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -37,4 +37,3 @@ setup(name='anuket-example',
       main = anuketexample:main
       """,
       )
-
