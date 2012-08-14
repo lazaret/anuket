@@ -43,6 +43,4 @@ First public release with :
 Initial release release with :
 
 * Base templates with mako and Twitter Bootstrap
-* Basic Auth&Auth mecanism and model with SQLAlchemy
-
-
+* Basic Auth&Auth mechanism and model with SQLAlchemy
