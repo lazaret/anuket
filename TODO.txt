@@ -1,17 +1,12 @@
 Todo
 ====
 
-0.5
----
-
-* Use beaker for sessions
-* Add a line in docs about alembic migration and SQLlite
-
 0.6
 ---
 
-* Improve the SecurePassword validator
 * Decide if we use WTForms instead of pyramid_simpleform
+* Improve the SecurePassword validator
+* Make cracklib an optional dependency
 
 0.7
 ---
@@ -19,7 +14,7 @@ Todo
 * Use form template widgets
 * Add a form for users to change their datas
 * Add a came_from mecanism
-* Add a paster template and an example child application
+* Add a paster template for child applications
 
 Future
 ------
@@ -30,7 +25,7 @@ Future
 * Add a logs display tool
 * Add database tools in the admin part
 * Add an options table for the application
-* Add an image manipulation library. Maybe PIL as a Tween ?
+* Add an image manipulation library. Maybe PIL or Wand as a Tween
 
 After version 1.0
 -----------------
