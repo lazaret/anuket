@@ -27,7 +27,7 @@ For more detailled instructions please read the INSTALL.txt_ file.
 Usage
 -----
 Anuket is writed so he can be extended by other Pyramid applications by using
-the extensibility mecanism of Pyramid. For details please read our
+the extensibility mecanism of Pyramid. For details please read the
 `Anuket tutorial`_.
 
 Licence
@@ -48,9 +48,9 @@ Contributions to Anuket are highly welcome. Please use Github to report bugs,
 feature requests and submit your code:
 https://github.com/lazaret/anuket
 
-Note that development is done on the `develop` branch. The `master` is reserved
+Note that development is done on the *develop* branch. The *master* is reserved
 for production-ready state. Therefore make sure to base your work on the
-`develop` branch.
+*develop* branch.
 
 .. image:: https://secure.travis-ci.org/lazaret/anuket.png
    :target: http://travis-ci.org/lazaret/anuket
