@@ -3,6 +3,7 @@
 from formencode import Invalid
 from formencode import validators
 
+from anuket.lib.i18n import MessageFactory as _
 from anuket.models.auth import AuthUser
 
 
@@ -37,7 +38,7 @@ class UniqueAuthUsername(validators.FancyValidator):
     """ Unique username validator."""
 
     messages = {
-        'not_unique_username': "This username is already used"
+        'not_unique_username': _(u"This username is already used")
     }
 
     def validate_python(self, values, state):
@@ -63,7 +64,7 @@ class UniqueAuthEmail(validators.FancyValidator):
     """ Unique email validator."""
 
     messages = {
-        'not_unique_email': "This email is already used"
+        'not_unique_email': _(u"This email is already used")
     }
 
     def validate_python(self, values, state):
@@ -89,7 +90,7 @@ class SecurePassword(validators.String):
     """ Secure password validator."""
 
     messages = {
-        'not_secure': "This password is not secure"
+        'not_secure': _(u"This password is not secure")
     }
 
     def validate_python(self, value, state):

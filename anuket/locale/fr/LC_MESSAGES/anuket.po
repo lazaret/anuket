@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: anuket 0.5\n"
 "Report-Msgid-Bugs-To: opensource@lazaret.unice.fr\n"
-"POT-Creation-Date: 2012-07-30 14:40+0200\n"
+"POT-Creation-Date: 2012-08-14 17:06+0200\n"
 "PO-Revision-Date: 2012-08-01 15:57+0200\n"
 "Last-Translator: Bertrand LECERVOISIER <opensource@lazaret.unice.fr>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -16,6 +16,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
+
+#: anuket/lib/validators.py:41
+msgid "This username is already used"
+msgstr "Ce nom d'utilisateur est déjà utilisé"
+
+#: anuket/lib/validators.py:67
+msgid "This email is already used"
+msgstr "Cet email est déjà utilisé"
+
+#: anuket/lib/validators.py:93
+msgid "This password is not secure"
+msgstr "Ce mot de passe n'est pas sûr"
 
 #: anuket/templates/404.mako:6
 msgid "The page you requested was not found."
@@ -200,56 +212,56 @@ msgstr "Voulez vous vraiment supprimer cet utilisateur ?"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: anuket/views/root.py:42
+#: anuket/views/root.py:46
 msgid "Change the default password!"
 msgstr "Modifiez le mot de passe par défaut !"
 
-#: anuket/views/root.py:57 anuket/views/user.py:171
+#: anuket/views/root.py:63 anuket/views/user.py:191
 msgid "Insufficient permissions!"
 msgstr "Permissions insufisantes !"
 
-#: anuket/views/root.py:61
+#: anuket/views/root.py:67
 msgid "You are not connected."
 msgstr "Vous n'êtes pas connecté."
 
-#: anuket/views/root.py:83
+#: anuket/views/root.py:92
 msgid "Successful login."
 msgstr "Connexion réussie."
 
-#: anuket/views/root.py:88
+#: anuket/views/root.py:97
 msgid "Check your login credentials!"
 msgstr "Vérifiez vos informations de connexion !"
 
-#: anuket/views/root.py:101
+#: anuket/views/root.py:113
 msgid "You have been disconnected."
 msgstr "Vous avez été déconnecté."
 
-#: anuket/views/user.py:80
+#: anuket/views/user.py:88
 msgid "There is no results!"
 msgstr "Aucun résultats !"
 
-#: anuket/views/user.py:106
+#: anuket/views/user.py:117
 msgid "User added."
 msgstr "Utilisateur ajouté."
 
-#: anuket/views/user.py:124 anuket/views/user.py:146 anuket/views/user.py:178
-#: anuket/views/user.py:211
+#: anuket/views/user.py:138 anuket/views/user.py:163 anuket/views/user.py:198
+#: anuket/views/user.py:235
 msgid "This user did not exist!"
 msgstr "Cet utilisateur n'existe pas !"
 
-#: anuket/views/user.py:153
+#: anuket/views/user.py:170
 msgid "User updated."
 msgstr "Utilisateur mis à jour."
 
-#: anuket/views/user.py:186
+#: anuket/views/user.py:207
 msgid "Deletion of the only admin forbidden!"
 msgstr "Supression du seul administrateur interdite !"
 
-#: anuket/views/user.py:191
+#: anuket/views/user.py:212
 msgid "User deleted."
 msgstr "Utilisateur supprimé."
 
-#: anuket/views/user.py:217
+#: anuket/views/user.py:241
 msgid "Password updated."
 msgstr "Mot de passe mis à jour."
 
