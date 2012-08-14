@@ -47,7 +47,7 @@ setup(
     author='LDPL - Laboratoire Départemental de Préhistoire du Lazaret',
     author_email='opensource@lazaret.unice.fr',
     url='http://github.com/lazaret/anuket',
-    license='LICENSE.txt',
+    license='Expat licence (or MIT licence)',
     keywords='web wsgi pyramid',
     packages=find_packages(),
     include_package_data=True,

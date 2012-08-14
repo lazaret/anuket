@@ -1,8 +1,8 @@
 Anuket
 ******
 :Author: LDPL - Laboratoire Départemental de Préhistoire du Lazaret
-:Version: 0.5b, released 2012-XX-XX
-:PyPI:
+:Version: 0.5, released 2012-08-14
+:PyPI: http://pypi.python.org/pypi/anuket
 :License: Expat license (MIT license)
 :Docs: http://anuket.readthedocs.org/
 :Source: https://github.com/lazaret/anuket (Git)

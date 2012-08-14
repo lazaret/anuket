@@ -1,4 +1,1 @@
-Install
-*******
-
 .. include:: ../INSTALL.txt
