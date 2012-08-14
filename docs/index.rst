@@ -34,7 +34,7 @@ The project also integrate:
 
 Usage
 =====
-Anuket is writed so he can be extended by Pyramid applications. Normaly,
+Anuket is writed so he can be extended by other Pyramid applications. Normaly,
 it is not necessary to fork Anuket. Just use the extensibility mecanism. For
 details please read the `Pyramid documentation
 <http://pyramid.readthedocs.org/en/1.3-branch/narr/extending.html>`_
