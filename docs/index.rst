@@ -52,7 +52,7 @@ made before the 1.0 version. In particulary take care of the facts than:
 
 * The database schema is subject to change
 * WTForms may be choised over FormEncode and Pyramid_simpleform
-* We may add a 'plugin' mecanism to allow optional features
+* We may add a 'plugin' system to allow optional features
 
 
 Alternatives

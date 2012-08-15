@@ -26,7 +26,7 @@ For more detailed instructions please read the INSTALL.txt file.
 Usage
 -----
 Anuket is write so he can be extended by other Pyramid applications by using
-the extensibility mechanism of Pyramid. For details please read the
+the extensibility system of Pyramid. For details please read the
 `Anuket tutorial`_.
 
 Licence
