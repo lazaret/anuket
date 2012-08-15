@@ -1,3 +1,3 @@
 include *.txt *.ini *.cfg *.rst
-recursive-include anuket *.ico *.png *.css *.txt *.mako *.js *.mo
+recursive-include anuket *.ico *.png *.svg *.css *.ini *.txt *.mako *.js *.mo *.ttf *.woff
 recursive-include docs *.ico *.svg *.rst *.ini *.py
