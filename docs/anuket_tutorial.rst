@@ -237,12 +237,11 @@ http://0.0.0.0:6543/             `home`         anuket
 http://0.0.0.0:6543/hello        `hello`        anuket-example
 http://0.0.0.0:6543/login        `login`        anuket
 http://0.0.0.0:6543/hello/admin  `hello_admin`  anuket-example
-
+===============================  =============  ==============
 
 Note than the `hello_admin` require an user with admin permission. If you try
 to access to it without login first the application will redirect you to the
 `login` view.
-
 
 .. seealso:: `Creating your first Pyramid application`_
 
