@@ -225,9 +225,9 @@ Now the application can serve the Anuket views and our two new views:
 
 You can for example the connect with your browser to:
 
-===============================  =============  ===========
+===============================  =============  ==============
 Adress                           View name      Application
-===============================  =============  ===========
+===============================  =============  ==============
 http://0.0.0.0:6543/             `home`         anuket
 http://0.0.0.0:6543/hello        `hello`        anuket-example
 http://0.0.0.0:6543/login        `login`        anuket
