@@ -2,7 +2,9 @@ Flash messages
 **************
 
 To add flash messages from the views you can use the Pyramid flash messages
-mecanisms. for example:
+mecanisms.
+
+For example:
 
 .. code-block:: python
 

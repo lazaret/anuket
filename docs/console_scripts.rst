@@ -7,7 +7,6 @@ Anuket provide console scripts:
 * ``backup_anuket_db``
 * ``upgrade_anuket_db``
 
-
 Initializing the database
 =========================
 
@@ -21,7 +20,6 @@ database.
 The script will create a database by using the ``sqlalchemy.url`` option
 from the .ini file, and will fill it with default values.
 
-
 Backup the database
 ===================
 
@@ -34,7 +32,6 @@ Backup the database
 The script will create a bziped SQL dump of your database using the
 ``anuket.backup_directory`` option from the .ini file
 (/var/backups by default). The filename will include the date of the backup.
-
 
 Upgrade the database
 ====================

@@ -3,7 +3,6 @@ API Documentation
 
 .. automodule:: anuket
 
-
 :mod:`anuket.models` -- SQLAlchemy models
 =========================================
 
@@ -39,12 +38,10 @@ API Documentation
 
     .. autoclass:: RootFactory
 
-
 :mod:`anuket.views` -- Pyramid views
 ====================================
 
 .. automodule:: anuket.views
-
 
 :mod:`anuket.views.root` -- Root views
 --------------------------------------
@@ -56,14 +53,12 @@ API Documentation
     .. autofunction:: login_view
     .. autofunction:: logout_view
 
-
 :mod:`anuket.views.tools` -- Tools views
 ----------------------------------------
 
 .. automodule:: anuket.views.tools
 
     .. autofunction:: tools_index_view
-
 
 :mod:`anuket.views.user` -- User views
 --------------------------------------
@@ -76,7 +71,6 @@ API Documentation
     .. autofunction:: user_list_view
     .. autofunction:: user_show_view
     .. autofunction:: password_edit_view
-
 
 :mod:`anuket.scripts` -- Console scripts
 ========================================
@@ -113,7 +107,6 @@ API Documentation
         .. automethod:: run
         .. automethod:: upgrade_db
 
-
 :mod:`anuket.lib` -- Internal libraries
 =======================================
 
@@ -127,14 +120,12 @@ API Documentation
     .. autofunction:: get_alembic_settings
     .. autofunction:: get_alembic_revision
 
-
 :mod:`anuket.lib.i18n` -- Translation library
 ---------------------------------------------
 
 .. automodule:: anuket.lib.i18n
 
     .. autofunction:: locale_negotiator
-
 
 :mod:`anuket.lib.validators` -- FormEncode Validators
 -----------------------------------------------------
@@ -156,7 +147,6 @@ API Documentation
 
         .. automethod:: validate_python
 
-
 Others
 ======
 
@@ -166,7 +156,6 @@ Others
 .. automodule:: anuket.security
 
     .. autofunction:: groupfinder
-
 
 :mod:`anuket.subscribers` -- Subscribers
 ----------------------------------------

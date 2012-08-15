@@ -8,20 +8,17 @@ used to build the tests : :mod:`nose`, :mod:`WebTest`
 
     $ pip install nose WebTest
 
-
 Optionaly you can install the coverage package.
 
 .. code-block:: text
 
     $ pip install coverage
 
-
 Then run the tests:
 
 .. code-block:: text
 
     $ python setup.py nostetests
-
 
 Or simply:
 

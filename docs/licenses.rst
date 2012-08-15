@@ -1,4 +1,3 @@
 Licenses
 ********
-
 .. include:: ../LICENSE.txt

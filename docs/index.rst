@@ -8,7 +8,6 @@ Anuket
 :Source: https://github.com/lazaret/anuket (Git)
 :Bugs: https://github.com/lazaret/anuket/issues
 
-
 Introduction
 ============
 **Anuket** is an opiniated Python web framework based on Pyramid_. It is
@@ -31,7 +30,6 @@ The project also integrate:
 * Cracklib_: Password checking library
 * Cryptacular_: Password hashing framework
 
-
 Usage
 =====
 Anuket is writed so he can be extended by other Pyramid applications. Normaly,
@@ -44,7 +42,6 @@ applications. We will use it at the `Lazaret laboratory`_ mostly for filling
 and quering relational databases with web forms. If your application is like
 this, Anuket may be suited for you.
 
-
 Warning
 =======
 The developement is still at an early stage and other choices have to be
@@ -54,14 +51,12 @@ made before the 1.0 version. In particulary take care of the facts than:
 * WTForms may be choised over FormEncode and Pyramid_simpleform
 * We may add a 'plugin' system to allow optional features
 
-
 Alternatives
 ============
 There are already other web frameworks and CMS based on Pyramid. Anuket have
 take  inspiration from them but the choices made are sometime different. They
 may be best suited to your needs. Have a look on Akhet_, Apex_, Cone.app_,
 Kotti_, Khufu_, Ptah_, PyCK_, Pyrone_ and more.
-
 
 Narative documentation
 ======================
@@ -80,7 +75,6 @@ Narative documentation
    changes.rst
    todo.rst
 
-
 API Documentation
 ==================
 
@@ -88,7 +82,6 @@ API Documentation
    :maxdepth: 1
 
    api.rst
-
 
 Index and Glossary
 ==================

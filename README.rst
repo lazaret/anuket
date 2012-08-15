@@ -12,7 +12,6 @@ Documentation
 =============
 The full documentation is available at `Read the Docs`_.
 
-
 Installation
 ------------
 In short::
@@ -21,7 +20,6 @@ In short::
 
 This will install Anuket and all the necessary Python packages dependencies.
 For more detailed instructions please read the INSTALL.txt file.
-
 
 Usage
 -----
@@ -34,12 +32,10 @@ Licence
 Anuket is provided under the Expat licence (or MIT licence). See the
 LICENSE.txt file for details.
 
-
 Authors
 =======
 Anuket is maintained by the `Lazaret laboratory`_. See the
 AUTHORS.txt file for the full list.
-
 
 Development
 ===========

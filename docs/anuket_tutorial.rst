@@ -4,7 +4,6 @@ Tutorial
 This tutorial will explain the course to create a simple *Hello world*
 application with Anuket.
 
-
 Introduction
 ============
 
@@ -26,7 +25,6 @@ During this tutorial, we will create a very simple *Hello world* application.
 You can browse the code of this example application in our Git repository:
 https://github.com/lazaret/anuket-example
 
-
 Install Anuket and the prerequistes
 ===================================
 
@@ -35,7 +33,6 @@ this tutorial we will use SQLite.
 
 For this tutorial we will asume than they are already installed on your
 computer. If it's not the case, please install them first.
-
 
 Prepare the isolated environment
 --------------------------------
@@ -49,14 +46,13 @@ will create first an an isolated environment:
     $ virtualenv --no-site-packages tutorial
     $ source tutorial/bin/activate
 
-This, have:
+This have:
 
 * installed the virtualenv_ and pip_ packages
 * activated the `tutorial` isolated environment
 
 When you will have finished the tutorial, you can get rid of everything we done
 by just deleting the */tutorial* directory.
-
 
 Install Anuket
 --------------
@@ -77,16 +73,15 @@ installed packages with `pip`:
     (tutorial)$ pip freeze
 
 .. note:: As today, Anuket require the `cracklib` module with serve to test the
-security of the user password. If you have probelm during the install it's
-probably because you need to install the cracklib developement libraries.
-(probably crackib-devel or libcrack2-dev depending on your OS)
+    security of the user password. If you have probelm during the install it's
+    probably because you need to install the cracklib developement libraries.
+    (probably crackib-devel or libcrack2-dev depending on your OS)
 
 Create the example application
 ==============================
 
 Now we have a working environment with Anuket, Pyramid ans all the other
 prerequistes installed. It's time now to create ou example application.
-
 
 Create the application
 ----------------------
@@ -100,7 +95,6 @@ We need first to create a Pyramid application with the `starter` scafold:
 This create a minimalistic Pyramid application with all the default files. We
 will edit this file to create our example application. In a future release we
 will add ou own `anuket` scafold to start with.
-
 
 Configure the application
 -------------------------
@@ -151,7 +145,6 @@ In this file we have configured the database, the authentification, the
 session, the routes, the view and even the translation system. And as you can
 see, most of them comme from Anuket.
 
-
 Initialize the application
 --------------------------
 
@@ -168,7 +161,6 @@ the database, and finaly fill it with default values.
 As we use SQLite the script have normaly created a anuket-example.db file witch
 is our database.
 
-
 Serve the application
 ---------------------
 
@@ -184,7 +176,6 @@ For now, the application only offer the base application from Anuket. You can
 already login to the aplication with the default admin credentials:
 *admin/admin*.
 
-
 Add the `hello_world` views
 ---------------------------
 
@@ -199,11 +190,9 @@ to edit the ``views.py`` file inside the ``anuketexample`` directory.
 
 This will create:
 
-* The `include` function, witch register the routes of the views when you lauch
-    the application with the `config.scan()` call.
+* The `include` function, witch register the routes of the views when you lauch the application with the `config.scan()` call.
 * The `Hello World` view available at http://0.0.0.0:6543/hello
 * The `Hello admin` view available at http://0.0.0.0:6543/hello/admin
-
 
 Add the `hello.mako` template
 -----------------------------
@@ -217,7 +206,6 @@ Our two views need a template to be rendered:
 We use here a Mako template witch inherit from the default templates of Anuket.
 The template itsef just display the `hello` variable witch is returned by the
 views.
-
 
 Connect to the views
 --------------------
@@ -243,15 +231,11 @@ Note than the `hello_admin` require an user with admin permission. If you try
 to access to it without login first the application will redirect you to the
 `login` view.
 
-.. seealso:: `Creating your first Pyramid application`_
-
-
 Further reading
 ===============
 
-Anuket use the extensibility system of Pyramid. To go further you will need
-to read the `Pyramid documentation
-<http://pyramid.readthedocs.org/en/1.3-branch/narr/extending.html>`_
+* `Creating your first Pyramid application`_
+* `Extending an existing Pyramid application`_
 
 
 .. _Pyramid: http://pylonsproject.org/
@@ -259,4 +243,5 @@ to read the `Pyramid documentation
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
 .. _virtualenv: http://www.virtualenv.org/
 
+.. _Extending an existing Pyramid application: http://pyramid.readthedocs.org/en/1.3-branch/narr/extending.html
 .. _Creating your first Pyramid application: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/firstapp.html

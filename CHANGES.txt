@@ -10,14 +10,12 @@ Changelog
 * Add a tutorial in the documentation
 * Improve the security of the deletion of users
 
-
 0.4 released 2012-04-29
 -----------------------
 
 * Change the auth_user request property to an AuthUser object
 * Extend the tests suite
 * Extend the documentation
-
 
 0.3 released 2012-03-30
 -----------------------
@@ -27,20 +25,14 @@ Changelog
 * Add cracklib password checker
 * Add pyramid_exclog for production environment
 
-
-0.2: released 2012-03-20
+0.2 released 2012-03-20
 ------------------------
-
-First public release with :
 
 * Add 100% tests coverage
 * Add minimalistic documentation
 
-
-0.1: released 2012-03-12
+0.1 released 2012-03-12
 ------------------------
-
-Initial release release with :
 
 * Base templates with mako and Twitter Bootstrap
 * Basic Auth&Auth mechanism and model with SQLAlchemy
