@@ -35,7 +35,7 @@ tests_require = [
 
 setup(
     name='anuket',
-    version='0.5.1',
+    version='0.5.2',
     description='Anuket web application',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

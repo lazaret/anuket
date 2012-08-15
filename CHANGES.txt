@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5 released 2012-08-15
+-----------------------
+
+* Fix documentation and packaging issues
+
 0.5 released 2012-08-14
 -----------------------
 

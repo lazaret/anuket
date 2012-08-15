@@ -15,7 +15,7 @@ from anuket.models import DBSession, Base
 
 
 here = os.path.dirname(__file__)
-config_uri = os.path.abspath(os.path.join(here, '..', '..', 'test.ini'))
+config_uri = os.path.abspath(os.path.join(here, 'test.ini'))
 settings = appconfig('config:' + config_uri)
 
 
