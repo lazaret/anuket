@@ -5,10 +5,6 @@ import os
 from anuket.tests import AnuketScriptTestCase
 
 
-here = os.path.dirname(__file__)
-config_uri = os.path.join(here, '../../', 'test.ini')
-
-
 class TestUpgradeDBCommand(AnuketScriptTestCase):
     """ Tests for the `upgrade_db` and `run` methods."""
     def _getTargetClass(self):
@@ -31,7 +27,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         """ Test the `run` method with a `config_uri` positional argument."""
         self.backup_file_fixture()
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.run()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -41,7 +37,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         """ Test than `upgrade_db` method upgrade the database."""
         self.backup_file_fixture()
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.upgrade_db()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -52,7 +48,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         file.
         """
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.upgrade_db()
         self.assertEqual(result, 1)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -65,7 +61,7 @@ class TestUpgradeDBCommand(AnuketScriptTestCase):
         """
         self.backup_file_fixture()
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         command.args.force = True
         result = command.upgrade_db()
         self.assertEqual(result, 0)

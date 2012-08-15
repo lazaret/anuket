@@ -15,7 +15,8 @@ from anuket.models import DBSession, Base
 
 
 here = os.path.dirname(__file__)
-settings = appconfig('config:' + os.path.join(here, '../../', 'test.ini'))
+config_uri = os.path.abspath(os.path.join(here, '..', '..', 'test.ini'))
+settings = appconfig('config:' + config_uri)
 
 
 class AnuketDummyRequest(DummyRequest):
@@ -36,6 +37,7 @@ class AnuketTestCase(TestCase):
     """ ``TestCase`` class for integration tests."""
     def setUp(self):
         self.settings = settings
+        self.config_uri = config_uri
         self.engine = engine_from_config(self.settings, prefix='sqlalchemy.')
         DBSession.configure(bind=self.engine)
         Base.metadata.bind = self.engine

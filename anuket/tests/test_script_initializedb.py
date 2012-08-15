@@ -9,10 +9,6 @@ from anuket.models.migration import version_table
 from anuket.tests import AnuketScriptTestCase
 
 
-here = os.path.dirname(__file__)
-config_uri = os.path.join(here, '../../', 'test.ini')
-
-
 class TestInitializeDBCommand(AnuketScriptTestCase):
     """ Tests for the `initialize_db` and `run` methods."""
     def setUp(self):
@@ -52,7 +48,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
     def test_run_config_uri(self):
         """ Test the `run` method with a `config_uri` positional argument."""
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.run()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -61,7 +57,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
     def test_initialize_db_config_uri(self):
         """ Test than the `initialize_db` method create the database."""
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.initialize_db()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -72,7 +68,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         initialized database.
         """
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         command.initialize_db()
         from anuket.models.auth import AuthUser
         user = self.DBSession.query(AuthUser).filter_by().first()
@@ -94,7 +90,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         self.DBSession.remove()
 
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.initialize_db()
         self.assertEqual(result, 1)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -115,7 +111,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         self.DBSession.remove()
 
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.initialize_db()
         self.assertEqual(result, 1)
         self.assertEqual(self.output.getvalue().rstrip("\n"),

@@ -9,10 +9,6 @@ from anuket.models.migration import version_table
 from anuket.tests import AnuketTestCase
 
 
-here = os.path.dirname(__file__)
-config_uri = os.path.join(here, '../../', 'test.ini')
-
-
 class AlembicUtilsTests(AnuketTestCase):
     """ Test the alembic utilities library."""
     def setUp(self):
@@ -38,7 +34,7 @@ class AlembicUtilsTests(AnuketTestCase):
         from alembic.config import Config
         from pyramid.paster import get_appsettings
         from anuket.lib.alembic_utils import get_alembic_settings
-        alembic_cfg = get_alembic_settings(config_uri)
+        alembic_cfg = get_alembic_settings(self.config_uri)
         # test the config object
         self.assertIsInstance(alembic_cfg, Config)
         # test the script_location option
@@ -50,7 +46,7 @@ class AlembicUtilsTests(AnuketTestCase):
         sqlalchemy_url = alembic_cfg.get_section_option(
             'alembic',
             'sqlalchemy.url')
-        pyramid_sqlalchemy_url = get_appsettings(config_uri)['sqlalchemy.url']
+        pyramid_sqlalchemy_url = self.settings['sqlalchemy.url']
         self.assertEqual(sqlalchemy_url, pyramid_sqlalchemy_url)
 
     def test_get_alembic_revision(self):
@@ -65,11 +61,11 @@ class AlembicUtilsTests(AnuketTestCase):
         self.DBSession.remove()
 
         from anuket.lib.alembic_utils import get_alembic_revision
-        revision = get_alembic_revision(config_uri)
+        revision = get_alembic_revision(self.config_uri)
         self.assertEqual(revision[0], u'revid')
 
     def test_get_alembic_revision_empty(self):
         """ Test the `get_alembic_settings` function with an empty revision."""
         from anuket.lib.alembic_utils import get_alembic_revision
-        revision = get_alembic_revision(config_uri)
+        revision = get_alembic_revision(self.config_uri)
         self.assertIsNone(revision)

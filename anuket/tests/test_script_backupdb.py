@@ -5,10 +5,6 @@ import os
 from anuket.tests import AnuketScriptTestCase
 
 
-here = os.path.dirname(__file__)
-config_uri = os.path.join(here, '../../', 'test.ini')
-
-
 class TestBackupDBCommand(AnuketScriptTestCase):
     """ Tests for the `backup_db` and `run` methods."""
     def _getTargetClass(self):
@@ -30,7 +26,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
     def test_run_config_uri(self):
         """ Test the `run` method with a `config_uri` positional argument."""
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.run()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -39,7 +35,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
     def test_backup_db_config_uri(self):
         """ Test than `backup_db` method create a backup file."""
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.backup_db()
         self.assertEqual(result, 0)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -51,7 +47,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         """
         self.backup_file_fixture()
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         result = command.backup_db()
         self.assertEqual(result, 1)
         self.assertEqual(self.output.getvalue().rstrip("\n"),
@@ -63,7 +59,7 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         """
         self.backup_file_fixture()
         command = self._makeOne()
-        command.args.config_uri = config_uri
+        command.args.config_uri = self.config_uri
         command.args.overwrite = True
         result = command.backup_db()
         self.assertEqual(result, 0)
