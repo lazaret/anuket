@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Alembic utilities to use with database scripts."""
 from pyramid.paster import get_appsettings
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import OperationalError, ProgrammingError
 from alembic.config import Config
 
 from anuket.models import DBSession
@@ -34,6 +34,6 @@ def get_alembic_revision(config_uri):
     """
     try:
         revision = DBSession.query(Migration.version_num).first()
-    except OperationalError:
+    except (OperationalError, ProgrammingError):
         revision = None
     return revision
