@@ -10,6 +10,7 @@
         <ul class="nav">
           <li class="active"><a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a></li>
         </ul>
+##        ${self.top_navbar_links()}
         <ul class="nav pull-right">
         %if request.auth_user:
           ## Tools are available only for admins
@@ -20,7 +21,7 @@
             <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user.username}</b><b class="caret"/></b></a>
             <ul class="dropdown-menu">
               <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
-              <li><a href="#">Test</a></li>
+##              <li><a href="#">Test</a></li>
             </ul>
           </li>
         %else:
@@ -32,3 +33,10 @@
   </div>
 </nav>
 </%def>
+
+#### Top navbar links and dropdown
+##<%def name="top_navbar_links()">
+##<ul class="nav"><li>titi</li>
+##</ul></%def>
+
+##TODO manage the active class in top navbar
