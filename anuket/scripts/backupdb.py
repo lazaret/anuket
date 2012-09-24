@@ -4,7 +4,9 @@ import argparse
 import bz2
 import os
 import sqlite3
+import subprocess
 import sys
+import tempfile
 from datetime import date
 
 from sqlalchemy import engine_from_config
@@ -79,12 +81,12 @@ class BackupDBCommand(object):
         connect_args = engine.url.translate_connect_args()
         if engine.dialect.name == 'sqlite':
             sql_dump = self.dump_sqlite(connect_args)
-#        if engine.dialect.name == 'mysql':
+#        elif engine.dialect.name == 'mysql':
 #            pass
-#       if engine.dialect.name == 'postgresql':
-#            pass
+        elif engine.dialect.name == 'postgresql':
+            sql_dump = self.dump_postgresql(connect_args)
         else:  # pragma: no cover
-            print("Unsuported database engine!")
+            print("Unsuported database engine! (%s)" % engine.dialect.name)
             return 1
 
         if sql_dump:
@@ -95,22 +97,57 @@ class BackupDBCommand(object):
                 except OSError:  # pragma: no cover
                     print("Could not create the backup directory.")
                     return 1
-            # bzip and save the file
+            # bzip and save the dump
             bz = bz2.BZ2File(path, 'w')
-            bz.write(sql_dump)
+            bz.writelines(sql_dump)
             bz.close()
+            sql_dump.close()
             print("Database backup done.")
             return 0
+
 
 #    def dump_mysql(self, connect_args=None):
 #        """ Dump a MySQL database."""
 
-#    def dump_postgresql(self, connect_args=None):
-#        """ Dump a PostgreSQL database."""
+
+    def dump_postgresql(self, connect_args=None):
+        """ Dump a PostgreSQL database with the `pg_dump` command.
+
+        Dump the database in plain text format with ACLs, owner statments and
+        COPY command.
+
+        return a temporary file object (opened).
+        """
+        # ACLS and owners can be droped if necessary by `pg_retore`
+
+        # construct the `pg_dump` command
+        command = ['pg_dump']
+        command.append('-w')  # no password prompt
+        command.extend(['-U', connect_args['username']])
+        command.extend(['-h', connect_args['host']])
+        if connect_args.has_key('port'):
+            command.extend(['-p', str(connect_args['port'])])
+        command.append(connect_args['database'])
+        # put the password in the environment variables
+        os.putenv("PGPASSWORD", connect_args['password'])
+        # save the database dump in a temp file
+        sql_dump = tempfile.SpooledTemporaryFile()
+        sql_dump.write(subprocess.check_output(command))
+        sql_dump.seek(0)
+        return sql_dump
+
+        # TODO test the generated pg_dump command for windows too
+
 
     def dump_sqlite(self, connect_args=None):
-        """ Dump a SQLite database."""
-        con = sqlite3.connect(connect_args['database'])
-        sql_dump = '\n'.join(con.iterdump())
-        con.close()
+        """ Dump a SQLite database.
+
+        return a temporary file object"""
+        connection = sqlite3.connect(connect_args['database'])
+        sql_dump = tempfile.SpooledTemporaryFile()
+        sql_dump.write('\n'.join(connection.iterdump()))
+        connection.close()
+        sql_dump.seek(0)
         return sql_dump
+
+
