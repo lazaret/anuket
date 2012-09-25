@@ -25,6 +25,6 @@
 
 
 ## Page title
-<%def name="page_title()">
+<%block name="page_title">
 ${_(u"Tools")}
-</%def>
+</%block>

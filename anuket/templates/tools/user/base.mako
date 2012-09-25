@@ -4,8 +4,8 @@
 
 ${next.body()}
 
-## Aside Tools Menu
-<%def name="aside_menu()">
+## Aside tools menu
+<%block name="aside_menu">
 <div style="padding: 8px 0pt;" class="well">
   <ul class="nav nav-list">
     <li class="nav-header">${_(u"Tools")}</li>
@@ -13,4 +13,4 @@ ${next.body()}
     <li class="active"><a href="${request.route_path('tools.user_list')}"><span class="icon">L</span>${_(u"User management")}</a></li>
   </ul>
 </div>
-</%def>
+</%block>

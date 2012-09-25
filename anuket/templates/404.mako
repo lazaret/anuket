@@ -7,6 +7,6 @@
 
 
 ## Page title
-<%def name="page_title()">
+<%block name="page_title">
 404 - ${_(u"Page not found!")}
-</%def>
+</%block>

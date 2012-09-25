@@ -62,6 +62,6 @@
 ${confirm_delete()}
 
 ## Page title
-<%def name="page_title()">
+<%block name="page_title">
 ${_(u"User informations")}
-</%def>
+</%block>

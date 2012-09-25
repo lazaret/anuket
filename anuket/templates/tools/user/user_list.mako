@@ -50,15 +50,6 @@ ${pager(users)}
 ${confirm_delete()}
 
 
-## Page title
-<%def name="page_title()">
-${_(u"User list")}
-</%def>
-
-## Add record button
-<%def name="add_button()">
-  <a href="${request.route_path("tools.user_add")}" class="btn btn-primary pull-right"><span class="icon">@</span>${_(u"Add new user")}</a>
-</%def>
 
 ## Sortable column link
 <%def name="sortable_link(column, textlink)">
@@ -76,8 +67,19 @@ ${_(u"User list")}
   <a href="${request.route_path('tools.user_list')}${postlink}">${_(textlink)}${arrow}</a>
 </%def>
 
+
+## Page title
+<%block name="page_title">
+${_(u"User list")}
+</%block>
+
+## Add record button
+<%block name="add_button">
+<a href="${request.route_path("tools.user_add")}" class="btn btn-primary pull-right"><span class="icon">@</span>${_(u"Add new user")}</a>
+</%block>
+
 ## Aside search box
-<%def name="aside_search()">
+<%block name="aside_search">
   <% search = request.params.get('search') %>
   %if search:
     <% placeholder = search %>
@@ -88,10 +90,10 @@ ${_(u"User list")}
   <input type="search" name="search" placeholder="${placeholder}" class="input-small search-query">
 <button type="submit" class="btn btn-small pull-right"><span class="icon">z</span>${_(u"Search")}</button>
 </form>
-</%def>
+</%block>
 
-## Aside stats box
-<%def name="aside_stats()">
+## Aside stats table
+<%block name="aside_stats">
 <table class="table table-condensed table-bordered">
   <thead>
    <tr><th>${_(u"Statistics")}</th></tr>
@@ -107,4 +109,4 @@ ${_(u"User list")}
     </tr>
   </tbody>
 </table>
-</%def>
+</%block>

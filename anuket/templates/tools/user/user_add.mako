@@ -26,6 +26,6 @@
 </div>
 
 ## Page title
-<%def name="page_title()">
+<%block name="page_title">
 ${_(u"Add user")}
-</%def>
+</%block>

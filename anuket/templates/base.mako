@@ -7,7 +7,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>${self.page_title()}</title>
+    <title><%block name="page_title"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -37,14 +37,16 @@
                 <h1>${self.page_title()}</h1>
               </div>
               <div class="span3">
-                ${self.add_button()}
+                <%block name="add_button"/>
               </div>
             </div>
           </div>
           <div class="span3">
+            <%block name="aside_logo">
             <div class="well">
               <h1><img src="${request.static_url('anuket:static/img/anuket.svg')}" width=60>&nbsp;${brand_name}</h1>
             <div>
+            </%block>
           </div>
         </div>
       </div>
@@ -56,13 +58,15 @@
         ${next.body()}
       </article>
       <aside class="span3">
-        ${self.aside_menu()}
-        ${self.aside_search()}
-        ${self.aside_stats()}
+        <%block name="aside_menu"/>
+        <%block name="aside_search"/>
+        <%block name="aside_stats"/>
       </aside>
       </div>
     </div><!-- /container -->
+
     <footer>
+      <%block name="footer"/>
     </footer>
 
     <!-- javascrip imports -->
@@ -72,18 +76,3 @@
 
   </body>
 </html>
-
-## Page title
-<%def name="page_title()"></%def>
-
-## Add record button
-<%def name="add_button()"></%def>
-
-## Aside menu
-<%def name="aside_menu()"></%def>
-
-## Aside search box
-<%def name="aside_search()"></%def>
-
-## Aside stats box
-<%def name="aside_stats()"></%def>
