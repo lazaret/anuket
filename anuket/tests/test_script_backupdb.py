@@ -73,8 +73,10 @@ class TestBackupDBCommand(AnuketScriptTestCase):
         connect_args = engine.url.translate_connect_args()
         command = self._makeOne()
         result = command.dump_sqlite(connect_args)
-        self.assertIsInstance(result, unicode)
+        from tempfile import SpooledTemporaryFile
+        self.assertIsInstance(result, SpooledTemporaryFile)
 
+#TODO add tests for dump_postgresql
 
 class TestBackupDBmain(AnuketScriptTestCase):
     """ Test for the `main` function of the `backupdb` the script."""
