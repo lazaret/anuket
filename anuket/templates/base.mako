@@ -1,6 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
-<%namespace file="anuket:templates/widgets/top_navbar.mako" import="top_navbar"/>
+<%! from pyramid.security import has_permission %>
 <%namespace file="anuket:templates/widgets/flash_messages.mako" import="flash_messages"/>
 
 <!DOCTYPE html>
@@ -24,7 +24,45 @@
   </head>
 
   <body>
-    ${top_navbar()}
+
+## Top navigation bar
+    <nav role="navigation" class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse">
+            ## left navbar
+            <ul class="nav">
+              <%block name="left_navbar_links">
+              <li class="active"><a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a></li>
+              </%block>
+            </ul>
+            ## right navbar
+            <ul class="nav pull-right">
+            %if request.auth_user:
+              ## Tools are available only for admins
+              % if has_permission('admin', request.context, request):
+                <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
+              %endif
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user.username}</b><b class="caret"/></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
+##                <li><a href="#">Test</a></li>
+                </ul>
+              </li>
+            %else:
+              <li><a href="${request.route_path('login')}"><span class="icon">t</span><b>${_(u"Login")}</b></a></li>
+            %endif
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </nav>
+##TODO try to move righ_navbar_links+ in an <%include>
+##TODO try to manage the 'active' class by checking the route
+
+
+## Main header
     <header>
       <div class="container">
         <div class="row">
@@ -52,6 +90,7 @@
       </div>
     </header>
 
+## Main body and aside blocks
     <div class="container">
       <div class="row">
       <article role="main" class="span9">
@@ -65,11 +104,12 @@
       </div>
     </div><!-- /container -->
 
+## Main footer
     <footer>
       <%block name="footer"/>
     </footer>
 
-    <!-- javascrip imports -->
+## Javascript imports
     <script src="${request.static_url('anuket:static/js/jquery.min.js')}"></script>
     <script src="${request.static_url('anuket:static/js/bootstrap.min.js')}"></script>
     <script src="${request.static_url('anuket:static/js/anuket.js')}"></script>
