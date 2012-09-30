@@ -26,14 +26,18 @@
   <body>
 
 ## Top navigation bar
+    ## default active navigation link
+    <%! active_link = 'home' %>
     <nav role="navigation" class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <div class="nav-collapse">
             ## left navbar
             <ul class="nav">
+              <li ${'class="active"' if self.attr.active_link=='home' else ''|n}>
+                <a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a>
+              </li>
               <%block name="left_navbar_links">
-              <li class="active"><a href="${request.route_path('home')}"><span class="icon">S</span><b>${_(u"Home")}</b></a></li>
               </%block>
             </ul>
             ## right navbar
@@ -41,26 +45,26 @@
             %if request.auth_user:
               ## Tools are available only for admins
               % if has_permission('admin', request.context, request):
-                <li><a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a></li>
+                <li ${'class="active"' if self.attr.active_link=='tools' else ''|n}>
+                  <a href="${request.route_path('tools.index')}"><span class="icon">a</span><b>${_(u"Tools")}</b></a>
+                </li>
               %endif
-              <li class="dropdown">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user.username}</b><b class="caret"/></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
-##                <li><a href="#">Test</a></li>
-                </ul>
-              </li>
+                <li class="dropdown">
+                  <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="icon">L</span><b>${request.auth_user.username}</b><b class="caret"/></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="${request.route_path('logout')}">${_("Logout")}</a></li>
+                  </ul>
+                </li>
             %else:
-              <li><a href="${request.route_path('login')}"><span class="icon">t</span><b>${_(u"Login")}</b></a></li>
+              <li ${'class="active"' if self.attr.active_link=='login' else ''|n}>
+                <a href="${request.route_path('login')}"><span class="icon">t</span><b>${_(u"Login")}</b></a>
+              </li>
             %endif
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </nav>
-##TODO try to move righ_navbar_links+ in an <%include>
-##TODO try to manage the 'active' class by checking the route
-
 
 ## Main header
     <header>

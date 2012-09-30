@@ -31,3 +31,6 @@
 <%block name="page_title">
 ${_(u"Login")}
 </%block>
+
+## Nav bar active link
+<%! active_link = 'login' %>
