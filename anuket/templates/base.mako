@@ -1,7 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
 <%! from pyramid.security import has_permission %>
-<%namespace file="anuket:templates/widgets/flash_messages.mako" import="flash_messages"/>
 
 <!DOCTYPE html>
 <html>
@@ -72,7 +71,7 @@
         <div class="row">
           <div class="span9">
             <div class ="flash-placeholder">
-              ${flash_messages()}
+              <%include file="anuket:templates/widgets/flash_messages.mako"/>
             </div>
             <div class="row">
               <div class="span6">

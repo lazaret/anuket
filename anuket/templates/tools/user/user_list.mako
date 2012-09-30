@@ -1,7 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
 <%inherit file="anuket:templates/tools/user/base.mako" />
-<%namespace file="anuket:templates/widgets/confirm_delete.mako" import="confirm_delete"/>
 <%namespace file="anuket:templates/widgets/pager.mako" import="pager"/>
 
 
@@ -47,8 +46,7 @@
 ${pager(users)}
 
 ## Confirm delete modal
-${confirm_delete()}
-
+<%include file="anuket:templates/widgets/confirm_delete.mako"/>
 
 
 ## Sortable column link

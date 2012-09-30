@@ -1,8 +1,6 @@
 ## -*- coding:utf-8 -*-
 ##
 <%inherit file="anuket:templates/tools/user/base.mako" />
-<%namespace file="anuket:templates/widgets/confirm_delete.mako" import="confirm_delete"/>
-
 
 <div class="row">
   <div class="span6 offset1">
@@ -59,7 +57,7 @@
 
 
 ## Confirm delete modal
-${confirm_delete()}
+<%include file="anuket:templates/widgets/confirm_delete.mako"/>
 
 ## Page title
 <%block name="page_title">

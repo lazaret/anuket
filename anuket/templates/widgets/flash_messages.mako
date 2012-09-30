@@ -1,6 +1,7 @@
 ## -*- coding:utf-8 -*-
 ##
-<%def name="flash_messages()">
+
+<%block name="flash_messages">
     % for queue in ['info', 'warn', 'error', 'success']:
         % for message in request.session.pop_flash(queue):
             <div class="alert alert-${queue}">
@@ -16,5 +17,5 @@
             ${message}
         </div>
     % endfor
-</%def>
+</%block>
 
