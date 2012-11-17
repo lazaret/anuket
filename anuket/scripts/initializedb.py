@@ -5,6 +5,7 @@ import sys
 import transaction
 
 from alembic.command import stamp
+from alembic.util import CommandError
 from sqlalchemy import engine_from_config
 from sqlalchemy.exc import IntegrityError
 from pyramid.paster import get_appsettings
@@ -99,8 +100,9 @@ class InitializeDBCommand(object):
             alembic_cfg = get_alembic_settings(config_uri)
             stamp(alembic_cfg, 'head')
         except (AttributeError, ImportError):  # pragma: no cover
-            # alembic is missing or not configured
-            pass
+            print("Warning: Alembic is missing or not configured.")
+        except CommandError:  # pragma: no cover
+            print("Warning: Alembic script_location option is missing.")
 
         print("Database initialization done.")
         return 0
