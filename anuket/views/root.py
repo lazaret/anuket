@@ -8,6 +8,7 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.view import notfound_view_config
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
+from sqlalchemy.exc import OperationalError as SqlAlchemyOperationalError
 
 from anuket.models.auth import AuthUser
 
@@ -34,7 +35,7 @@ def includeme(config):
 def root_view(request):
     """ Render the root pages.
 
-    Render the home page, the login page and 404 not found page.
+    Render the home page, the about page and 404 not found page.
 
     :param request: a ``pyramid.request`` object
     """
@@ -67,6 +68,21 @@ def forbiden_view(request):
         request.session.flash(_(u"You are not connected."),
                               'error')
         return HTTPFound(location=request.route_path('login'))
+
+
+@view_config(context=SqlAlchemyOperationalError, renderer='500.mako')
+def failed_sqlalchemy_view(exception , request):
+    """ Catch SqlAlchemy OperationalError exception to display an informational
+    flash error message along with a 500 error code."""
+    _ = request.translate
+    if 'could not connect to server' in exception.message:
+        request.session.flash(_(u"The database server is not responding!"),
+                              'error')
+    else:
+        request.session.flash(_(u"A database error have occured!"), 'error')
+    log.error(exception.message)
+    request.response.status = 500
+    return dict()
 
 
 @view_config(route_name='login', renderer='login.mako')
