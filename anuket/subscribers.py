@@ -76,7 +76,7 @@ def add_csrf_validation(event):
     """ CSRF validation event subscriber.
 
     If the POST forms do not have a CSRF token, or an invalid one then user is
-    logged out and the forbident view is called.
+    logged out and the forbiden view is called.
 
     :param event: a ``pyramid.event.NewRequest`` object
     :raise HTTPForbidden: if the CSRF token is None or invalid
