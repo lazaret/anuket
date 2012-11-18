@@ -2,7 +2,7 @@
 """ Tests for the `initializedb` script."""
 import os
 
-from sqlalchemy.exc import OperationalError as as SqlAlchemyOperationalError
+from sqlalchemy.exc import OperationalError as SqlAlchemyOperationalError
 
 from anuket.models import Base
 from anuket.models.migration import version_table
