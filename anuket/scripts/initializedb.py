@@ -5,9 +5,9 @@ import sys
 import transaction
 
 from alembic.command import stamp
-from alembic.util import CommandError
+from alembic.util import CommandError as AlembicCommandError
 from sqlalchemy import engine_from_config
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError as SqlAlchemyIntegrityError
 from pyramid.paster import get_appsettings
 
 from anuket.lib.alembic_utils import get_alembic_revision
@@ -88,7 +88,7 @@ class InitializeDBCommand(object):
                 DBSession.add(admins_group)
                 DBSession.add(admin_user)
                 DBSession.flush()
-            except IntegrityError:
+            except SqlAlchemyIntegrityError:
                 DBSession.rollback()
                 print("There is already a database. "
                       "Use the upgrade script instead!")
@@ -101,7 +101,7 @@ class InitializeDBCommand(object):
             stamp(alembic_cfg, 'head')
         except (AttributeError, ImportError):  # pragma: no cover
             print("Warning: Alembic is missing or not configured.")
-        except CommandError:  # pragma: no cover
+        except AlembicCommandError:  # pragma: no cover
             print("Warning: Alembic script_location option is missing.")
 
         print("Database initialization done.")

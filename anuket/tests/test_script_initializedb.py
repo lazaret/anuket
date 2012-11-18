@@ -2,7 +2,7 @@
 """ Tests for the `initializedb` script."""
 import os
 
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import OperationalError as as SqlAlchemyOperationalError
 
 from anuket.models import Base
 from anuket.models.migration import version_table
@@ -17,7 +17,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         # drop the alembic_version table
         try:
             version_table.drop(self.engine)
-        except OperationalError:  # pragma: no cover
+        except SqlAlchemyOperationalError:  # pragma: no cover
             pass
 
     def tearDown(self):
@@ -26,7 +26,7 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
         # drop the alembic_version table
         try:
             version_table.drop(self.engine)
-        except OperationalError:  # pragma: no cover
+        except SqlAlchemyOperationalError:  # pragma: no cover
             pass
 
     def _getTargetClass(self):
@@ -98,8 +98,9 @@ class TestInitializeDBCommand(AnuketScriptTestCase):
                          "Use the upgrade script instead!")
 
     def test_initialize_db_integrity_error(self):
-        """ Test than the `initialize_db` method fail if an ``IntegrityError``
-        occur because there is already an `admins` group in the database.
+        """ Test than the `initialize_db` method fail if a SqlAlchemy
+        ``IntegrityError`` occur because there is already an `admins` group in
+        the database.
         """
         import transaction
         from anuket.models.auth import AuthGroup
