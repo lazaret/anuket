@@ -95,7 +95,7 @@ ${_(u"User list")}
 <table class="table table-condensed table-bordered">
   <thead>
    <tr><th>${_(u"Statistics")}</th></tr>
-  <thead>
+  </thead>
   <tbody>
     <tr>
       <td>${_("Users")}</td>
