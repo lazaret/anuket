@@ -112,21 +112,20 @@ class AnuketTestCase(TestCase):
         """ Random valid password generator fixture."""
         from random import choice
         from string import letters
-        try:
-            from cracklib import VeryFascistCheck
-            while True:
-                # generate 8 letters random password
-                password = u''.join([choice(letters) for i in range(8)])
-                try:
-                    VeryFascistCheck(password)
-                    break
-                except ValueError:  # pragma: no cover
-                    # the generated password did not pass cracklib check
-                    pass
-            return password
-        except:  # pragma: no cover
-            # cracklib is probably missing
-            raise AssertionError
+        while True:
+            # generate 8 letters random password
+            password = u''.join([choice(letters) for i in range(8)])
+            try:
+                from cracklib import VeryFascistCheck
+                VeryFascistCheck(password)
+                break
+            except ImportError:
+                # cracklib is not installed
+                break
+            except ValueError:  # pragma: no cover
+                # the generated password did not pass cracklib check
+                pass
+        return password
 
 
 class AnuketFunctionalTestCase(AnuketTestCase):

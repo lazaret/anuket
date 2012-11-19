@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 """ FormEncode validators."""
+import logging
 from formencode import Invalid
 from formencode import validators
 
 from anuket.lib.i18n import MessageFactory as _
 from anuket.models.auth import AuthUser
+
+
+log = logging.getLogger(__name__)
 
 
 class FirstNameString(validators.String):
@@ -95,7 +99,15 @@ class SecurePassword(validators.String):
 
     def validate_python(self, value, state):
         """ Use cracklib to check the strenght of passwords."""
-        from cracklib import VeryFascistCheck
+
+        # try to import VeryFascistCheck from cracklib
+        try:
+            from cracklib import VeryFascistCheck
+        except ImportError:
+            log.warning('Cracklib module is missing!')
+            return value
+
+        # do the Very Fascist Check validation
         try:
             VeryFascistCheck(value)
         except ValueError:

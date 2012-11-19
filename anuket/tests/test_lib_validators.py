@@ -42,18 +42,28 @@ class ValidatorsTests(AnuketTestCase):
 
     def test_SecurePassword(self):
         """ Test the ``SecurePassword`` validator."""
-        from anuket.lib.validators import SecurePassword
-        password = SecurePassword()
-        # test than the validator is a formencode validators.String
-        self.assertIsInstance(password, validators.String)
-        # test than unsecure password are not accepted
-        self.assertRaises(Invalid, password.validate_python, "PassW0rd", None)
-        self.assertRaises(Invalid, password.validate_python, "123456789", None)
-        self.assertRaises(Invalid, password.validate_python, "azerty", None)
-        # tests than cracklib secure password are accepted
-        secure_password = self.password_fixture()
-        self.assertEqual(password.validate_python(secure_password, None),
-                         secure_password)
+        # the tests is done only if crackib is avalaible
+        try:
+            from cracklib import VeryFascistCheck
+            from anuket.lib.validators import SecurePassword
+            password = SecurePassword()
+            # test than the validator is a formencode validators.String
+            self.assertIsInstance(password, validators.String)
+            # test than unsecure password are not accepted
+            self.assertRaises(Invalid,
+                              password.validate_python, "PassW0rd", None)
+            self.assertRaises(Invalid,
+                              password.validate_python, "123456789", None)
+            self.assertRaises(Invalid,
+                              password.validate_python, "azerty", None)
+            # tests than cracklib secure password are accepted
+            secure_password = self.password_fixture()
+            self.assertEqual(password.validate_python(secure_password, None),
+                             secure_password)
+        except ImportError:
+            # cracklib is not installed
+            pass
+
 
     def test_UniqueAuthUsername(self):
         """ Test the ``UniqueAuthUsername`` validator."""
