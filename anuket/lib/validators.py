@@ -89,6 +89,26 @@ class UniqueAuthEmail(validators.FancyValidator):
             raise Invalid(self.message('not_unique_email', state),
                                        values, state, error_dict=errors)
 
+class NotOldPassword(validators.FancyValidator):
+    """ Forbiden old password validator"""
+
+    messages = {
+        'old_password': _(u"Do not reuse your old password!")
+    }
+
+    def validate_python(self, values, state):
+        """ Check tna the new password is not the same than the old one."""
+        if 'password' in values:
+            password = values['password']
+        if 'user_id' in values:
+            user_id = values['user_id']
+            user = AuthUser.get_by_id(user_id)
+        if user.check_password(user.username, password):
+            errors = {'password': self.message('old_password', state)}
+            raise Invalid(self.message('old_password', state),
+                                       values, state, error_dict=errors)
+
+
 
 class SecurePassword(validators.String):
     """ Secure password validator."""

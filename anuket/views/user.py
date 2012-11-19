@@ -9,9 +9,9 @@ from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 from webhelpers import paginate
 
-from anuket.lib.validators import FirstNameString, LastNameString
-from anuket.lib.validators import SecurePassword, UniqueAuthUsername
-from anuket.lib.validators import UniqueAuthEmail, UsernamePlainText
+from anuket.lib.validators import (FirstNameString, LastNameString,
+    SecurePassword, NotOldPassword, UniqueAuthUsername, UniqueAuthEmail,
+    UsernamePlainText)
 from anuket.models import DBSession
 from anuket.models.auth import AuthUser, AuthGroup
 
@@ -291,4 +291,5 @@ class UserPasswordForm(UserForm):
 
     chained_validators = [
         FieldsMatch('password', 'password_confirm'),
+        NotOldPassword()
     ]
