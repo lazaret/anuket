@@ -8,6 +8,7 @@ from pyramid.security import forget
 from formencode import api as formencode_api
 
 from anuket.lib.i18n import MessageFactory
+from anuket.resources import anuket_resources
 
 
 log = logging.getLogger(__name__)
@@ -21,6 +22,7 @@ def includeme(config):
     config.add_subscriber(add_renderer_globals, BeforeRender)
     config.add_subscriber(add_localizer, NewRequest)
     config.add_subscriber(add_csrf_validation, NewRequest)
+    config.add_subscriber(add_resources, NewRequest)
 
 
 def add_renderer_globals(event):
@@ -84,6 +86,16 @@ def add_csrf_validation(event):
     if event.request.method == 'POST':
         token = event.request.POST.get('_csrf')
         if token is None or token != event.request.session.get_csrf_token():
-            headers = forget(event.request)  # force a log out
+            headers = forget(event.request) # force a log out
             raise HTTPForbidden('CSRF token is missing or invalid',
                                 headers=headers)
+
+
+def add_resources(event):
+    """ resources event subscriber.
+
+    Add css and javascript resources to the templates with ``fanstatic``.
+
+    :param event: a ``pyramid.event.NewRequest`` object
+    """
+    anuket_resources.need()

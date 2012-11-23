@@ -14,6 +14,7 @@ install_requires = [
     'pyramid_beaker',
     'pyramid_debugtoolbar',
     'pyramid_exclog',
+    'pyramid_fanstatic',
     'pyramid_simpleform',
     'pyramid_tm',
     'zope.sqlalchemy',
@@ -21,7 +22,8 @@ install_requires = [
     'alembic',
     'Babel',
     'cryptacular',
-    'formencode'
+    'formencode',
+    'js.bootstrap'
     ]
 
 tests_require = [
@@ -61,5 +63,7 @@ setup(
     backup_anuket_db = anuket.scripts.backupdb:main
     initialize_anuket_db = anuket.scripts.initializedb:main
     upgrade_anuket_db = anuket.scripts.upgradedb:main
+    [fanstatic.libraries]
+    anuket = anuket.resources:anuket_library
     """,
     )

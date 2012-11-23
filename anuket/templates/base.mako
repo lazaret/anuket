@@ -10,14 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="${request.static_url('anuket:static/img/favicon.ico')}">
-    <link rel="stylesheet" href="${request.static_url('anuket:static/css/bootstrap.min.css')}">
-    <link rel="stylesheet" href="${request.static_url('anuket:static/css/bootstrap-responsive.min.css')}">
-    <link rel="stylesheet" href="${request.static_url('anuket:static/css/style.css')}">
-
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-##      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <script src="${request.static_url('anuket:static/js/html5shim.js')}"></script>
     <![endif]-->
   </head>
@@ -111,11 +105,6 @@
     <footer>
       <%block name="footer"/>
     </footer>
-
-## Javascript imports
-    <script src="${request.static_url('anuket:static/js/jquery.min.js')}"></script>
-    <script src="${request.static_url('anuket:static/js/bootstrap.min.js')}"></script>
-    <script src="${request.static_url('anuket:static/js/anuket.js')}"></script>
 
   </body>
 </html>
